@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .board {
+      width: 800px;
+      height: 800px;
+      border: 1px solid black;
+    }
+    .row{
+      display: flex;
+    }
+    .white-square{
+      width: 100px;
+      height: 100px;
+      background-color: white;
+    }
+    .black-square{
+      width: 100px;
+      height: 100px;
+      background-color: black;
+    }
+    .black-pawn{
+      background-image: url(black_pawn.png);
+      background-size: contain;
+      /* 아래는 아예 없애는 것이라 쓰면 안됨 */
+      /* display: none; */
+      visibility: hidden;
+    }
+    .white-king{
+      background-image: url(white_king.png);
+      background-size: cover;
+      position: relative;
+      top: -300px;
+      left: -300px;
+    }
+    .white-queen{
+      background-image: url(white_queen.png);
+      background-size: contain;
+      position: relative;
+      left: 200px;
+    }
+    .white-rook{
+      background-image: url(white_rook.png);
+      background-size: cover;
+      position: relative;
+      right: 200px;
+      
+    }
+    .black-spacefill{
+      position: relative;
+      right: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div class="board">
+    <!-- 1행 -->
+    <div class="row">
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+    </div>
+    <!-- 2행 -->
+    <div class="row">
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+    </div>
+    <!-- 3행 -->
+    <div class="row">
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+    </div>
+    <!-- 4행 -->
+    <div class="row">
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+    </div>
+    <!-- 5행 -->
+    <div class="row">
+      <div class="white-square black-pawn"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+    </div>
+    <!-- 6행 -->
+    <div class="row">
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+    </div>
+    <!-- 7행 -->
+    <div class="row">
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+    </div>
+    <!-- 8행 -->
+    <div class="row">
+      <div class="black-square"></div>
+      <div class="white-square"></div>
+      <div class="black-square"></div>
+      <div class="white-square white-king"></div>
+      <div class="black-square white-queen"></div>
+      <div class="white-square"></div>
+      <div class="black-square black-spacefill"></div>
+      <div class="white-square white-rook"></div>
+    </div>
+  </div>
+</body>
+</html>

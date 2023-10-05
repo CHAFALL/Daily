@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>NEW</h1>
+  {% comment %} 여기도 살짝 기억 {% endcomment %}
+  <form action="{% url "articles:create" %}" method='POST'>
+    {% csrf_token %}
+    <div>
+      <label for="title">Title:</label>
+      <input type="text" name='title' id='title'>
+    </div>
+    <div>
+      <label for="content">Content:</label>
+      <textarea name="content" id="content" cols="30" rows="10"></textarea>
+    </div>
+    <input type="submit">
+  </form>
+  <hr>
+  <a href="{% url "articles:index" %}">[back]</a>
+{% endblock content %}
+
+

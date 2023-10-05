@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>CSS Position</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 1500px;
+    }
+
+    .container {
+      /* 아래를 활성화 시키지 않으면 absolute가 이상하게 보임 */
+      /* 왜냐하면 부모를 못 찾아서 마지막인 body까지 올라가고 body를 부모취급 */
+      position: relative;
+      height: 300px;
+      width: 300px;
+      border: 1px solid black;
+    }
+
+    .box {
+      height: 100px;
+      width: 100px;
+      border: 1px solid black;
+    }
+
+    .static {
+      position: static;
+      background-color: lightcoral;
+    }
+    /* 범위 이탈 */
+    /* 새로운 부모를 찾으러 감(static이 아닌) */
+    .absolute {
+      position: absolute;
+      background-color: lightgreen;
+      top: 100px;
+      left: 100px;
+    }
+    /* 자기의 static 위치를 상대로 이동 */
+    .relative {
+      position: relative;
+      background-color: lightblue;
+      top: 100px;
+      left: 100px;
+    }
+    /* 고정(스크롤 이동시켜도..) */
+    .fixed {
+      position: fixed;
+      background-color: gray;
+      top: 0;
+      right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="box static">Static</div>
+    <div class="box absolute">Absolute</div>
+    <div class="box relative">Relative</div>
+    <div class="box fixed">Fixed</div>
+  </div>
+</body>
+
+</html>

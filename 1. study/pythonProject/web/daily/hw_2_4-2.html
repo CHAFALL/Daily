@@ -1,0 +1,28 @@
+<!-- 1.자손 결합자는 아래에 있는 모든 것에 다 영향 끼치고 자식 결합자는 바로 밑에 직계 자식만 영향을 끼친다.  -->
+<!-- 공백 있는 것은 자손, > 있는것이 자식 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div p {
+      color: blue;
+    }
+    div > p {
+      color: crimson;
+    }
+
+  </style>
+</head>
+<body>
+  <div>
+    <p>자식</p>
+    <ul>
+      <p>손자</p>
+    </ul>
+    <p>자식</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{% extends "articles/base.html" %}
+
+{% block content %}
+  <h1>fake naver</h1>
+  {% comment %} action: 어디로 보낼것인가(서버) {% endcomment %}
+  {% comment %} , GET이 method(요청을 보내는 방식)의 기본값이라 생략가능 (나중에 post 배울것, 이건 비번 관련된 것, 주소창에 뜨면 안되는거 할 때 씀) {% endcomment %}
+  <form action="https://search.naver.com/search.naver/" method = "GET">
+    <label for="message">검색어</label>
+    {% comment %} 네이버의 키의 이름은 query이다 {% endcomment %}
+    <input type="text" name='query' id="message" >
+    <input type="submit">
+  </form>
+{% endblock content %}
+
+

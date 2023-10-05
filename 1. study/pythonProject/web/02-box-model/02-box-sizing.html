@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 그래서 시작할 때 전체 선택자로 아래와 같이 많이 씀 */
+    /* content로 영역이 잡히면 어려워지므로 아예 첨부터 없앰 */
+    /* *{
+      box-sizing: border-box;
+    } */
+
+    .box {
+      width: 100px;
+      border: 2px solid black;
+      padding: 10px;
+      margin: 20px;
+      background-color: yellow;
+      /* 동그라미 만들기 */
+      border-radius: 50%;
+    }
+    /* 기본 상태 */
+    .content-box {
+      box-sizing: content-box;
+    }
+
+    .border-box {
+      box-sizing: border-box;
+    }
+    /* test에 나옴 */
+    /* 난 100을 할당했는디? */
+    /* 영역 F12로 들어가서 보기! */
+  </style>
+</head>
+
+<body>
+  <div class="box content-box">content-box</div>
+  <div class="box border-box">border-box</div>
+</body>
+
+</html>

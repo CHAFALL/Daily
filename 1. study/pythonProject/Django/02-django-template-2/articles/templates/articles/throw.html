@@ -1,0 +1,15 @@
+{% extends "articles/base.html" %}
+
+{% block content %}
+  <h1>Throw</h1>
+  {% comment %} 여기서 슬래시가 앞에도 있는 이유 잘 생각할 것 {% endcomment %}
+  <form action="/catch/" method = "GET">
+    <label for="message">메세지</label>
+    {% comment %} 이 데이터를 받은 장고 서버는 어떠한 객체 안의 message라는 키로 접근해서 검색어를 찾아낼 것이다. {% endcomment %}
+    {% comment %} 키의 이름 name='message' {% endcomment %}
+    <input type="text" name='message' id="message" >
+    <input type="submit">
+  </form>
+{% endblock content %}
+
+

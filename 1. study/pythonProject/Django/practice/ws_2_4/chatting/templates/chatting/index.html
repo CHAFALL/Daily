@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>chatting의 index</h1>
+  {% comment %} 바뀌면 우짤라고 {% endcomment %}
+  {% comment %} <a href="/information/index">information</a> {% endcomment %}
+  {% comment %} 그래서 아래와 같이 바꿔줌 {% endcomment %}
+  <a href="{% url "information:index" %}">information</a>
+  {% endblock content %}

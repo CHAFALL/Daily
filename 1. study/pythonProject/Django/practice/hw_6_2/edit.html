@@ -1,0 +1,8 @@
+<h2>edit</h2>
+<form action= "{% url 'reservations:update' reservation.pk %}" method="POST">
+  {% csrf_token %}
+  {{ form.__(a)__}}
+  <input type="submit" value="submit">
+</form>
+
+(a) = as_p

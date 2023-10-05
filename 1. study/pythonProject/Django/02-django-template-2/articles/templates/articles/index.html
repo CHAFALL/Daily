@@ -1,0 +1,9 @@
+{% extends "articles/base.html" %}
+{% comment %} extends 위에 아무것도 올라가면 안됨(주석도..) {% endcomment %}
+{% comment %} index가 base를 상속받겠다 {% endcomment %}
+{% comment %} 부모가 만들어 놓은 공간 활용하기 {% endcomment %}
+{% block content %}
+  <h1>안녕!, {{name}}</h1>
+{% endblock content %}
+
+

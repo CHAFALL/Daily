@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>안녕!</h1>
+  <a href="{% url "articles:dinner" %}">디너</a>
+  <a href="{% url "articles:search" %}">검색</a>
+  <a href="{% url "articles:throw" %}">던지기</a>
+  <a href="{% url "pages:index" %}">asd</a>
+
+{% endblock content %}
+  

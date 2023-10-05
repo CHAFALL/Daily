@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>INDEX</h1>
+  {% for article in articles %}
+    <p>글 번호: {{article.pk}}</p>
+    {% comment %} 아래에서 article.pk가 인자로 온 것임 {% endcomment %}
+    {% comment %} pk번 글로 감 {% endcomment %}
+    <a href="{% url "articles:detail" article.pk %}">
+      <p>글 제목: {{article.title}}</p>
+    </a>
+    <p>글 내용: {{article.content}}</p>
+    {% comment %} 헤드라인 {% endcomment %}
+    <hr>
+    {% endfor %}
+
+</body>
+</html>
+
+{% comment %} 에러에서 NoReverseMatch가 나왔다?? Url만 보면 된다. {% endcomment %}

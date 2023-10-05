@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+  {% comment %} action: 입력 데이터가 전송될 URL(목적지) {% endcomment %}
+  {% comment %} method: 데이터를 어떤 방식으로 보낼 것인가? {% endcomment %}
+  <form action="{% url "articles:catch" %}" method="GET">
+    <label for="message">Throw</label>
+    {% comment %} 여기에 있는 name의 속성 값을 통해서 사용자가 입력한 데이터에 접근가능하게 함 {% endcomment %}
+    <input type="text" name='message' id='message'>
+    <input type="submit">
+
+  </form>
+
+{% endblock content %}
+
+

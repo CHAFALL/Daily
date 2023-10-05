@@ -1,0 +1,12 @@
+{% comment %} user가 인증되었는지 여부를 기준으로 분기처리 {% endcomment %}
+{% comment %} 로그인 된 경우 {% endcomment %}
+{% if request.user.is_authenticated %}
+  <h3>Hello, {{ user }}</h3>
+  <form action="{% url 'accounts:logout' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Logout">
+  </form>
+{% comment %} 로그인 안 된 경우 {% endcomment %}
+{% else %}
+  <a href="{% url 'accounts:login' %}">Login</a>
+{% endif %}

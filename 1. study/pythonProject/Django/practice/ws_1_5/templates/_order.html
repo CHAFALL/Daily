@@ -1,0 +1,13 @@
+<h1>주문해 주세요!</h1>
+<hr>
+{% for item in items %}
+  <p>{{item}}</p>
+{% endfor %}
+
+<form action="/receipt/">
+  <input type="hidden" name='fnd' value='{{fnd}}'>
+  <label> 주문란 :
+    <input type="text" name="thing">
+  </label>
+  <input type="submit" value="주문하기">
+</form>

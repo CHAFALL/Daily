@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- 스타일 내에선 HTML 자동완성이 아닌 CSS 자동완성 -->
+  <style>
+    * {
+      color: hotpink;
+    }
+    /* 요소 선택자와 전체 선택자는 재사용이 불가...   */
+    /* 모든 h2 요소의 텍스트 색을 주황색으로 변경 -> 굉장히 제한적이라 잘 안 씀 */
+    h2 {
+      color: coral;
+    }
+
+    h3, h4 {
+      color: aqua;
+    }
+    /* 클래스 선택자는 재사용이 가능, 그래서 거의 이것만 씀 */
+    /* 그리고 우선순위 때문이기도 함 */
+    .green {
+      color: green;
+    }
+    /* id 선택자(잘 이용하지 않음), 딱 하나만 할당할 때 씀, 더 할당되긴 하는데 그렇게 안함 */
+    /* id는 이 스타일은 이 문서에서 딱 한 번만 쓸꺼다 할 때 이용됨 */
+    #purple {
+      color: purple;
+    }
+
+    /* 자식 결합자 */
+    .green > span {
+      font-size: 50px;
+    }
+    /* 어디의 어디 안의 것 할당하고플때 이용 */
+    /* 자손 결합자 */ 
+    /* 보면 ul 안의 li뿐만 아니라 ol 안의 li도 할당 됨 */
+    /* 두 단계 세 단계 안에 있어도 할당됨 */
+    .green li {
+      color: brown;
+    }
+
+  </style>
+</head>
+
+<body>
+  <h1 class="green">Heading</h1>
+  <h2>선택자</h2>
+  <h3>연습</h3>
+  <h4>반가워요</h4>
+  <p id="purple">과목 목록</p>
+  <ul class="green">
+    <li>파이썬</li>
+    <li>알고리즘</li>
+    <li>웹
+      <ol>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>PYTHON</li>
+      </ol>
+    </li>
+  </ul>
+  <!-- # span 태그는 HTML 문서에서 줄바꿈 및 영역 생성 없이 인라인 요소들을 묶어서 -->
+  <!-- 스타일링이나 속성값을 공유할 수 있게 하는 태그  -->
+  <p class="green">Lorem, <span>ipsum</span> dolor.</p>
+</body>
+
+</html>

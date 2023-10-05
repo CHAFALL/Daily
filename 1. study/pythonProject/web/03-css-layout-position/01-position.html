@@ -1,0 +1,76 @@
+<!-- 다시보기 권장 -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>CSS Position</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 1500px;
+    }
+
+    .container {
+      position: relative;
+      height: 300px;
+      width: 300px;
+      border: 1px solid black;
+    }
+
+    .box {
+      height: 100px;
+      width: 100px;
+      border: 1px solid black;
+    }
+    /* 기본 값 */
+    .static {
+      position: static;
+      background-color: lightcoral;
+    }
+    /* 자기가 차지하고 있던 위치를 버린다. (다른 레이아웃에게 영향을 끼침) */
+    /* 집 나간 애 */
+    /* 얘도 기준은 필요 (static이 아닌 부모를 찾음) */
+    /* 찾다 찾다 올라가서도 없으면 마지막을 부모로 함(여기선 body) */
+    /* 그래서 명확한 relative 부모를 주는 것을 권장(여기선 container에 줌) */
+    .absolute {
+      position: absolute;
+      background-color: lightgreen;
+      top: 100px;
+      left: 100px;
+    }
+    /* 여기서 기준점은 본인의 static 시절의 위치를 기준 */
+    /* 왜 상대적이냐면 주변상황에 따라서 static 시절의 위치가 바뀔 수 있으므로 */
+    /* 상대적 위치(기준점 존재) */
+    /* 얘는 집 나간 애 아님!!! */
+    .relative {
+      position: relative;
+      background-color: lightblue;
+      top: 100px;
+      left: 100px;
+    }
+    /* 고정위치 */
+    /* 집 나간 애 */
+    /* 얘는 스크롤 영향 x (브라우저를 기준으로) */
+    /* 내비게이션 바 같은 곳에 쓰임 */
+    .fixed {
+      position: fixed;
+      background-color: gray;
+      top: 0;
+      right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="box static">Static</div>
+    <div class="box absolute">Absolute</div>
+    <div class="box relative">Relative</div>
+    <div class="box fixed">Fixed</div>
+  </div>
+</body>
+
+</html>

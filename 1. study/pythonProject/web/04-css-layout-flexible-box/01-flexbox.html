@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .container {
+      height: 500px;
+      border: 1px solid black;
+      /* 나 이제부터 flex 박스 쓸거야 */
+      display: flex;
+      /* 여기 part는 놓는 방식? 느낌 */
+      /* 기본적으로 block요소 였는데 flex 쓰겠다고 선언하면 block요소가 없어짐 */
+      /* 본인의 컨텐츠 만큼만 너비 차지, 아래의 영역이 남는 것은 부모의 높이만큼 채움 */
+      /* 방향 바꾸기(기본은 row) */
+      /* flex-direction: column; */
+      /* 역순으로 할당하기 */
+      /* flex-direction: row-reverse; */
+      /* flex-direction: column-reverse; */
+      /* 감싸졌을 때 작아지거나(nowrap) 유지하거나(wrap) 설정 */
+      /* 기본은 nowrap임(이때는 줄일 때 깨지지 않고 본인의 몸집을 줄임) */
+      /* 즉 nowrap은 몸집 줄이고 wrap은 몸집 줄이지 않음 */
+      flex-wrap: wrap;
+
+
+      /* 수직 수평 가운데 정렬 하는 법 */
+      /* justify-content: center;
+      align-content: center; */
+
+      /* 메인축 정렬 */
+      justify-content: flex-start;
+      /* justify-content: center; */
+      /* justify-content: flex-end; */
+
+      /* 교차축 정렬 */
+      /* 여기 중요(종류 많음) */
+      /* align-content: flex-start;
+      align-content: center;
+      align-content: flex-end; */
+      
+      /* 행 하나 정렬 */
+      /* 행 여러개 있으면 정렬 안됨 */
+      /* align-items: flex-start;
+      align-items: center;
+      align-items: flex-end; */
+    }
+
+    .post {
+      background-color: grey;
+      border: 1px solid black;
+      margin: 0.5rem;
+      padding: 0.5rem;
+    }
+
+    .item1 {
+      /* 각각 따로 조정 */
+      /* 개별로 움직이고픈 */
+      /* 애네들은 부모에게 속성 안주고 본인한테 줌 */
+      align-self: center;
+    }
+
+    .item2 {
+      align-self: flex-end;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="post item1">
+      <h2>Post Title 1</h2>
+      <p>Post Content 1</p>
+    </div>
+    <div class="post item2">
+      <h2>Post Title 2</h2>
+      <p>Post Content 2</p>
+    </div>
+    <div class="post">
+      <h2>Post Title 3</h2>
+      <p>Post Content 3</p>
+    </div>
+    <div class="post">
+      <h2>Post Title 4</h2>
+      <p>Post Content 4</p>
+    </div>
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Edit</h1>
+  <form action="{% url "articles:update" article.pk %}" method = "POST">
+    {% comment %} 이 요청은 post요청부터 필요해짐 {% endcomment %}
+    {% csrf_token %}
+    <div>
+      <label for="title">제목: </label>
+      {% comment %} value 추가됨, 왜냐 수정하는건데 왜 첨부터인데?? 원래 상태에서 고쳐야지{% endcomment %}
+      {% comment %} 바로 article.title을 해주면 안되겠지? article이 없으니 {% endcomment %}
+      {% comment %} 그러므로 url로 가서 수정 필요 {% endcomment %}
+      {% comment %} 또한 views도 바뀜 {% endcomment %}
+      <input type="text" id = "title" name="title" value="{{article.title}}">
+    </div>
+    <div>
+      <label for="content">내용: </label>
+      {% comment %} textarea는 value 라는 속성이 없어서 태그 사이에 채움(content) {% endcomment %}
+      <textarea name="content" id="content" cols="30" rows="10">{{article.content}}</textarea>
+    </div>
+    <input type="submit">
+  </form>
+</body>
+</html>
+
+
+{% comment %} U로직도 C로직과 유사하다 다만, U로직은 새로운 인스턴스를 만들어가며 진행하는 것이 아니라 {% endcomment %}
+{% comment %} 기존 인스턴스를 먼저 찾고 기존의 게시글에다가 새로운 값으로 갱신 시켜주는 점이 다르다. {% endcomment %}
