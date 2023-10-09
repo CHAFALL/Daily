@@ -27,7 +27,7 @@ adj = [[] for _ in range(N + 1)]
 for i in range(1, N + 1):
     adj[i].extend(list(map(int, input().split())))
 
-min_v = 999999
+min_v = 9999
 # 비트마스킹을 이용한 부분집합 생성
 for i in range(1, 1 << (N-1)):
     group1 = []
@@ -45,7 +45,7 @@ for i in range(1, 1 << (N-1)):
         group2_value = sum([people[g2] for g2 in group2])
         min_v = min(min_v, abs(group1_value - group2_value))
 
-if min_v == 999999:
+if min_v == 9999:
     min_v = -1
 
 print(min_v)
