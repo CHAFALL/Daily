@@ -209,7 +209,9 @@ SELECT
 FROM
   tracks
 GROUP BY
-  Composer DESC;
+  Composer
+ORDER BY
+  AVG(Bytes)DESC;
 
 -- 그룹화의 집계항목에 대한 조건은 WHERE이 아닌 HAVING 이용
 -- 집계항목이 아닌 것과 구분하기 위해서
