@@ -1,0 +1,35 @@
+CREATE TABLE zoo (
+  name TEXT NOT NULL,
+  eat TEXT NOT NULL,
+  weight INT NOT NULL,
+  height INT,
+  age INT
+);
+
+-- 1) 
+INSERT INTO zoo VALUES 
+(5, 180, 210, 'gorilla', 'omnivore');
+
+-- 2)
+INSERT INTO zoo (rowid, name, eat, weight, age) VALUES
+(10,'dolphin', 'carnivore', 210, 3),
+(10, 'alligator', 'carnivore', 250, 50);
+
+-- 3)
+INSERT INTO zoo (name, eat, age) VALUES
+('dolphin', 'carnivore', 3);
+
+
+-- 1) 인자? 순서가 잘못 됨
+INSERT INTO zoo VALUES 
+('gorilla', 'omnivore', 210, 180, 5);
+
+-- 2) rowid -> pk로
+INSERT INTO zoo (pk, name, eat, weight, age) VALUES
+(10,'dolphin', 'carnivore', 210, 3),
+(10, 'alligator', 'carnivore', 250, 50);
+
+-- 3) weight가 not null 이라서 값을 넣어줘야 됨
+INSERT INTO zoo (name, eat, age, weight) VALUES
+('dolphin', 'carnivore', 3, 0);
+

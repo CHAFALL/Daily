@@ -1,0 +1,7 @@
+CREATE TABLE examples(
+  ExamId INTEGER PRIMARY KEY AUTOINCREMENT,
+  LastName VARCHAR(50) NOT NULL,
+  FirstName VARCHAR(50) NOT NULL
+);
+
+PRAGMA table_info('examples');
