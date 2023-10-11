@@ -1,0 +1,4 @@
+SELECT * FROM users
+ORDER BY age
+LIMIT 40, 20;
+-- LIMIT 20 OFFSET 40;
