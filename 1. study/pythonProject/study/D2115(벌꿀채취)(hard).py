@@ -20,6 +20,7 @@ for tc in range(1, T + 1):
     N, M, C = map(int, input().split())
     arr = [list(map(int, input().split())) for _ in range(N)]
     ans = 0
+    # 각각 벌통을 선택하는 경우 구현
     for i1 in range(N):
         for j1 in range(N - M + 1):
             max_v = 0
