@@ -5,14 +5,13 @@
   <ul>
     {% for todo in todos %}
       <li>
-        {{todo.author}} - {{todo.title}}
+        {{ todo.author }} - {{ todo.title }}
       </li>
       {% if  todo.author == request.user %}
-
         <form action="{% url "todos:toggle" todo.pk %}" method='POST'>
           {% csrf_token %}
             {% if todo.completed == False %}
-              <input type="submit" value = '취소하기'>
+              <button>취소하기</button>
             {% else %}
               <input type="submit" value = '완료하기'>
             {% endif %}

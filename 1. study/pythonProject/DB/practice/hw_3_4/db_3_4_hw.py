@@ -26,7 +26,7 @@ def detail(request, question_pk):
     return render(request, 'eithers/detail.html', context)
 
 # (a) count()
-# (b) count_a + count_b
+# (b) count_a + count_b #답) question.comment_set.count()
 # (c) total_count
 # (d) 1
-# (e) all()
+# (e) all() #답)order_by('-pk')
