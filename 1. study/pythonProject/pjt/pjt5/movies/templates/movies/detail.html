@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>DETAIL PAGE</h1>
+
+  <h3>{{ movie.title }}</h3>
+  <p>{{ movie.description }}</p>
+  <p>장르 : {{ movie.genre }}</p>
+  <p>평점 : {{movie.score}}</p>
+  <hr>
+  <a href="{% url "movies:update" movie.pk %}" class="btn btn-secondary">UPDATE</a>
+  {% comment %} post 방식이라서 a를 쓰면 안되고 form으로 해야 된다. {% endcomment %}
+  <form action="{% url "movies:delete" movie.pk %} " method = "POST" class='d-inline'>
+    {% csrf_token %}
+    <button class="btn btn-danger">DELETE</button>
+  </form>
+  <hr>
+  <h4>댓글 목록</h4>
+    {% for comment in comments %}
+      <div class='d-flex justify-content-between'>
+        {{comment.user}} - {{ comment.content }}
+        {% if request.user == comment.user %}
+          <form action="{% url "movies:comments_delete" movie.pk comment.pk %}" method="POST" style='display:inline'>
+            {% csrf_token %}
+            <button class="btn btn-danger btn-sm mb-1">삭제</button>
+        </form>
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    <form action="{% url "movies:comments_create" movie.pk %}" method = "POST">
+      {% csrf_token %}
+      {{comment_form.as_p}}
+      <input type="submit">
+    </form>
+
+
+  <a href="{% url "movies:index" %}">
+    <button type="button" class="btn btn-primary">BACK</button>
+  </a>
+{% endblock content %}
+
+
