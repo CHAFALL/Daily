@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  {% if request.user.is_authenticated %}
+    <p>{{user.username}}님 안녕하세요!!</p>
+    <a href="{% url "accounts:update" %}">[회원정보 수정]</a>
+    <form action="{% url "change_password" user.pk %}"method='POST'>
+      {% csrf_token %}
+      <input type="submit" value='비밀번호 변경'>
+    </form>
+    <form action="{% url "accounts:logout" %}"method='POST'>
+      {% csrf_token %}
+      <input type="submit" value='로그아웃'>
+    </form>
+    <form action="{% url "accounts:delete" %}"method='POST'>
+      {% csrf_token %}
+      <input type="submit" value='회원 탈퇴'>
+    </form>
+  {% else %}
+    <a href="{% url "accounts:login" %}">[login]</a>
+    <a href="{% url "accounts:signup" %}">[signup]</a>
+  {% endif %}
+  {% block content %}
+  {% endblock content %}
+</body>
+</html>

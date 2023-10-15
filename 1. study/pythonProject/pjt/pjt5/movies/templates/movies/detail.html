@@ -29,8 +29,9 @@
 
     <form action="{% url "movies:comments_create" movie.pk %}" method = "POST">
       {% csrf_token %}
-      {{comment_form.as_p}}
+      {{comment_form}}
       <input type="submit">
+      <hr>
     </form>
 
 
