@@ -28,9 +28,13 @@ def create(request):
             movie = form.save(commit=False)
             movie.user = request.user
             movie.save()
+            # 본문을 단어별로 잘라서 리스트에 저장
             for word in movie.content.split():
+                # '#'으로 시작되는 단어 여부
                 if word.startswith('#'):
+                    # 조건에 맞는 레코드가 있으면 객체를 리턴, 없으면 레코드 추가하고 객체 리턴
                     hashtag, created = Hashtag.objects.get_or_create(content=word)
+                    # 중개테이블에 영화와 해시태그를 저장
                     movie.hashtags.add(hashtag)
             return redirect('movies:detail', movie.pk)
 
@@ -122,8 +126,11 @@ def likes(request, movie_pk):
         return redirect("movies:index")
     return redirect("accounts:login")
 
+@login_required
 def hashtag(request, hash_pk):
+    # 함수가 아니라서 충돌 발생 안함(hashtag)
     hashtag = get_object_or_404(Hashtag, pk=hash_pk)
+    # 해당 해시태그가 달린 영화를 가져와야 한다.
     movies = hashtag.movie_set.order_by('-pk')
     context = {
         'hashtag' : hashtag,
