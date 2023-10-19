@@ -10,6 +10,8 @@ def article_list(request):
     return __(d)__(serializer.__(e)__)
 
 
+# 여기서 serializer는 객체이다 그러므로 객체를 보낼 수는 없으므로 serializer.data를 보냄
+
 # (a) : ArticleSerializer
 # (c) : many=True
 # (d) : Response

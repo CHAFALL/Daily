@@ -8,4 +8,4 @@ class ArticleSerializer(__(b)__):
         model = Article
         fields = '__all__'
 
-# (b) : serializer.ModelSertializer
+# (b) : serializer.ModelSerializer
