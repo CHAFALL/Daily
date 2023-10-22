@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>index page</h1>
+  <h5>{{user.username}}님 환영합니다!</h5>
+  <a href="{% url "accounts:profile" user.username %}">[내 프로필]</a>
+  <a href="{% url "articles:create"%}">[create]</a>
+  <hr>
+  {% for article in articles %}
+    <p>작성자 : 
+      <a href="{% url "accounts:profile" article.user.username %}">
+        {{ article.user }}
+      </a>
+    </p>
+    <p>번호 : {{article.pk}}</p>
+    <a href="{% url "articles:detail" article.pk%}">
+      <p>제목 : {{article.title}}</p>
+    </a>
+    <p>내용 : {{article.content}}</p>
+    <form action="{% url "articles:likes" article.pk %}"method='POST'>
+      {% csrf_token %}
+      {% if request.user in article.like_users.all %}
+        <input type="submit" value='좋아요 취소'>
+      {% else %}
+        <input type="submit" value='좋아요'>
+      {% endif %}
+    </form>
+  <hr>
+    {% endfor %}
+
+{% endblock content %}
+
+

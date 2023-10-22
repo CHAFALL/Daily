@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>{{person.username}}님의 프로필</h1>
+  <h3>영화 목록</h3>
+  <ul>
+    {% for movie in person.movie_set.all %}
+      <li>
+        <a href="{% url "movies:detail" movie.pk%}">
+          {{movie.title}}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+  <h3>좋아요 누른 개수 : {{person.like_movies.all|length}}</h3>
+  <a href="{% url "accounts:like_movies" person.pk %}">좋아요 영화 확인</a>
+  <div class='d-flex justify-content-between'>
+    <div>
+      <div>팔로워: {{person.followers.all|length}}</div>
+      <div>팔로잉: {{person.followings.all|length}}</div>
+    </div>
+    <div>
+      {% if request.user != person %}
+        <form action="{% url "accounts:follow" person.pk%}" method='POST'>
+          {% csrf_token %}
+          {% if request.user in person.followers.all %}
+            <button class="btn btn-primary">팔로우 취소</button>
+          {% else %}
+            <button class="btn btn-primary">팔로우</button>
+          {% endif %}
+        </form>
+      {% endif %}
+    </div>
+  </div>
+{% endblock content %}
+
+

@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login as auth_login, logout as auth_logout, update_session_auth_hash
+from django.contrib.auth import login as auth_login, logout as auth_logout, update_session_auth_hash, get_user_model
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_http_methods
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def signup(request):
@@ -21,7 +22,7 @@ def signup(request):
     }
     return render(request, 'accounts/signup.html', context)
 
-
+@require_http_methods(['GET', 'POST'])
 def login(request):
     if request.user.is_authenticated:
         return redirect('movies:index')
@@ -38,11 +39,14 @@ def login(request):
     return render(request, 'accounts/login.html', context)
 
 @require_POST
+@login_required
 def logout(request):
     auth_logout(request)
     return redirect('movies:index')
 
 
+@require_http_methods(['GET', 'POST'])
+@login_required
 def update(request):
     if request.method =='POST':
         form = CustomUserChangeForm(request.POST, instance=request.user)
@@ -54,12 +58,18 @@ def update(request):
     context = {
         'form' : form,
     }
-    return render(request, 'accounts/login.html', context)
+    return render(request, 'accounts/update.html', context)
 
+
+@require_POST
+@login_required
 def delete(request):
     request.user.delete()
     return redirect('movies:index')
 
+
+@require_http_methods(['GET', 'POST'])
+@login_required
 def change_password(request, user_pk):
     if request.method =='POST':
         form = PasswordChangeForm(request.user, request.POST)
@@ -73,3 +83,37 @@ def change_password(request, user_pk):
         'form' : form,
     }
     return render(request, 'accounts/change_password.html', context)
+
+
+
+def profile(request, username):
+    User = get_user_model()
+    person = User.objects.get(username=username)
+    context = {
+        'person' : person,
+    }
+    return render(request, 'accounts/profile.html', context)
+
+
+
+@login_required
+def follow(request, user_pk):
+    User = get_user_model()
+    person = User.objects.get(pk=user_pk)
+    if request.user != person:
+        if request.user in person.followers.all():
+            request.user.followings.remove(person)
+        else:
+            request.user.followings.add(person)
+    return redirect('accounts:profile', person.username)
+
+
+@require_POST
+@login_required
+def like_movies(request, user_pk):
+    User = get_user_model()
+    person = User.objects.get(pk=user_pk)
+    context = {
+        'person' : person
+    }
+    return render(request, 'accounts/like_movies.html', context)

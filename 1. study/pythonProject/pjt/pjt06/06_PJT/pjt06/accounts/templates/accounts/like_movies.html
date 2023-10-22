@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Linked Movie List</h1>
+  <a href="{% url "accounts:profile" person.username %}">[BACK]</a>
+  <hr>
+  <ul>
+    {% for movie in person.like_movies.all %}
+      <li>
+        <a href="{% url "movies:detail" movie.pk%}">
+          {{movie.title}}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock content %}
+
+

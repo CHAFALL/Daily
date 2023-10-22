@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect
 from .models import Movie, Comment
 from .forms import MovieForm, CommentForm
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST, require_http_methods, require_safe
 # Create your views here.
+
+@require_safe
 def index(request):
     movies = Movie.objects.all()
     context = {
@@ -9,6 +13,8 @@ def index(request):
     }
     return render(request, 'movies/index.html', context)
 
+
+@require_safe
 def detail(request, pk):
     movie = Movie.objects.get(pk=pk)
     comment_form = CommentForm()
@@ -20,6 +26,8 @@ def detail(request, pk):
     }
     return render(request, 'movies/detail.html', context)
 
+@require_http_methods(['GET','POST'])
+@login_required
 def create(request):
     if request.method =='POST':
         form = MovieForm(request.POST)
@@ -35,6 +43,9 @@ def create(request):
     }
     return render(request, 'movies/create.html', context)
 
+
+@require_http_methods(['GET','POST'])
+@login_required
 def update(request, pk):
     movie = Movie.objects.get(pk=pk)
     if request.method =='POST':
@@ -51,11 +62,16 @@ def update(request, pk):
     return render(request, 'movies/update.html', context)
 
 
+@require_POST
+@login_required
 def delete(request, pk):
     movie = Movie.objects.get(pk=pk)
     movie.delete()
     return redirect('movies:index')
 
+
+@require_POST
+@login_required
 def comments_create(request, pk):
     movie = Movie.objects.get(pk=pk)
     comment_form = CommentForm(request.POST)
@@ -72,6 +88,8 @@ def comments_create(request, pk):
     return render(request, 'movies/detail.html', context)
 
 
+@require_POST
+@login_required
 def comments_delete(request, movie_pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
     if request.user == comment.user:
@@ -79,6 +97,8 @@ def comments_delete(request, movie_pk, comment_pk):
     return redirect('movies:detail', movie_pk)
 
 
+@require_POST
+@login_required
 def likes(request, movie_pk):
     movie = Movie.objects.get(pk=movie_pk)
     if request.user in movie.like_users.all():

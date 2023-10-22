@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
+  <img src="{% static "movies/R.png" %}" alt="img">
   {% if request.user.is_authenticated %}
     <p>{{user.username}}님 환영합니다^^</p>
   {% endif %}
@@ -9,18 +11,28 @@
       <div class="col-6">
       <div class="card mb-4">
         <div class="card-header">
-          {{movie.title}}
+          {{movie.title}} - 
+          <a href="{% url "accounts:profile" movie.user.username %}">
+            {{movie.user}}
+          </a>
         </div>
         <div class="card-body">
-          <p class="card-text">{{movie.description}}</p>
-          <form action="{% url "movies:likes" movie.pk %}" method="POST">
+          <p class="card-text">
+            <a href="{% url "movies:detail" movie.pk%}">
+              {{movie.description}}
+            </a>
+          </p>
+          <div class='d-flex justify-content-end'>{{movie.updated_at}}</div>
+          <form class='d-flex justify-content-between' action="{% url "movies:likes" movie.pk %}" method="POST">
             {% csrf_token %}
-            <p>{{movie.like_users.all|length}}</p>
-            {% if request.user in movie.like_users.all %}
-              <button class="btn btn-primary">좋아요</button>
-            {% else %}
-              <button class="btn btn-primary">좋아요 취소</button>
-            {% endif %}
+            <div>좋아요 {{movie.like_users.all|length}}</div>
+            <div>
+              {% if request.user in movie.like_users.all %}
+                <button class="btn btn-primary">좋아요</button>
+              {% else %}
+                <button class="btn btn-primary">좋아요 취소</button>
+              {% endif %}
+            </div>
           </form>
         </div>
       </div>
