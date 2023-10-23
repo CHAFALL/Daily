@@ -1,0 +1,28 @@
+<script>
+  // 콘솔 창에 띄우기
+  console.log()
+  console.log(h1Tag.classList)
+  console.log(aTag.getAttribute('href'))
+  console.log(h1Tag.textContent)
+  console.log(pTag.style)
+  // 선택(조회)하기
+  document.querySelector('h1') // 첫번째 놈만 조회함을 기억!
+  document.querySelectorAll('h1')
+  const h1Tag = document.querySelector('h1') // 저장하기
+  // class 관련
+  h1Tag.classList.add('red')
+  h1Tag.classList.remove('red')
+  h1Tag.classList.toggle('red')
+  // 속성 관련(id, class, style도 전부 속성에 속함)
+  aTag.setAttribute('href', 'https://www.naver.com')
+  aTag.removeAttribute('href')
+  // 텍스트 관련
+  h1Tag.textContent = '안녕 싸피'
+  // 태그 관련
+  const h1Tag = document.createElement('h1') // 태그 생성
+  divTag.appendChild(h1Tag) // 추가(선택 후 자식으로 추가)
+  divTag.removeChild(h1Tag) // 삭제
+  // 스타일 관련
+  pTag.style.color = 'red'
+  pTag.style.border = '1px solid black'
+</script>
