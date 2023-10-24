@@ -1,67 +1,77 @@
-import heapq
+# import heapq
+#
+# def prim(start):
+#     Q = []
+#     # 출발점 초기화
+#     heapq.heappush(Q, (0, start)) # 가중치, 정점
+#     total_w = 0 # 누적합 저장
+#     while Q:
+#         w, v = heapq.heappop(Q)
+#         # 연결 안 되었으면 해주고
+#         if not connected[v]:
+#             connected[v] = 1
+#             total_w += w
+#
+#         # 갈 수 있는 노드들 체크
+#         for nw, nv in adj[v]:
+#             if not connected[nv]:
+#                 heapq.heappush(Q, (nw, nv))
+#
+#     return total_w
+#
+#
+# V, E = map(int, input().split())
+# # 연결 유무 체크
+# connected = [0] * (V + 1)
+# # 인접리스트 만들기
+# adj = [[] for _ in range(V + 1)]
+# for _ in range(E):
+#     A, B, C = map(int, input().split())
+#     adj[A].append((C, B)) # 무향
+#     adj[B].append((C, A))
+#
+#
+# print(prim(1))
 
-def prim(start):
-    Q = []
-    # 출발점 초기화
-    heapq.heappush(Q, (0, start)) # 가중치, 정점
-    D[start] = 0
+#----------------------------------------------------------------
+def find_set(x):
+    if parents[x] == x:
+        return x
+    # 경로 압축
+    parents[x] = find_set(parents[x])
+    return parents[x]
 
-    while Q:
-        w, v = heapq.heappop(Q)
-        for n
+def union(x, y):
+    x = find_set(x)
+    y = find_set(y)
 
+    if x == y:
+        return
+    if x < y:
+        parents[y] = x
+    else:
+        parents[x] = y
 
 V, E = map(int, input().split())
-visited = [0] * (V + 1)
-# 인접리스트 만들기
-adj = [[] for _ in range(V + 1)]
+edge = []
+parents = [i for i in range(V + 1)]
 for _ in range(E):
     A, B, C = map(int, input().split())
-    adj[A].append((C, B)) # (가중치, 도착지)
+    edge.append((C, A, B))
 
-INF = 2_222_222_222
-D = [INF] * (V + 1)
-prim(1)
+edge.sort()
 
+cnt = 0 # 현재 방문한 정점 수
+sum_weight = 0
+for w, f, t in edge:
+    # 싸이클이 발생하지 않는다면
+    # (대표가 같지 않다면?)
+    if find_set(f) != find_set(t):
+        cnt += 1
+        sum_weight += w
+        union(f, t)
+        # 다 연결되었으면
+        if cnt == V:
+            break
 
-
-#-----------------------------------------------------------------------
-def prim(s):
-    total = 0
-    # 시작점 설정
-    D[s] = 0
-    # 정점의 갯수만큼 선택하기
-    for i in range(V+1):
-
-        # 가중치 최소값 찾기
-        min_v = 987654321
-        for j in range(V+1):
-            if visited[j] == 0 and D[j] < min_v:
-                min_v = D[j]
-                v = j # 정점 선택
-        # 방문처리(선택)
-        visited[v] = 1
-        total += adj[PI[v]][v]
-        for w in range(V + 1):
-            if adj[v][w] and not visited[w]:
-                if D[w] > adj[v][w]:
-                    D[w] = adj[v][w]
-                    PI[w] = v
-    return total
-# 노드 0부터 시작함
-T = int(input())
-for tc in range(1, T + 1):
-    V, E = map(int, input().split())
-    adj = [[0] * (V+1) for _ in range(V + 1)]
-    visited = [0] * (V + 1)
-    D = [987654321] * (V + 1) # 가중치
-    PI = list(range(V + 1)) # 부모
-
-    # 인접행렬
-    for _ in range(E):
-        # 양 끝 노드 ,가중치
-        s, e, w = map(int, input().split())
-        adj[s][e] = adj[e][s] = w # 무향
-
-    # 간선의 가중치 합
-    print(f'#{tc} {prim(0)}')
+print(sum_weight)
