@@ -39,13 +39,14 @@
     const study3 = document.querySelector('body > ul > li:nth-child(3)')
     const study4 = document.querySelector('body > ul > li:nth-child(4)')
 
+
     study1.classList.add('list-group-item')
     study2.classList.add('list-group-item')
     study3.classList.add('list-group-item')
     study4.classList.add('list-group-item')
     
-    study2.setAttribute('aria-current', 'true')
-    console.log(study2.getAttribute('aria-current'))
+    study2.setAttribute('aria-current', true)
+    // console.log(study2.getAttribute('aria-current'))
 
     study2.classList.add('active')
     

@@ -23,51 +23,94 @@
   <h2>연락처</h2>
   <p>이메일: <b id="email">[이메일 주소]</b></p>
   <p>전화번호: <b id="phone">[전화번호]</b></p>
-  <p>SNS: <b id="sns">[SNS]</b></p>
+  <!-- <p>SNS: <b id="sns">[SNS]</b></p> -->
   <script>
-    const nameTag = document.querySelector('#name')
-    console.log(nameTag)
-    nameTag.textContent = '전근렬'
-    nameTag.classList.add('highlight')
+    // const nameTag = document.querySelector('#name')
+    // console.log(nameTag)
+    // nameTag.textContent = '전근렬'
+    // nameTag.classList.add('highlight')
 
 
-    const jobTag = document.querySelector('#job')
-    console.log(jobTag)
-    jobTag.textContent = '의적'
-    jobTag.classList.add('highlight')
+    // const jobTag = document.querySelector('#job')
+    // console.log(jobTag)
+    // jobTag.textContent = '의적'
+    // jobTag.classList.add('highlight')
 
-    const experienceTag = document.querySelector('#experience')
-    console.log(experienceTag)
-    experienceTag.textContent = '서당'
-    experienceTag.classList.add('highlight')
+    // const experienceTag = document.querySelector('#experience')
+    // console.log(experienceTag)
+    // experienceTag.textContent = '서당'
+    // experienceTag.classList.add('highlight')
 
-    const emailTag = document.querySelector('#email')
-    console.log(emailTag)
-    emailTag.textContent = 'hgd@korea'
-    emailTag.classList.add('highlight')
+    // const emailTag = document.querySelector('#email')
+    // console.log(emailTag)
+    // emailTag.textContent = 'hgd@korea'
+    // emailTag.classList.add('highlight')
 
-    const phoneTag = document.querySelector('#phone')
-    console.log(phoneTag)
-    phoneTag.textContent = '010-1234-1234'
-    phoneTag.classList.add('highlight')
+    // const phoneTag = document.querySelector('#phone')
+    // console.log(phoneTag)
+    // phoneTag.textContent = '010-1234-1234'
+    // phoneTag.classList.add('highlight')
 
-    const imgTag = document.querySelector('img')
-    imgTag.setAttribute('src', 'profile.jpg')
-    imgTag.setAttribute('alt', 'img')
-    imgTag.classList.add('img')
-    console.log(imgTag.getAttribute('src'))
+    // const imgTag = document.querySelector('img')
+    // imgTag.setAttribute('src', 'profile.jpg')
+    // imgTag.setAttribute('alt', 'img')
+    // imgTag.classList.add('img')
+    // console.log(imgTag.getAttribute('src'))
 
-    const bodyTag = document.querySelector('body')
-    bodyTag.classList.add('container')
+    // const bodyTag = document.querySelector('body')
+    // bodyTag.classList.add('container')
     
+    // const h1Tag = document.querySelector('h1')
+    // h1Tag.classList.add('title')
+
+    // const snsTag = document.querySelector('#sns')
+    // snsTag.textContent = 'hgd@sns.com'
+    // snsTag.classList.add('highlight')
+
+    
+    const name = document.querySelector('#name')
+    const job = document.querySelector('#job')
+    const experience = document.querySelector('#experience')
+    const email = document.querySelector('#email')
+    const phone = document.querySelector('#phone')
+
+    name.textContent = '홍길동'
+    job.textContent = '의적'
+    experience.textContent = '서당'
+    email.textContent = 'hgd@korea'
+    phone.textContent = '010-1234-1234'
+
+    const img = document.querySelector('img')
+    img.setAttribute('src', 'profile.jpg')
+    img.setAttribute('alt', '프로필 사진')
+
+    const body = document.querySelector('body')
+    body.classList.add('container')
+    // 아래와 같이도 가능
+    // body.setAttribute('class', 'container')
+
     const h1Tag = document.querySelector('h1')
     h1Tag.classList.add('title')
 
-    const snsTag = document.querySelector('#sns')
-    snsTag.textContent = 'hgd@sns.com'
-    snsTag.classList.add('highlight')
+    img.classList.add('img')
 
     
+    name.classList.add('highlight')
+    job.classList.add('highlight')
+    experience.classList.add('highlight')
+    email.classList.add('highlight')
+    phone.classList.add('highlight')
+    
+    // SNS 생성
+    const sns = document.createElement('p')
+    const sns_highlight = document.createElement('b')
+    sns.textContent = 'SNS : '
+    sns_highlight.textContent = 'hgd@sns.com'
+    sns_highlight.classList.add('highlight')
+    sns.appendChild(sns_highlight)
+    body.appendChild(sns)
+
+
     
   </script>
 </body>

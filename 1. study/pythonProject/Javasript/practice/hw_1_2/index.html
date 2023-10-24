@@ -22,33 +22,51 @@
   <p>이메일: <b id="email">[이메일 주소]</b></p>
   <p>전화번호: <b id="phone">[전화번호]</b></p>
   <script>
-    const nameTag = document.querySelector('#name')
-    console.log(nameTag)
-    nameTag.textContent = '전근렬'
+    // const nameTag = document.querySelector('#name')
+    // console.log(nameTag)
+    // nameTag.textContent = '전근렬'
     
-    const jobTag = document.querySelector('#job')
-    console.log(jobTag)
-    jobTag.textContent = '의적'
+    // const jobTag = document.querySelector('#job')
+    // console.log(jobTag)
+    // jobTag.textContent = '의적'
     
-    const experienceTag = document.querySelector('#experience')
-    console.log(experienceTag)
-    experienceTag.textContent = '서당'
+    // const experienceTag = document.querySelector('#experience')
+    // console.log(experienceTag)
+    // experienceTag.textContent = '서당'
     
-    const emailTag = document.querySelector('#email')
-    console.log(emailTag)
-    emailTag.textContent = 'hgd@korea'
+    // const emailTag = document.querySelector('#email')
+    // console.log(emailTag)
+    // emailTag.textContent = 'hgd@korea'
     
-    const phoneTag = document.querySelector('#phone')
-    console.log(phoneTag)
-    phoneTag.textContent = '010-1234-1234'
+    // const phoneTag = document.querySelector('#phone')
+    // console.log(phoneTag)
+    // phoneTag.textContent = '010-1234-1234'
 
-    const imgTag = document.querySelector('img')
-    imgTag.setAttribute('src', 'profile.jpg')
-    imgTag.setAttribute('alt', 'img')
+    // const imgTag = document.querySelector('img')
+    // imgTag.setAttribute('src', 'profile.jpg')
+    // imgTag.setAttribute('alt', 'img')
 
-    console.log(imgTag.getAttribute('src'))
+    // console.log(imgTag.getAttribute('src'))
 
-    
+    // 교수님처럼 한꺼번에 다 받아오는 것도 나쁘지 않을지도
+    const name = document.querySelector('#name')
+    const job = document.querySelector('#job')
+    const experience = document.querySelector('#experience')
+    const email = document.querySelector('#email')
+    const phone = document.querySelector('#phone')
+
+    name.textContent = '홍길동'
+    job.textContent = '의적'
+    experience.textContent = '서당'
+    email.textContent = 'hgd@korea'
+    phone.textContent = '010-1234-1234'
+
+    const img = document.querySelector('img')
+    img.setAttribute('src', 'profile.jpg')
+    img.setAttribute('alt', '프로필 사진')
+
+
+
   </script>
 </body>
 </html>
