@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const names = ['Alice', 'Bella', 'Cathy',]
+
+    // 일반 함수
+    names.forEach(function (item, index, array) {
+      console.log(`${item} / ${index} / ${array}`)
+    })
+
+    // 화살표 함수(정말 많이 활용 됨)(this를 안 쓰면 위나 아래나 동작 동일)(하지만 보통 콜백 함수를 쓸 때는 화살표를 씀)
+    names.forEach((item, index, array) => {
+      console.log(`${item} / ${index} / ${array}`)
+    })
+  </script>
+</body>
+
+</html>
