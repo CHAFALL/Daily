@@ -13,6 +13,10 @@ def dijkstra(si, sj):
     while Q:
         w, i, j = heapq.heappop(Q)
 
+        # 이미 더 적은 가중치로 방문한 적이 있다면 pass
+        if D[i][j] < w:
+            continue
+
         for k in range(2):
             ni = i + di[k]
             nj = j + dj[k]

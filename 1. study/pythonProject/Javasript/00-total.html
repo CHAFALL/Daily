@@ -26,4 +26,181 @@
   // 스타일 관련
   pTag.style.color = 'red'
   pTag.style.border = '1px solid black'
+
+
+  // if문
+  const name = 'customer'
+
+  if (name==='admin') {
+    console.log('1')
+  } else if (name === 'customer') {
+    console.log('2')
+  } else {
+    console.log('3')
+  }
+
+  // 삼항 연산자
+  const rst = num % 2 ? '홀수' : '짝수'
+    console.log(rst)
+
+  // while
+  let i = 0
+  while (i<6) {
+    console.log(i)
+    i+=1
+  }
+
+  // for
+  for (let i = 0; i < 6; i++) {
+    console.log(i)
+  }
+
+  // for ...in(Object, 딕셔너리 용)
+  const fruits = {
+      a: 'apple',
+      b: 'banana',
+    }
+
+  for (const property in fruits) {
+    console.log(property)
+    console.log(fruits[property])
+  }
+  
+  // for ...of
+  const numbers = [2, 3, 4, 5]
+
+  for (const number of numbers) {
+    console.log(number)
+  }
+
+  // 함수 선언식
+  function add(num1, num2) {
+      return num1 + num2
+    }
+
+  // 함수 표현식
+  const arrow1 = function (name) {
+      return `hello, ${name}`
+    }
+
+  // 화살표 함수
+  const arrow2 = (name) => { return `hello, ${name}` }
+
+
+  // 함수 호출 시 인자 확장 (... 확장 편) (상황에 따라 기능이 바뀜)
+  // 만약에 [1, 2, 3, 4](많은 경우)라면 마지막 인자 버려서 똑같이 6이 나오고,
+  // 만약에 [1,2](적은 경우)라면 NaN이 나오더라
+  function myFunc(x, y, z) {
+      return x + y + z
+    }
+
+    let numbers2 = [1, 2, 3] 
+    console.log(myFunc(...numbers2)) // 6
+
+  // 나머지 매개변수 (가변 인자)(... 압축 편)
+  const myFunc = function (num1, num2, ...restArgs) {
+      return [num1, num2, restArgs]
+    }
+  
+  console.log(myFunc(1, 2, 3, 4, 5)) // [1, 2, [3, 4, 5]]
+  console.log(myFunc(1, 2)) // [1, 2, []]
+
+  // with 전개 구문
+  const obj = { b: 2, c: 3, d: 4 }
+  const newObj = { a: 1, ...obj, e: 5 }
+  console.log(newObj) // {a: 1, b: 2, c: 3, d: 4, e: 5}
+
+
+
+  // 구조 분해 할당
+  // 속성하고 이름이 같으면 알아서 받아준다!
+  //(변수 할당을 하는데 특이하게 중괄호가 있네??)
+  const userInfo = {
+      firstName: 'Alice',
+      userId: 'alice123',
+      email: 'alice123@gmail.com'
+    }
+  
+  const { firstName, userId, email } = userInfo
+
+
+  // 구조 분해 할당 활용 - 함수 매개변수
+  // 함수 호출 시 객체를 구조 분해하여 함수의 매개변수로 전달
+  // 이 시키도 매개변수 칸에 중괄호 있겠지~
+  function printInfo({ name, age, city }) {
+      console.log(`이름: ${name}, 나이: ${age}, 도시: ${city}`)
+    }
+    
+    const person = {
+      name: 'Bob',
+      age: 35,
+      city: 'London',
+    }
+
+    printInfo(person) // '이름: Bob, 나이: 35, 도시: London'
+
+
+  // 유용한 객체 메서드
+  const profile = {
+      name: 'Alice',
+      age: 30,
+    }
+
+  console.log(Object.keys(profile)) // ['name', 'age']
+  console.log(Object.values(profile)) // ['Alice', 30]
+
+
+  // forEach(배열part)
+  const names = ['Alice', 'Bella', 'Cathy',]
+
+  // 일반 함수
+  names.forEach(function (item, index, array) {
+    console.log(`${item} / ${index} / ${array}`)
+  })
+
+  // 화살표 함수(정말 많이 활용 됨)(this를 안 쓰면 위나 아래나 동작 동일)(하지만 보통 콜백 함수를 쓸 때는 화살표를 씀)
+  names.forEach((item, index, array) => {
+    console.log(`${item} / ${index} / ${array}`)
+  })
+
+  // map(배열 part)( forEach와 달리 결과물을 할당(반환)하고 있으므로 return 필요)
+  const numbers3 = [1, 2, 3,]
+  
+  const doubleNumber = numbers3.map((number) => {
+    return number * 2
+  })
+
+  console.log(doubleNumber) // [2, 4, 6]
+
+
+  // filter(배열 part)
+  const products = [
+      {name: 'banana', type:'fruit'},
+      {name: 'apple', type:'fruit'},
+      {name: 'carrot', type:'vegetable'},
+      {name: 'banana', type:'vegetable'},
+    ]
+
+  const fruits2 = products.filter((item) => {
+    return item.type ==='fruit'
+  })
+  console.log(fruits2)
+
+
+  // find(배열 part)(맨 처음에 찾은 놈만 가져온다)
+  const banana = products.find((item) => {
+      return item.name === 'banana'
+    })
+  
+  console.log(banana)
+
+
+  // reduce(배열 part) (초기 값이 있네??), acc=0으로 초기값 된 것임
+  const arr = [1, 2, 3, 4, 5]
+    const result = arr.reduce((acc, item)=> {
+      return acc + item
+    }, 0)
+
+  console.log(result)
+
 </script>
