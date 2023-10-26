@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .blue {
+      color: blue;
+    }
+  </style>
+</head>
+
+<body>
+  <h1></h1>
+  <button id="btn">클릭</button>
+  <input type="text" id="text-input">
+
+  <script>
+    // input 구현
+    // 1. 선택
+    const h1Tag = document.querySelector('h1')
+    const inputTag  = document.querySelector('#text-input')   
+    // 2. 핸들러 장착
+    inputTag.addEventListener('input', function(event){
+      console.log(event.target.value)
+      h1Tag.textContent = event.target.value
+    })
+
+    // click 구현
+    const btn = document.querySelector('#btn')
+    btn.addEventListener('click', function(event){
+    // h1Tag.classList.toggle('blue')
+      if (h1Tag.classList.value){
+        h1Tag.classList.remove('blue')
+      } else {
+        h1Tag.classList.add('blue')
+      }
+    })
+  </script>
+</body>
+
+</html>

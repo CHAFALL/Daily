@@ -43,7 +43,20 @@
       return ans
     }
 
+    const myJoin2 = function(array, separator) {
+      let result = ''
+      for (let i = 0; i < array.length; i++) {
+        result += array[i]
+        // - 는 마지막 인덱스는 제외
+        if (i < array.length - 1) {
+          result += separator
+        }
+      }
+      return result
+    }
+
     console.log(myJoin(['010', '1234', '5678'], '-')) // '010-1234-5678'
+    console.log(myJoin2(['010', '1234', '5678'], '-')) // '010-1234-5678'
 
     /*
       주문을 받아서 주문서를 반환하는 함수 `makeOrder`를 작성하시오.
@@ -56,7 +69,16 @@
       return `menu : ${menu}, size : ${size}`
     }
 
+
+    const makeOrder2 = function(menu, size = 'regular'){
+      return {
+        menu,
+        size,
+      }
+    }
+
     console.log(makeOrder('mocha')) // { menu: 'mocha', size: 'regular' }
+    console.log(makeOrder2('mocha')) // { menu: 'mocha', size: 'regular' }
 
     /*
       - 아래 celsiusToFahrenheit 함수는 섭씨 온도를 화씨 온도로 바꾸는 함수이다.
@@ -66,7 +88,7 @@
     //   return celsius * 9/5 + 32
     // }
     
-    const celsiusToFahrenheit = (celsius) => {return celsius * 9/5 + 32}
+    const celsiusToFahrenheit = (celsius) => { return celsius * 9/5 + 32 }
 
   </script>
 </body>

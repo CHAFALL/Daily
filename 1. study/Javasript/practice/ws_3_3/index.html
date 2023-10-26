@@ -24,6 +24,7 @@
     })
 
 
+
     /*
       길이가 서로 같은 배열 ages와 names를 활용하여 새로운 배열 actors를 완성하시오.
       배열 actors는 age와 name을 키로 가지는 객체들로 구성한다.
@@ -43,6 +44,20 @@
     }
 
     console.log(actors)
+
+
+    // 이렇게도 되는구만
+    const actors2 = ages.map((age, i) => {
+      return {
+        age,
+        name : names[i]
+      }
+    })
+
+    console.log(actors2)
+
+
+
 
     /*
       새롭게 생성한 배열 actors를 순회하여, age가 20 이상인 객체만 모아

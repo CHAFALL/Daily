@@ -36,7 +36,6 @@
     const arr3 = ['sec', 'buds']
 
     text1 = arr1.join(['.'])
-    
 
     arr3.unshift(text1)
 
@@ -47,6 +46,25 @@
     text3 = arr3.join(['/'])
 
     console.log(text3)
+
+    // 뭔가 잘못 빼낌
+    // const homepage = arr1.join('.')
+    // console.log(homepage)
+    
+    // arr3.unshift(homepage)
+    // console.log(homepage)
+
+    // const product = arr2.join('-')
+    // console.log(product)
+
+    // arr3.push(product)
+    // console.log(arr3)
+
+    // const result = arr3.join('/')
+    // console.log(result)
+
+
+
 
     /*
     속력값(distance/time)을 저장하는 배열 speeds를 만드시오.
@@ -77,11 +95,15 @@
     const query = 'java'
 
     const newLanguages = languages.filter(function(text){
-      return text.includes(query)
+      return text.includes(query) // 포함여부 찾아주는 메소드
+    })
+
+    const newLanguages2 = languages.filter((text)=> {
+      return text.includes(query) // 포함여부 찾아주는 메소드
     })
 
     console.log(newLanguages)
-
+    console.log(newLanguages2)
 
     /*
     주어진 accounts 배열에서 balance가 24,000인 사람을 찾으시오.
@@ -98,7 +120,12 @@
       return account.balance === 24000
     })
 
+    const balance24 = accounts.find((item) => {
+      return item.balance === 24000
+    })
+
     console.log(ba24)
+    console.log(balance24)
 
 
   </script>
