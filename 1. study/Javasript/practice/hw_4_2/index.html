@@ -45,11 +45,12 @@
         bodyTag.setAttribute('style', 'background-color:white')
         h1Tag.setAttribute('style', 'color:black')
         pTag.setAttribute('style', 'color:black')
-
+      
+        // 이렇게 하는 것이 나을 듯, 그리고 bodyTag 속성에 바로 넣어도 됨
       } else if (event.target === navyBtn){
-        bodyTag.setAttribute('style', 'background-color:navy')
+        bodyTag.style.backgroundColor = 'navy'
         h1Tag.setAttribute('style', 'color:white')
-        pTag.setAttribute('style', 'color:white')
+        pTag.style.color = 'white'
 
       }
     }
