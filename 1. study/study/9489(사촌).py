@@ -8,7 +8,7 @@ while True:
     pre_cnt = 1
     arr_cnt = 0 # 현재 연속된 배열 덩어리 수
     cnt = 0
-    arr_list=[]
+    arr_total = 0
     for i in range(2, n): # 첫 놈 빼고, 연속되었는지 check
         if temp[i] == temp[i - 1] + 1:
             cnt += 1
@@ -18,11 +18,11 @@ while True:
                 pre_cnt = cnt
 
             else:
-               arr_list.append(cnt)
+               arr_total += cnt
 
             cnt = 0
 
-    # arr_list 초기화도 시켜줘야 되는데..
+
 
 
 
