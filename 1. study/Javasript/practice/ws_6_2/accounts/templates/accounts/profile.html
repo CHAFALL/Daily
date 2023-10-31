@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ person.username }}님의 프로필</h1>
+
+{% with followings=person.followings.all followers=person.followers.all %}
+  <div>
+    <div>
+      팔로잉 : {{ followings|length }} / 팔로워 : {{ followers|length }}
+    </div>
+    {% if request.user != person %}
+      <div>
+        <form id="follow-form" data-user-id="{{ person.pk }}">
+          {% csrf_token %}
+          {% if user in followers %}
+            <button>언팔로우</button>
+          {% else %}
+            <button>팔로우</button>
+          {% endif %}
+        </form>
+      </div>
+    {% endif %}
+  </div>
+{% endwith %}
+{% endblock %}
+{% block script %}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    //  선택
+    const formTag = document.querySelector('#follow-form')
+    const userId = formTag.dataset.userId
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+    formTag.addEventListener('submit', function(event){
+      // 기본 동작 취소
+      event.preventDefault()
+      axios({
+        method : 'post',
+        url : `/accounts/${userId}/follow/`,
+        headers: {'X-CSRFToken': csrftoken},
+      })
+        .then((res)=>{
+          console.log(res.data)
+        })
+    })
+  </script>
+{% endblock script %}

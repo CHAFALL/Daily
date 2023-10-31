@@ -24,13 +24,12 @@
     const API_URI = 'https://dog.ceo/api/breeds/image/random'
     
     function getDog () {
+      // 메소드 get으로 바로 받아올때는 아래와 같이 써도 됨
       axios.get(API_URI)
       .then(res => {console.log(res)
       const imgUrl = res.data.message
       return imgUrl
-      
       })
-
       .then((res)=> {
         const imgTag = document.querySelector('img')
         imgTag.setAttribute('src', res)
@@ -42,7 +41,7 @@
         console.log(err)
       })
     }
-
+    // 굳이 나처럼 then 2번 안 쪼개도 됨.
     const button = document.querySelector('button')
     button.addEventListener('click', getDog)
   </script>
