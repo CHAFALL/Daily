@@ -9,6 +9,9 @@ const forms = document.querySelectorAll('.like-form')
 forms.forEach(function (form) {
   form.addEventListener('submit', function (event) {
     event.preventDefault()
+    
+    {% comment %} 여기서 event.target 대신에 form이나 this, currentTarget을 써도 됨 {% endcomment %}
+
     const articleId = event.target.dataset.articleId
 		//...//
     })
@@ -17,4 +20,8 @@ forms.forEach(function (form) {
 {% endblock %}
 
 
-<!-- (a) <form class="like-form" data-article-id="{{article.pk}}"></form> -->
+{% comment %} (a) 
+<form class="like-form" data-article-id="{{article.pk}}">
+  {% csrf_token %}
+  <button>좋아요</button>
+</form>  {% endcomment %}

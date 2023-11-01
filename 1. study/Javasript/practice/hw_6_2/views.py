@@ -15,6 +15,7 @@ def likes(request, article_pk):
             liked = True
             
         like_status = {
+            # 구조분해할당 편하게 하라고 이렇게 변수명 함
             'liked': liked, 
             'likeCount': article.like_users.count(),
         }
