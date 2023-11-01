@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>{{ greeting }}</h1>
+    <button @click="count++">{{ count }}</button>
+    <p>{{ count }}</p>
+    <h3>{{ count }}</h3>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    // vue라고 하는 객체의 createApp이라는 속성 값을 createApp라는 변수에 할당
+    const { createApp, ref } = Vue
+
+
+    const app = createApp({
+      setup(){
+        const count = ref(0)
+        const greeting = ref('Hello')
+        return {
+          count,
+          greeting
+        }
+      }
+    })
+    // 단축 메서드 한 것임 그냥
+    // const app = createApp({
+    //   setup : function () {
+
+    //   }
+    // })
+    
+    // mount: 어딘가에 탑재하다, 연결하다의 의미를 가지고 있음
+    app.mount('#app') //const app을 id가 app인 버튼에 탑재하겠다.
+
+  </script>
+</body>
+
+</html>

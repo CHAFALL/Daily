@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1> {{ message }} </h1>
+    <h2>{{ arr[2] }}</h2>
+    <button @click="increment">{{ count }}</button>
+    <button @click="cal_avg">{{ avg }}</button>
+  </div>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp, ref } = Vue
+    const app = createApp({
+      setup() {
+        const count = ref(0) // 선언
+        const message = ref('hello')
+        const arr = ref([1, 2, 3])
+        // 평균값을 구해보자구
+        const avg = ref(0)
+        const cal_avg = function () {
+          const sum = arr.value.reduce((acc, score)=>{
+            return acc + score
+          }, 0)
+          avg.value = sum / arr.value.length
+        }
+        const increment = function(){
+          count.value++
+        }
+        return {              // 반환
+          count,
+          message,
+          arr,
+          increment,
+          avg,
+          cal_avg
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+
+</html>
