@@ -12,7 +12,7 @@
     <button @click="cal_average">평균 점수 계산</button>
     <hr>
     <p>전체 점수 목록 : {{scores}}</p>
-    <p>방학 여부 : {{is_vacation}}</p>
+    <p>방학 여부 : {{is_vacation.status}}</p>
   </div>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script>
@@ -30,28 +30,56 @@
       4. cal_average 함수를 정의하고, `평균 점수 계산` 버튼을 클릭하면 함수가 작동하도록 한다.
         - cal_average 함수는 scores 배열에 담긴 정수의 평균 값을 avgScore에 할당한다.
     */
+    // const {createApp, ref} = Vue
+    // const app = createApp({
+    //   setup(){
+    //     const title = ref('점수표')
+    //     const avgScore = ref(null)
+    //     const scores = ref([10, 20, 30, 40, 50])
+    //     const is_vacation = ref({status : false})
+    //     const cal_average = function (){
+    //       const sum = scores.value.reduce((acc, score)=>{
+    //         return acc + score
+    //       }, 0)
+    //       avgScore.value = sum / scores.value.length
+    //     }
+    //     return{
+    //       title,
+    //       avgScore,
+    //       scores,
+    //       is_vacation,
+    //       cal_average
+    //     }
+    //   }
+    // }) 
+    // app.mount('#app')
+
     const {createApp, ref} = Vue
     const app = createApp({
-      setup(){
+      setup() {
         const title = ref('점수표')
         const avgScore = ref(null)
         const scores = ref([10, 20, 30, 40, 50])
-        const is_vacation = ref(false)
-        const cal_average = function (){
+        const is_vacation = ref({status : true})
+        const cal_average = function () {
           const sum = scores.value.reduce((acc, score)=>{
             return acc + score
-          }, 0)
+          }, 0) 
           avgScore.value = sum / scores.value.length
+          // 만약 초기값을 생략한다면, 첫번째 놈이 들어감.forEach를 제외하곤 대부분 리턴값이 있음
+          // 조심할 점: acc += score로 착각하기 쉬움
         }
-        return{
+        return {
           title,
           avgScore,
           scores,
           is_vacation,
           cal_average
         }
+      
       }
-    }) 
+
+    })
     app.mount('#app')
   </script>
 </body>
