@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Community</h1>
+  <hr>
+  {% for review in reviews %}
+    <p>작성자 : <a href="{% url 'accounts:profile' review.user.username %}">{{ review.user }}</a></p>
+    <p>글 번호: {{ review.pk }}</p>
+    <p>글 제목: {{ review.title }}</p>
+    <p>글 내용: {{ review.content }}</p>
+    <form class='likes-forms' data-review-id="{{ review.pk }}">
+      {% csrf_token %}
+      {% if user in review.like_users.all %}
+        <button id="like-{{ review.pk }}">좋아요 취소</button>
+      {% else %}
+        <button id="like-{{ review.pk }}">좋아요</button>
+      {% endif %}
+    </form>
+    <p>
+      <span id="like-count-{{ review.pk }}">{{ review.like_users.all|length }}</span> 명이 이 글을 좋아합니다.
+    </p>
+    <a href="{% url 'community:detail' review.pk %}">[detail]</a>
+    <hr>
+  {% endfor %}
+{% endblock %}
+{% block script %}
+  <script>
+    const formTags = document.querySelectorAll('.likes-forms')
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+    formTags.forEach((formTag)=>{
+      formTag.addEventListener('submit', function(event){
+        event.preventDefault()
+        
+        const reviewId = formTag.dataset.reviewId
+
+        axios({
+          url:`/community/${reviewId}/like/`,
+          method:'post',
+          headers: {'X-CSRFToken': csrftoken},
+        })
+          .then((res)=>{
+            console.log(res.data.isLiked)
+            const isLiked = res.data.isLiked
+            const likeCount = res.data.likeCount
+            const likeBtn = document.querySelector(`#like-${reviewId}`)
+            const likeCountTag = document.querySelector(`#like-count-${reviewId}`)
+            
+            if (isLiked===true){
+              likeBtn.innerText = '좋아요 취소'
+            } else {
+              likeBtn.innerText = '좋아요'
+            }
+            likeCountTag.textContent = likeCount
+          })
+          .catch((err)=>{
+            console.log(err)
+          })
+
+
+      })
+    })
+  </script>
+{% endblock script %}
+
+
+
+

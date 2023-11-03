@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<p>제목 : {{movie.title}}</p>
+<p>발매일 : {{movie.release_date}}</p>
+<p>인기도 : {{movie.popularity}}</p>
+<p>추천 수 : {{movie.vote_count}}</p>
+<p>추천 평균 : {{movie.vote_average}}</p>
+<p>줄거리 : {{movie.overview}}</p>
+<img src="{{movie.poster_path}}" alt="영화사진">
+<p>장르 : {{movie.genres}}</p>
+
+{% endblock %}
