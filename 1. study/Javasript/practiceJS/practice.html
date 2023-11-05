@@ -1,0 +1,288 @@
+<script>
+  // document.querySelector()
+  // document.querySelectorAll()
+  // element.classList.add()
+  // element.classList.remove()
+  // element.classList.toggle()
+  // element.getAttribute()
+  // element.setAttribute(name, value)
+  // element.removeAttribute()
+  // element.textContent
+  // document.createElement(tagName)
+  // node.appendChild()
+  // node.removeChild()
+  // element.style.property
+
+  // // String(문자열) - '+' 인자를 통해 문자열끼리 결합 가능
+
+  // y=x++
+  // y=x
+  // x+=1
+
+  // b=++a
+  // a+=1
+  // b=a
+
+  // person > 17 ? 'Yes' : 'No'
+
+
+  let i = 0
+  while (i < 6) {
+    console.log(i)
+    i++
+  }
+
+
+  for (let i = 0; i < 6; i++) {
+    console.log(i)
+  }
+
+  // 내부적으로 for...in은 배열의 반복자 대신 속성 열거를 사용하기 때문에 특정 순서에 따라 인덱스를 반환하는 것을 보장 x (Object에서만 쓰도록 하자)
+  const fruits = {
+    a : 'apple',
+    b : 'banana'
+  }
+  for (const fruit in fruits) {
+    console.log(fruit) // a, b (속성 값)
+    console.log(fruits[fruit]) // apple, banana
+  }
+
+
+  const numbers = [3, 4, 5, 6]
+  for (const number of numbers){
+    console.log(number) // 3, 4, 5, 6
+  }
+
+
+  // for ...in 과 for ...of는 재할당이 아니라, 매 반복마다 다른 속성 이름이 변수에 지정되는 것이므로 const를 사용해도 에러가 발생 x
+
+  // 호이스팅이란??
+  // 변수를 선언 이전에 참조할 수 있는 현상으로 변수의 값은 꼭대기로 끌어올리지 않고 선언만 꼭대기로 끌어올리는 것. 
+
+
+
+  // 함수 선언식
+  function add (num1, num2) {
+    return num1 + num2
+  }
+
+  console.log(add(1, 2))  // 3
+
+  // 함수 표현식 (선언식과 달리 호이스팅 되지 않음(GOOD), 즉 함수 정의 전에 먼저 사용 불가.)
+  const add2 = function (num1, num2) {
+    return num1 + num2
+  }
+
+  console.log(add2(1, 2)) // 3
+
+  // 화살표 함수
+  const add3 = (num1, num2) => {
+    return num1 + num2
+  } 
+
+  // 심화편(Object) - object는 중괄호가 있는데 중괄호를 없애고 싶다.. 그러면 소괄호로 감싸기라도 해!!
+  const returnObject = _ => ({key : 'value'})
+
+  console.log(add3(1, 2)) // 3
+
+  // 나머지 매개 변수 (JS는 튜플이 아닌 배열로 허용..)
+  const myFunc = function (p1, p2, ...restP) {
+    return {p1, p2, restP}
+  }
+
+  console.log(myFunc(1, 2, 3, 4, 5)) // {1, 2, [3, 4, 5]}
+  console.log(myFunc(1, 2)) // {1, 2, []}
+
+
+  // 전개 구문 활용(중요!!)
+  const myFunc2 = function (x, y, z) {
+    return x + y + z
+  }
+
+
+  let numbers2 = [1, 2, 3, 4, 5]
+  let numbers3 = [1, 2]
+  console.log(myFunc2(...numbers2)) // 6
+  console.log(myFunc2(...numbers3)) // NaN
+
+
+  // 객체 구조 (함수 부분 잘 볼 것!!)
+  const user = {
+    name : 'Alice',
+    'key with space' : true,
+    greeting : function () {
+      return `Hello my name is ${this.name}`
+    }
+  }
+
+  console.log(user.name)
+  console.log(user['name']) // 주의사항!! 따옴표 꼭 넣으래이!!
+  console.log(user['key with space']) // 띄어쓰기 있으면 대괄호만 됨.
+  console.log('greeting' in user) // 'in'연산자, boolean값으로 나옴.
+  console.log(user.greeting()) // 함수니깐 괄호 필수!!, 함수는 키로 접근 불가.
+
+
+  //객체에 추가, 수정, 삭제 가능
+  user.address = 'korea'
+  console.log(user.address)
+  delete user.address // 혹시모르니..
+  console.log(user.address)
+
+  // this part 좀 더 찾아볼 것!!!
+
+  // 참고(단축 속성)
+  const name = 'Alice'
+  const age = 30
+
+  const user2 = {
+    name,
+    age,
+  }
+
+  // 참고(단축 메서드)
+  const myObj = {
+    myFunc() {
+      return 'Hello'
+    }
+  }
+
+  //참고(계산된 속성)
+
+  const product = prompt('물건 이름을 입력해라!') // 혹시 모르니
+  const prefix = 'my'
+  const suffix = 'property'
+
+  const bag = {
+    [product]: 5,
+    [prefix + suffix]: 'value',
+  }
+
+  console.log(bag) // {연필:5, myproperty: 'value'}
+
+  // 구조 분해 할당(매우 중요!!)
+  const userInfo={
+    firstName : 'Alice',
+    userId : 'alice123'
+  }
+
+  const {firstName, userId} = userInfo
+  console.log(firstName, userId) // 속성과 이름이 같아야지만 알아서 받아준다.
+
+  // 구조 분해 할당 활용
+  function printInfo ({name, age, city}) {
+    console.log(`이름: ${name}, 나이: ${age}, 도시: ${city}`)
+  }
+
+  const person = {
+    name:'Bob',
+    age:35,
+    city:'London',
+  }
+
+  printInfo(person) // 이름: Bob, 나이: 35, 도시: London
+
+  // 참고(유용한 객체 메서드)
+  const profile = {
+    name : 'Alice',
+    age:30,
+  }
+
+  console.log(Object.keys(profile)) // ['name', 'age']
+  console.log(Object.values(profile)) // ['Alice', 30]
+
+  // 참고(?.) : 속성이 없는 중첩 객체를 에러없이 접근, 에러 대신에 undefined를 반환.
+
+  // 혹시 몰라서... Object <-> Json변환하기
+  // Object - > JSON
+  //.stringify (반환값 필요)
+  // JSON - > Object
+  // .parse (반환값 필요)
+
+  // 참고(new 연산자)
+
+  // 배열 메서드
+  // .pop() : 배열 끝 요소 제거 후 반환
+  // .push() : 배열 끝에 요소 추가
+  // .shift() : 배열 앞 요소를 제거하고 , 제거한 요소를 반환
+  // .unshift() : 배열 앞 요소를 추가
+
+
+  // forEach
+  const names = ['Alice', 'Bella', 'Cathy']
+  names.forEach((item, index, array) => {
+    console.log(`${item} / ${index} / ${array}`)
+  })
+
+  const numbers4 = [1, 2, 3, 4]  
+  const callBackFunc = (num) => {
+    console.log(num ** 2)
+  }
+  
+  numbers4.forEach(callBackFunc)
+
+  // map
+
+  const numbers5 = [1, 2, 3, 4, 5]  
+  
+  const callBackFunc2 = (num) => {
+    return num ** 2 // map은 리턴값 필수!!
+  }
+
+  const doubleNum = numbers5.map(callBackFunc2) // 할당도 필수.
+
+  console.log(doubleNum) // [1, 4, 9, 16, 25]
+
+
+  
+
+  // Array Helper Method 추가
+  const products = [
+    {name: 'banana', type:'fruit'},
+    {name: 'apple', type:'fruit'},
+    {name: 'carrot', type:'vegetable'},
+    {name: 'banana', type:'vegetable'},
+  ]
+
+  //filter
+  const fruits2 = products.filter((fruit)=>{
+    return fruit.type === 'fruit'
+  })
+
+  console.log(fruits2)
+
+  // find(맨 처음에 찾은 놈만 가져옴)
+  const banana = products.find((item) => {
+      return item.name === 'banana'
+    })
+    console.log(banana)
+
+    // reduce
+    const arr = [1, 2, 3, 4, 5]
+    const result = arr.reduce((acc, item)=> {
+      return acc + item
+    }, 0)
+
+    console.log(result)
+  
+  
+  //btn.addEventListener(type, handler) // 주의사항 addEventListener를 화살표 함수로 쓰면 안된다. 왜냐하면, 화살표 함수는 자신만의 This를 가지지 못해서 addEventLister가 강제 시키지 못함...(this 안 쓸꺼면 뭐.. 알아서.)
+
+
+  // target : 찐
+  // currentTarget = this
+  // 버블링 : 
+  // 한 요소에 이벤트가 발생하면, 이 요소에 할당된 핸들러가 동작하고, 이어서 부모 요소의 핸들러가 동작하는 현상
+  // 가장 최상단의 조상 요소를 만날 때까지 이 과정이 반복되면서 요소 각각에 할당된 핸들러가 동작 
+  // 버블링 덕분에 하위 요소 전부에다가 event handler를 달아주지 않아도 됨.
+
+  // 이벤트 관련 part는 실습문제로...
+
+  // lodash
+
+  // 이벤트 기본 동작 취소
+  // .preventDefault()
+
+  // Axios란? 서버와의 HTTP 요청과 응답을 간편하게 처리할 수 있도록 도와주는 도구, 브라우저에서 비동기로 데이터 통신을 가능하게 하는 라이브러리
+  
+  // Ajax란? JS의 비동기 구조와 XML 객체를 활용해 비동기적으로 서버와 통신하여 웹 페이지의 일부분만을 업데이트하는 웹 개발 기술
+</script>
