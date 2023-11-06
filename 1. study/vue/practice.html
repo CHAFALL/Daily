@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <!-- 1. Raw HTML -->
+    <div v-html="rawHtml"></div>
+    <!-- 2. Attribute Bindings -->
+    <div :id="dynamicId"></div>
+    <a :href="myUrl">Link</a>
+    <img :src="imageSrc">
+    <!-- 3. Binding HTML Classes - Binding to Objects -->
+    <div :class="{active: isActive, 'text-primary': hasInfo}">Text</div>
+    <!-- 객체로 위의 것 구현하기 -->
+    <div :class="classObj">Text</div>
+    <!-- 4. Binding HTML Classes - Binding to Arrays -->
+    <div :class="[activeClass, infoClass]">Text</div>
+    <!-- 5. Binding Inline Styles - Binding to Objects -->
+    <div :style="{ color:activeColor, fontSize:fontSize+'px' }">Text</div>
+    <!-- 객체로 위의 것 구현하기 -->
+    <div :style="styleObj">Text</div>
+    <!-- 6. Binding Inline Styles - Binding to Arrays -->
+    <div :style="[styleObj, styleObj2]">Text</div>
+    <!-- 7. Inline handlers -->
+    <button @click="count++">Add 1</button>
+    <p>Count: {{ count }}</p>
+    <!-- 8. Method Handlers -->
+    <button @click="myFunc"> Hello </button>
+    <!-- 9. Event Modifiers -->
+    <!-- 순서 탐 -->
+    <form @submit.stop.prevent="onLink">...</form>
+    <!-- 10. Key Modifiers -->
+    <input @keyup.enter="onSubmit">
+    <!-- 11. v - bind 와 v - on을 함께 사용(양방향) -->
+    <p>{{ inputText1 }}</p>
+    <input :value="inputText1" @input="onInput">
+    <!-- 12. v-model -->
+    <p>{{ inputText2 }}</p>
+    <input v-model="inputText2">
+    <!-- 13. v-model 활용(Checkbox) -->
+    <input type="checkbox" id="checkbox" v-model="checked">
+    <label for="checkbox">{{ checked }}</label>
+    <!-- 14. v-model 활용(여러 Checkbox) -->
+    <div>checked names : {{ checkedNames }}</div>
+    
+    <input type="checkbox" id="alice" value="Alice" v-model="checkedNames">
+    <label for="alice">Alice</label>
+    
+    <input type="checkbox" id="bella" value="Bella" v-model="checkedNames">
+    <label for="bella">Bella</label>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    // 기본 틀
+    const {createApp, ref} = Vue
+    const app = createApp({
+      setup () {
+        // 1. Raw HTML
+        const rawHtml = ref('<span style="color : red">This should be red.</span>')
+        // 2. Attribute Bindings
+        const dynamicId = ref('my-id')
+        const myUrl = ref('https://www.google.co.kr/')
+        const imageSrc = ref('https://picsum.photos/200')
+        // 3. Binding HTML Classes - Binding to Objects
+        const isActive = ref(false)
+        const hasInfo = ref(true)
+        // 객체로 위의 것 구현하기
+        // ref은 반응 객체의 속성으로 액세스되거나 변경될 때 자동으로 unwrap
+        const classObj = ref({
+          active : isActive,
+          'text-primary' : hasInfo
+        })
+        // 4. Binding HTML Classes - Binding to Arrays
+        const activeClass = ref('active')
+        const infoClass = ref('text-primary')
+        // 5. Binding Inline Styles - Binding to Objects
+        const activeColor = ref('crimson')
+        const fontSize = ref(50)
+        // 객체로 위의 것 구현하기
+        const styleObj = ref({
+          color:activeColor,
+          fontSize:fontSize.value + 'pk'
+        })
+        // 6. Binding Inline Styles - Binding to Arrays
+        const styleObj2 = ref({
+          color : 'blue',
+          border : '1px solid black'
+        })
+        // 7. Inline handlers(잘 안씀)
+        const count = ref(0)
+        // 8. Method Handlers
+        const name = ref('Alice')
+        const myFunc = function (event) {
+          console.log(event)
+          console.log(event.currentTarget)
+          console.log(`Hello ${name.value}!`)
+        }
+        // 11. v - bind 와 v - on을 함께 사용(양방향)
+        const inputText1 = ref('')
+        const onInput = function (event) {
+          inputText1.value = event.currentTarget.value
+        }
+        // 12. v-model
+        const inputText2 = ref('')
+        // 13. v-model 활용(Checkbox)
+        const checked = ref(false)
+        // 14. v-model 활용(여러 Checkbox)
+        const checkedNames = ref([])
+
+
+        return {
+          rawHtml,
+          dynamicId,
+          myUrl,
+          imageSrc,
+          isActive,
+          hasInfo,
+          classObj,
+          activeClass,
+          infoClass,
+          activeColor,
+          fontSize,
+          styleObj,
+          styleObj2,
+          count,
+          name,
+          myFunc,
+          inputText1,
+          onInput,
+          inputText2,
+          checked,
+          checkedNames,
+        }
+      }
+    })
+      app.mount('#app')
+    
+    // Raw HTML
+  </script>
+</body>
+</html>
+
+
+
