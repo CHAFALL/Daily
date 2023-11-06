@@ -52,12 +52,32 @@
     
     <input type="checkbox" id="bella" value="Bella" v-model="checkedNames">
     <label for="bella">Bella</label>
+
+    <!-- 15.computed -->
+    <h2>남은 할 일</h2>
+    <p>{{ restOfTodos }}</p>
+    <!-- 16. v-if -->
+    <!-- else if도 있음 -->
+    <p v-if="isSeen">true일때 보여요</p>
+    <p v-else>false일때 보여요</p>
+    <button @click="isSeen = !isSeen">토글</button>
+    <!-- 17. template -->
+    <template v-if="isSeen">
+      <div>보이니?</div>
+    </template>
+    <!-- 18. v-show -->
+    <div v-show="isShow">v-show</div>
+    <!-- 19. v-for -->
+    <!-- 배열 반복 -->
+    <div v-for="(item, index) in myArr">
+      {{item}} / {{index}}
+    </div>
   </div>
 
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script>
     // 기본 틀
-    const {createApp, ref} = Vue
+    const {createApp, ref, computed} = Vue
     const app = createApp({
       setup () {
         // 1. Raw HTML
@@ -111,6 +131,20 @@
         const checked = ref(false)
         // 14. v-model 활용(여러 Checkbox)
         const checkedNames = ref([])
+        // 15. computed
+        const restOfTodos = computed(()=>{
+          return todos.value.length > 0 ? '아직 남았다' : '퇴근!'
+        })
+        // 16. v-if
+        const isSeen = ref(true)
+        // 18. v-show (항상 렌더링, 가시성만.)
+        const isShow = ref(false)
+        // 19. v-for
+        // 배열 반복
+        const myArr = ref([
+          {name: 'Alice', age:20},
+          {name: 'Bella', age:21},
+        ])
 
 
         return {
