@@ -67,17 +67,52 @@
     </template>
     <!-- 18. v-show -->
     <div v-show="isShow">v-show</div>
-    <!-- 19. v-for -->
+    <!-- 19. v-for (key 달아줘...) -->
     <!-- 배열 반복 -->
     <div v-for="(item, index) in myArr">
-      {{item}} / {{index}}
+      {{item.name}} / {{index}}
     </div>
+    <!-- 객체 반복 -->
+    <div v-for="(value, key, index) in myObj">
+      {{value}} / {{key}} / {{index}}
+    <!-- 중첩된 v-for -->
+    <!-- 각 v-for 범위는 상위 범위에 접근 가능 -->
+    <ul v-for="item in myInfo">
+      <li v-for="friend in item.friends">
+        {{ item.name }} - {{ friend }}
+      </li>
+    </ul>
+    <!-- 20. v-for와 v-if 해결법 -->
+    <!-- v-if가 항상 v-for 보다 먼저 발동해서 변수에 접근 불가 -->
+    <!-- computed를 이용해서 해결 -->
+    <ul>
+      <li v-for="todo in completeTodos" :key="todo.id">
+        {{todo.name}}
+      </li>
+    </ul>
+    </div>
+    <!-- v-for와 template 요소를 사용하여 v-if를 이동하여 해결 -->
+    <ul>
+      <template v-for="todo in todos" :key="todo.id">
+        <li v-if="!todo.isComplete">
+          {{ todo.name }}
+        </li>
+      </template>
+    </ul>
+    <!-- 21. watch(computed와 유사한데 목적이 다름) -->
+    <button @click="count2++">Add 1</button>
+    <p>count: {{ count2 }}</p>
+    <!-- 22. Lifecycle Hooks -->
+    <!-- onUpdated -->
+    <button @click="count3++">Add 1</button>
+    <p>Count : {{ count3 }}</p>
+    <p> {{ message }}</p>
   </div>
 
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script>
     // 기본 틀
-    const {createApp, ref, computed} = Vue
+    const {createApp, ref, computed, watch, onMounted, onUpdated } = Vue
     const app = createApp({
       setup () {
         // 1. Raw HTML
@@ -145,7 +180,50 @@
           {name: 'Alice', age:20},
           {name: 'Bella', age:21},
         ])
+        // 객체 반복
+        const myObj = ref({
+          name: 'Cathy',
+          age: 30
+        })
+        // 중첩된 v-for
+        const myInfo = ref([
+          {name:'Alice', age: 20, friends: ['Bella', 'Cathy', 'Dan']},
+          {name:'Bella', age: 22, friends: ['Alice', 'Cathy']}
 
+        ])
+        // 20. v-for와 v-if 해결법
+        // computed를 이용해서 해결
+
+        let id = 0
+
+        const todos = ref([
+          {id : id++, name: '복습', isComplete: true},
+          {id : id++, name: '예습', isComplete: false},
+          {id : id++, name: '저녁식사', isComplete: true},
+          {id : id++, name: '노래방', isComplete: true}
+        ])
+
+
+        const completeTodos = computed(()=>{
+          return todos.value.filter((todo) => !todo.isComplete)
+        })
+        // 21. watch
+        const count2 = ref(0)
+
+        const countWatch = watch(count, (newValue, oldValue)=>{
+          console.log(`newValue: ${newValue}, oldValue: ${oldValue}`)
+        })
+        // 22. Lifecycle Hooks
+        // onMounted
+          onMounted(() =>{
+            console.log('mounted')
+          })
+        // onUpdated
+        const count3 = ref(0)
+        const message = ref(null)
+        onUpdated(()=>{
+          message.value = 'updated!'
+        })
 
         return {
           rawHtml,
@@ -169,6 +247,23 @@
           inputText2,
           checked,
           checkedNames,
+          restOfTodos,
+          isSeen,
+          isShow,
+          myArr,
+          myObj,
+          myInfo,
+          todos,
+          completeTodos,
+          count2,
+
+
+
+
+
+
+
+
         }
       }
     })
