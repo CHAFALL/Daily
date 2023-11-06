@@ -16,3 +16,8 @@ arr2 = [list(map(int, input())) for _ in range(N)]
 
 for i in range(N - 2):
     for j in range(M - 2):
+
+
+# 같은 곳은 두번 이상 뒤집는 것은 의미 없으니깐
+# 뒤집을지 말지만 판단 해주면 될 듯.
+# 뒤집을 때마다 카운트

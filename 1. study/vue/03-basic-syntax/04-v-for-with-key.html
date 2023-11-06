@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- Maintaining State with key -->
+    <!-- 이렇게 key를 붙어준다고 눈으로 봤을 때 차이 x -->
+    <!-- 다만 Vue의 내부적으로 item에게 이 key를 붙임. -->
+    <!-- 그래서 내부적인 리스트 렌더링의 동작에 일관성을 유지하겠다. -->
+    <div v-for="item in items" :key="item.id">
+      <!-- content -->
+      {{ item }}
+    </div>
+  </div>
+
+    <!-- 아래와 같이 하면 안될까?? 안됨..., 인덱스는 요소가 지워줘도 유지가 되어 다른 것에 대한 식별자로 사용됨. -->
+    <!-- 따라서 배열에서 인덱스를 키로 사용하면 안됨 -->
+    <div v-for="(index,item) in items" :key="index">
+      <!-- content -->
+      {{ item }}
+    </div>
+  </div>
+
+
+  
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp, ref } = Vue
+
+    const app = createApp({
+      setup() {
+        let id = 0
+
+        const items = ref([
+          // 키의 역할을 해줄 수 있는 id를 가지도록 해둠.
+          { id: id++, name: 'Alice' },
+          { id: id++, name: 'Bella' },
+        ])
+
+        return {
+          items,
+        }
+      }
+    })
+
+    app.mount('#app')
+  </script>
+</body>
+
+</html>

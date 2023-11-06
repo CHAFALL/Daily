@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <button @click="count++">Add 1</button>
+    <p>Count: {{ count }}</p>
+    <p>{{ message }}</p>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp, ref, onMounted, onUpdated } = Vue
+
+    const app = createApp({
+      setup() {
+        const count = ref(0)
+        const message = ref(null)
+
+        // onMounted의 타이밍은 app이 템플릿에 mount 되었을 때의 타이밍이다.(앱이 템플릿에 연결이 될 때.)
+        onMounted(()=>{
+          console.log('mounted')
+        })
+
+        // Dom이 수정되었을 때 실행됨
+        onUpdated(()=>{
+          message.value = 'updated~!'
+        })
+
+        return {
+          count,
+          message
+        }
+      },
+    })
+
+    app.mount('#app')
+
+  </script>
+</body>
+
+</html>
