@@ -31,6 +31,8 @@
         :key="info.name" 
         :class="{cheap: info.price <= 5000, expensive: info.price >= 20000 }"
       >
+      <!-- 위를 보면 해당부분도 표현식이 들어가도 되네?? -->
+
         <h3>{{info.name}} </h3>
         <p>{{info.place}}</p>
         <p>가격 : {{info.price}}</p>
@@ -79,8 +81,8 @@
 				15000
 				전시 종료
     */
-    const {createApp, ref, computed } = Vue
-   const app = createApp({
+  const {createApp, ref, computed } = Vue
+  const app = createApp({
     setup(){
 
       const infos = ref([
@@ -129,9 +131,7 @@
           return infos.value
         }
         
-        
       })
-
       const isActive = ref(false)
 
       return {

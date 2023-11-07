@@ -9,7 +9,8 @@
   <div id="app">
     <h1>조건문 연습하기</h1>
     <button @click="isLogin = !isLogin">Login/Logout</button>
-    <ul v-if="isLogin===true">
+    <!-- <ul v-if="isLogin===true"> -->
+    <ul v-show="isLogin">
       <li>유저네임 : {{ userObj.userName }} </li>
       <li>관리자여부 : {{ userObj.isAdmin }} </li>
       <li>비밀번호 : {{ userObj.passWord }} </li>
@@ -34,6 +35,11 @@
       setup(){
 
         const isLogin = ref(false)
+        
+        // const onLogin = (()=>{
+        //   isLogin.value = !isLogin.value
+        // }) 
+        
         const userObj = ref({
           userName : `admin`,
           isAdmin : true,
@@ -51,3 +57,4 @@
   </script>
 </body>
 </html>
+

@@ -34,6 +34,7 @@
   <div id="app">
     <h1>글꼴 테스트기</h1>
     <ul>
+      <!-- li 요소를 반복하겠다. -->
       <li v-for="font in fonts" :key="font.style">
         <label for="글꼴 이름"> {{ font.style }} 테스트</label>
         <input type="text" id="글꼴 이름" v-model="font.text">
