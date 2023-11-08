@@ -30,3 +30,25 @@ visited = [0] * (B + 1)
 print(bfs(A))
 
 #------------------------------------------------------------
+from collections import deque
+
+def bfs(v):
+    Q = deque([(v, 1)])
+
+    while Q:
+        v, cnt = Q.popleft()
+        # 하고 싶은 일
+        if v == B:
+            return cnt
+
+        if v * 2 <= B:
+            Q.append((v * 2, cnt + 1))
+
+        if v * 10 + 1 <= B:
+            Q.append((v * 10 + 1, cnt + 1))
+
+    return -1
+
+A, B = map(int, input().split())
+
+print(bfs(A))

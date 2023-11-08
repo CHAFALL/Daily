@@ -2,6 +2,7 @@
   <div>
     <h1> 가수 목록 </h1>
     <SingerDetail/>
+    <SingerDetail/>
   </div>
 </template>
 
