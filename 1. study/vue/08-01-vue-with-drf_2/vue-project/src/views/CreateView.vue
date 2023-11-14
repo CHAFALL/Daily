@@ -26,6 +26,7 @@ const createArticle = function(){
   axios({
     method: 'post',
     url: `${store.API_URL}/api/v1/articles/`,
+    // 여기서 왜 data인가?? axios로 확인해보면 암!
     data: {
       title: title.value,
       content:content.value,
