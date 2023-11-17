@@ -17,7 +17,6 @@ export const useCounterStore = defineStore('counter', () => {
   })
 
 
-
   // DRF에 article 조회 요청을 보내는 action
   const getArticles = function () {
     axios({
