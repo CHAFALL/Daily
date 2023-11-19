@@ -4,12 +4,12 @@
     <form @submit.prevent="createQuiz">
       <label for="question">문제</label><br>
       <textarea
-       id="question" 
-       cols="50" 
-       rows="5" 
-       v-model="newQuiz.question"
-       @input="onChange"
-       ></textarea>
+      id="question" 
+      cols="50" 
+      rows="5" 
+      v-model="newQuiz.question"
+      @input="onChange"
+      ></textarea>
 
       <label for="answer">답안</label><br>
       <input 
