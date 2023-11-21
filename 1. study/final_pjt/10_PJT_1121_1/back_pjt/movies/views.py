@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 
 import requests
 from django.shortcuts import get_object_or_404
-from .serializers import MovieSerializer, MovieListSerializer, GenreSerializer, MovieReviewSerializer
+from .serializers import MovieSerializer, MovieListSerializer, GenreSerializer, MovieReviewSerializer, PreferGenreSerializer
 from .models import Movie , Genre, MovieReview
 from datetime import datetime
 
@@ -101,22 +101,25 @@ def likes(request, movie_pk):
 
 
 
-# 현재 보내고 있는 데이터가 name이라서 문자열이라 id로 받아주는 작업이 필요
-@api_view(['POST'])
+@api_view(['POST', 'GET'])
 def get_genres(request):
-    genres = request.data
-    for genre in genres:
-        genre = get_object_or_404(Genre, name=genre) 
-        request.user.prefer_genres.add(genre)
-    return Response({'detail': '장르가 성공적으로 추가되었습니다.'})
-
-
-
-
-
-
-
-
+    if request.method == 'GET' :
+        genres = Genre.objects.all()
+        serializer = PreferGenreSerializer(genres, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        genres = request.data.get('genres')
+        # print(genres)
+        for genre in genres:
+            # print(genre)
+            # print(type(genre))
+            genre = get_object_or_404(Genre, name=genre)
+            # print('넘어갔니???')
+            # print()
+            # print(genre)
+            # request.user.prefer_genres.add(genre)
+            genre.prefer_users.add(request.user)
+        return Response({'detail': '장르가 성공적으로 추가되었습니다.'})
 
 
 

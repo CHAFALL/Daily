@@ -5,13 +5,12 @@ from django.http import JsonResponse
 # permission Decorators
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
-
 import requests
 from django.shortcuts import get_object_or_404
-from .serializers import MovieSerializer, MovieListSerializer, GenreSerializer, MovieReviewSerializer
+from .serializers import MovieSerializer, MovieListSerializer, GenreSerializer, MovieReviewSerializer, UserSerializer
 from .models import Movie , Genre, MovieReview
 from datetime import datetime
-
+import random
 from django.contrib.auth import get_user_model
 
             
@@ -29,6 +28,32 @@ def movie_detail(request, movie_pk):
     movie = Movie.objects.get(pk=movie_pk)
     serializer = MovieSerializer(movie)
     return Response(serializer.data)
+
+# 유저 정보 다 가져오기
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def userinfo(request) :
+    if request.method == 'GET' :
+        genres = Genre.objects.all()
+        serializer = UserSerializer(request.user)
+
+        # print(serializer.data.get('genre_dict').get('16'))
+        a = serializer.data.get('genre_dict')
+        randomChoice = random.choices([12,14,16,18,35,36,37,53,80,99,878,9648,10402,10749,10751,10752,10770], weights = [(a.get('12')/17), (a.get('14')/17),(a.get('16')/17),(a.get('18')/17),(a.get('35')/17),(a.get('36')/17),(a.get('37')/17),(a.get('53')/17),(a.get('80')/17),(a.get('99')/17),(a.get('878')/17),(a.get('9648')/17),(a.get('10402')/17),(a.get('10749')/17),(a.get('10751')/17),(a.get('10752')/17),(a.get('10770')/17)])
+        print(f'{randomChoice[0]}입니다')
+
+        for genre in genres:
+            if genre.id == randomChoice[0]:
+                choiceGenre = genre.name
+                
+
+        context = {
+            'choiceGenre' : choiceGenre,
+            'user_info': serializer.data,
+        }
+
+        return Response(context)
+
 
 
 # 장르 가져오기
@@ -100,16 +125,50 @@ def likes(request, movie_pk):
     return JsonResponse(context)
 
 
-
-# 현재 보내고 있는 데이터가 name이라서 문자열이라 id로 받아주는 작업이 필요
 @api_view(['POST'])
-def get_genres(request):
-    genres = request.data
-    for genre in genres:
-        genre = get_object_or_404(Genre, name=genre) 
-        request.user.prefer_genres.add(genre)
-    return Response({'detail': '장르가 성공적으로 추가되었습니다.'})
+def interests(request, movie_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
 
+    if request.user in movie.like_users.all():
+        movie.interest_users.remove(request.user)
+        is_interested = False
+    else:
+        movie.interest_users.add(request.user)
+        is_interested = True
+
+    context = {
+        'is_interested': is_interested,
+    }
+
+    return JsonResponse(context)
+
+
+
+
+@api_view(['POST', 'GET'])
+@permission_classes([IsAuthenticated])
+def get_genres(request):
+    person = get_object_or_404(get_user_model(), username=request.user)
+    # 해당 유저가 어떤 장르를 가장 좋아하는지 체크하기 위한 Json(dict type)
+    person_genre_dict = person.genre_dict
+
+    if request.method == 'GET':
+        genres = Genre.objects.all()
+        serializer = GenreSerializer(genres, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    elif request.method == 'POST':
+        genres = request.data.get('genres')
+        print(genres)
+        for genre in genres:
+            print(genre)
+            genre = get_object_or_404(Genre,name=genre)
+            # MtoM field 관리
+            person.prefer_genres.add(genre)
+            print(genre.id)
+            # Json field 관리
+            person_genre_dict[str(genre.id)] += 1
+        person.save()
+        return Response(status=status.HTTP_201_CREATED)
 
 
 

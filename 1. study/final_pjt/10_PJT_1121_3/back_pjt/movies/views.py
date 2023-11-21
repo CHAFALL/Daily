@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 
 import requests
 from django.shortcuts import get_object_or_404
-from .serializers import MovieSerializer, MovieListSerializer, GenreSerializer, MovieReviewSerializer
+from .serializers import MovieSerializer, MovieListSerializer, GenreSerializer, MovieReviewSerializer, UserSerializer
 from .models import Movie , Genre, MovieReview
 from datetime import datetime
 
@@ -29,6 +29,15 @@ def movie_detail(request, movie_pk):
     movie = Movie.objects.get(pk=movie_pk)
     serializer = MovieSerializer(movie)
     return Response(serializer.data)
+
+# 유저 정보 다 가져오기
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def userinfo(request) :
+    if request.method == 'GET' :
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
+
 
 
 # 장르 가져오기
@@ -100,25 +109,30 @@ def likes(request, movie_pk):
     return JsonResponse(context)
 
 
-
-# 현재 보내고 있는 데이터가 name이라서 문자열이라 id로 받아주는 작업이 필요
-@api_view(['POST'])
+@api_view(['POST', 'GET'])
+@permission_classes([IsAuthenticated])
 def get_genres(request):
-    genres = request.data
-    for genre in genres:
-        genre = get_object_or_404(Genre, name=genre) 
-        request.user.prefer_genres.add(genre)
-    return Response({'detail': '장르가 성공적으로 추가되었습니다.'})
+    person = get_object_or_404(get_user_model(), username=request.user)
+    # 해당 유저가 어떤 장르를 가장 좋아하는지 체크하기 위한 Json(dict type)
+    person_genre_dict = person.genre_dict
 
-
-
-
-
-
-
-
-
-
+    if request.method == 'GET':
+        genres = Genre.objects.all()
+        serializer = GenreSerializer(genres, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    elif request.method == 'POST':
+        genres = request.data.get('genres')
+        print(genres)
+        for genre in genres:
+            print(genre)
+            genre = get_object_or_404(Genre,name=genre)
+            # MtoM field 관리
+            person.prefer_genres.add(genre)
+            print(genre.id)
+            # Json field 관리
+            person_genre_dict[str(genre.id)] += 1
+        person.save()
+        return Response(status=status.HTTP_201_CREATED)
 
 
 

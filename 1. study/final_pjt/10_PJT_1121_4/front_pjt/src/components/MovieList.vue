@@ -1,0 +1,102 @@
+
+<template>
+
+
+  <div class="back">
+  <h3 class="white-text">Movie List</h3>
+  <div class="carousel" >
+   
+    <div class="d-flex justify-space-between mb-6 bg-surface-variant" >
+      <MovieCard 
+        v-for="movie in store.movies"
+        :key="movie.id"
+        :movie="movie"
+      />
+    </div>
+  </div>
+<br><br><br><br>
+<!-- 평점 탑 텐 -->
+  <h3 class="white-text">당신만을 위해 뽑은 추천 영화 TOP 10 !!!</h3>
+  <div class="carousel">
+    <div class="d-flex justify-space-between mb-6 bg-surface-variant ">
+      <MovieCard
+        v-for="(movie, index) in rankList.slice(0, 10)"
+        :key="movie.id"
+        :movie="movie"
+      />
+    </div>
+  </div>
+
+<br><br><br><br>
+<!-- 장르별 -->
+  <h3 class="white-text"> 모험 장르 뽑기 연습</h3>
+  <div class="carousel">
+    <div class="d-flex justify-space-between mb-6 bg-surface-variant ">
+      <MovieCard
+        v-for="(movie, index) in rankList.slice(0, 30)"
+        :key="movie.id"
+        :movie="movie"
+      />
+    </div>
+  </div>
+</div>
+
+
+  
+</template>
+
+<script setup>
+import { useCounterStore } from '@/stores/counter';
+import { ref, onMounted, computed } from 'vue'
+import MovieCard from './MovieCard.vue';
+
+const store = useCounterStore()
+
+const rankList = ref([])
+
+
+// const getRandom = function() {
+//  for ( let movie in store.movies.name) {
+//   console.log(movie)
+//  }
+// }
+
+
+// 정렬 함수
+const sortByVoteAvg = (a, b) => b.vote_avg - a.vote_avg;
+
+// 컴포넌트가 마운트될 때 호출
+onMounted(() => {
+  // vote_avg를 기준으로 정렬
+  rankList.value = [...store.movies].sort(sortByVoteAvg);
+});
+
+// 장르별
+
+</script>
+
+<style>
+
+.carousel{
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin; /* Firefox에서 스크롤 바 크기 조절 */
+  scrollbar-color: gray transparent; /* Firefox에서 스크롤 바 색상 조절 */
+}
+
+.white-text {
+  color: white;
+  font-size: 25px;
+}
+/* 스크롤 바의 색상을 설정합니다. */
+/* Chrome, Safari, Edge */
+.carousel::-webkit-scrollbar {
+  width: 12px;
+}
+
+.carousel::-webkit-scrollbar-thumb {
+  background-color: #7a7a7a; /* 스크롤 바의 색상 */
+}
+
+</style>
