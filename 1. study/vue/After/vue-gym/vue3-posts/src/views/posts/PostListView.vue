@@ -14,6 +14,7 @@
 					:content="item.content"
 					:created-at="item.createdAt"
 					@click="goPage(item.id)"
+					@modal="openModal(item)"
 				></PostItem>
 			</template>
 		</AppGrid>
@@ -25,6 +26,17 @@
 			@page="page => (params._page = page)"
 		/>
 
+		<!-- css 충돌 발생해서 해당 모델을 밖으로 빼고픔 -->
+		<!-- 이렇 때 쓰는 것이 Teleport이다 -->
+		<Teleport to="#modal">
+			<PostModal
+				v-model="show"
+				:title="modalTitle"
+				:content="modalContent"
+				:created-at="modalCreatedAt"
+			/>
+		</Teleport>
+
 		<template v-if="posts && posts.length > 0">
 			<hr class="my-5" />
 			<AppCard>
@@ -32,6 +44,11 @@
 				<PostDetailView :id="posts[0].id"></PostDetailView>
 			</AppCard>
 		</template>
+
+		<!-- Teleport는 여러군데 지정가능(참고) -->
+		<!-- <Teleport to="#modal">
+			<div>Hello World!</div>
+		</Teleport> -->
 	</div>
 </template>
 
@@ -45,6 +62,7 @@ import { useRouter } from 'vue-router';
 import AppPagination from '@/components/AppPagination.vue';
 import AppGrid from '@/components/AppGrid.vue';
 import PostFilter from '@/components/posts/PostFilter.vue';
+import PostModal from '@/components/posts/PostModal.vue';
 
 const router = useRouter();
 const posts = ref([]);
@@ -103,6 +121,20 @@ const goPage = id => {
 		},
 		// 쿼리랑 해쉬도 가능
 	});
+};
+
+// modal
+const show = ref(false);
+const modalTitle = ref('');
+const modalContent = ref('');
+const modalCreatedAt = ref('');
+
+// item을 구조분해할당으로 받은 것임
+const openModal = ({ title, content, createdAt }) => {
+	show.value = true;
+	modalTitle.value = title;
+	modalContent.value = content;
+	modalCreatedAt.value = createdAt;
 };
 </script>
 

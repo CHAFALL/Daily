@@ -12,13 +12,27 @@
 		<AppGrid :items="items" v-slot="{ item }" col-class="col-3">
 			<AppCard>{{ item }}</AppCard>
 		</AppGrid>
+		<hr class="my-4" />
+		<h2>{{ $person.name }}</h2>
+		<button class="btn btn-primary" @click="person.say">click person</button>
 	</div>
 </template>
+
+<!-- 컴포넌트 인스턴스는 setup Lifecycle 이후에 생성이 되기 때문에 setup setup Lifecycle 훅에서 사용 불가 -->
+
+<script>
+export default {
+	created() {
+		// console.log(this.$person.name);
+		// this.$person.say();
+	},
+};
+</script>
 
 <script setup>
 import AppCard from '@/components/AppCard.vue';
 import AppGrid from '@/components/AppGrid.vue';
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -27,6 +41,8 @@ const goAboutPage = () => {
 };
 
 const items = ref(['사과', '딸기', '포도', '바나나']);
+const person = inject('person');
+console.log('person.name: ', person.name);
 </script>
 
 <style lang="scss" scoped></style>
