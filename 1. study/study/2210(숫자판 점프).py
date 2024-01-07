@@ -2,6 +2,8 @@
 def dfs(i, j, n, p):
     global p_set
     if n == 6:
+        # 문자열로 이루어진 리스트를 하나의 문자열로 바꾸고
+        # set에 넣어줘서 중복 제거
         p_set.add(''.join(p))
         return
     for k in range(4):
@@ -16,7 +18,7 @@ dj = [1, 0, -1, 0]
 N = 5
 arr = [list(input().split()) for _ in range(N)]
 p_set = set()
-p = []
+p = []  #숫자판
 for i in range(N):
     for j in range(N):
         dfs(i, j, 1, p+[arr[i][j]])
