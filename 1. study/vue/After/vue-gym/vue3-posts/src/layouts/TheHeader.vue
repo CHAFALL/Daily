@@ -2,7 +2,7 @@
 	<header>
 		<nav class="navbar navbar-expand-sm navber-light bg-primary">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="#">CHAFA</a>
+				<RouterLink class="navbar-brand" to="/">CHAFA</RouterLink>
 				<button
 					class="navbar-toggler"
 					type="button"
@@ -35,6 +35,11 @@
 						<li class="nav-item">
 							<RouterLink class="nav-link" active-class="active" to="/nested"
 								>Nested</RouterLink
+							>
+						</li>
+						<li class="nav-item">
+							<RouterLink class="nav-link" active-class="active" to="/my"
+								>Mypage</RouterLink
 							>
 						</li>
 					</ul>

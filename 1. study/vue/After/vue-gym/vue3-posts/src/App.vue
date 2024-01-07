@@ -7,6 +7,8 @@ import TheView from '@/layouts/TheView.vue';
 	<TheHeader></TheHeader>
 
 	<TheView></TheView>
+
+	<AppAlert />
 </template>
 
 <style></style>

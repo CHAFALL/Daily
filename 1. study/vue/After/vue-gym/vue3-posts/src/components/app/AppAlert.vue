@@ -9,7 +9,7 @@
 		<!-- 원래 (item, index)이런 식으로 하는데 item부분을 구조분해할당 한 것임 -->
 		<TransitionGroup name="slide">
 			<div
-				v-for="({ message, type }, index) in items"
+				v-for="({ message, type }, index) in alerts"
 				:key="index"
 				class="alert"
 				:class="typeStyle(type)"
@@ -22,11 +22,12 @@
 </template>
 
 <script setup>
-// import { computed } from 'vue';
+import { useAlert } from '@/composables/alert';
+const { alerts } = useAlert();
 
-defineProps({
-	items: Array,
-});
+// defineProps({
+// 	items: Array,
+// });
 
 // computed 불가, (왜냐하면 매개변수로 type을 받아야 하므로, 그래서 메소드로 ㄱㄱ)
 const typeStyle = type => (type === 'error' ? 'alert-danger' : 'alert-primary');

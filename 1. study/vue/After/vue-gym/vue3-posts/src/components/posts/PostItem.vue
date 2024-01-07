@@ -1,15 +1,19 @@
 <template>
 	<AppCard>
-		<h5 class="card-title">{{ title }}</h5>
-		<p class="card-text">
+		<!-- 글자 끊어주기(한 줄) -->
+		<h5 class="card-title text-truncate">{{ title }}</h5>
+		<p class="card-text text-truncate">
 			{{ content }}
 		</p>
-		<p class="text-muted">{{ createdAt }}</p>
+		<p class="text-muted">{{ createdDate }}</p>
 		<template #footer>
 			<div class="d-flex flex-row-reverse">
 				<!-- 버블링 방지 -->
-				<button class="btn p-0" @click.stop="$emit('modal')">
+				<button class="btn p-1" @click.stop="$emit('modal')">
 					<i class="bi bi-emoji-sunglasses"></i>
+				</button>
+				<button class="btn p-1" @click.stop="$emit('preview')">
+					<i class="bi bi-app"></i>
 				</button>
 			</div>
 		</template>
@@ -17,9 +21,10 @@
 </template>
 
 <script setup>
-import AppCard from '@/components/AppCard.vue';
+import { computed } from 'vue';
+import { inject } from 'vue';
 
-defineProps({
+const props = defineProps({
 	title: {
 		type: String,
 		required: true,
@@ -31,7 +36,11 @@ defineProps({
 		type: [String, Date, Number],
 	},
 });
-defineEmits(['modal']);
+defineEmits(['modal', 'preview']);
+const dayjs = inject('dayjs');
+const createdDate = computed(() =>
+	dayjs(props.createdAt).format('YYYY. MM. DD MM:mm:ss'),
+);
 </script>
 
 <style lang="scss" scoped></style>

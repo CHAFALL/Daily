@@ -1,52 +1,40 @@
 {
   "posts": [
     {
-      "id": 1,
-      "title": "제목1",
-      "content": "내용1",
-      "createdAt": "2021-01-01"
-    },
-    {
-      "id": 2,
-      "title": "제목2",
-      "content": "내용2",
-      "createdAt": "2021-02-02"
-    },
-    {
       "id": 3,
-      "title": "제목3",
+      "title": "제목3d",
       "content": "내용3",
-      "createdAt": "2021-03-03"
+      "createdAt": 1704090339606
     },
     {
       "id": 4,
       "title": "제목4",
       "content": "내용4",
-      "createdAt": "2021-04-04"
+      "createdAt": 1704090339605
     },
     {
       "id": 5,
       "title": "제목5",
       "content": "내용5",
-      "createdAt": "2021-05-05"
+      "createdAt": 1704090339604
     },
     {
       "id": 6,
       "title": "제목6",
       "content": "내용6",
-      "createdAt": "2021-06-06"
+      "createdAt": 1704090339603
     },
     {
       "id": 8,
       "title": "제목8",
       "content": "내용8",
-      "createdAt": "2021-08-08"
+      "createdAt": 1704090339602
     },
     {
       "id": 9,
-      "title": "제목9",
+      "title": "제목9d",
       "content": "내용9999",
-      "createdAt": "2021-09-09"
+      "createdAt": 1704090339601
     },
     {
       "title": "epdlxj",
@@ -59,6 +47,48 @@
       "content": "test1",
       "createdAt": 1704162153247,
       "id": 11
+    },
+    {
+      "title": " 게시글 제목",
+      "content": "게시글 내",
+      "createdAt": 1704532153023,
+      "id": 12
+    },
+    {
+      "title": "제목 112",
+      "content": "내용 112",
+      "createdAt": 1704532627343,
+      "id": 13
+    },
+    {
+      "title": "제목 11",
+      "content": "내용 11",
+      "createdAt": 1704532690954,
+      "id": 14
+    },
+    {
+      "title": "1111",
+      "content": "dasd",
+      "createdAt": 1704537607600,
+      "id": 15
+    },
+    {
+      "title": "1111",
+      "content": "dasddsad",
+      "createdAt": 1704537614425,
+      "id": 16
+    },
+    {
+      "title": "dsadsad",
+      "content": "zxczczxc",
+      "createdAt": 1704537699639,
+      "id": 18
+    },
+    {
+      "title": "ㅇㄴㅁ",
+      "content": "ㅁㅇㄴasdas",
+      "createdAt": 1704599210042,
+      "id": 20
     }
   ]
 }

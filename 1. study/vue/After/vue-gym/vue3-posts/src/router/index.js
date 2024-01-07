@@ -10,6 +10,7 @@ import NestedView from '@/views/nested/NestedView.vue';
 import NestedOneView from '@/views/nested/NestedOneView.vue';
 import NestedTwoView from '@/views/nested/NestedTwoView.vue';
 import NestedHomeView from '@/views/nested/NestedHomeView.vue';
+import Mypage from '@/views/Mypage.vue';
 
 const routes = [
 	{
@@ -82,12 +83,35 @@ const routes = [
 			},
 		],
 	},
+	{
+		path: '/my',
+		name: 'Mypage',
+		component: Mypage,
+		// 이렇게 배열로 정의한다면 해쉬를 없애거나 이러한 기능을 계속 추가 가능!!
+		beforeEnter: [removeQueryString],
+	},
 ];
+
+function removeQueryString(to) {
+	if (Object.keys(to.query).length > 0) {
+		return { path: to.path, query: {} };
+	}
+}
 
 const router = createRouter({
 	history: createWebHistory('/'),
 	// history: createWebHashHistory(), // SEO 검색엔진에 치명적 단점이 있어서 안 씀.. 장점은 뭐였드라...어라라?
 	routes,
 });
+
+// router.beforeEach((to, from) => {
+// 	console.log('to: ', to);
+// 	console.log('from: ', from);
+// 	if (to.name === 'Mypage') {
+// 		// return false;
+// 		// return { name: 'Home' };
+// 		return '/posts';
+// 	}
+// });
 
 export default router;

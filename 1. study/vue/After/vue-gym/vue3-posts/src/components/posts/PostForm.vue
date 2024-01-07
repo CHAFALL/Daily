@@ -2,7 +2,10 @@
 	<form>
 		<div class="mb-3">
 			<label for="title" class="form-label">제목</label>
+			<!-- autofocus: 페이지가 로딩된 시점에서 한 번만 실행됨... -->
+			<!-- v-color="'blue'" -->
 			<input
+				v-focus
 				:value="title"
 				@input="$emit('update:title', $event.target.value)"
 				type="text"
@@ -27,6 +30,12 @@
 </template>
 
 <script setup>
+// const vFocus = {
+// 	mounted: el => {
+// 		el.focus();
+// 	},
+// };
+
 defineProps({
 	title: String,
 	content: String,
