@@ -1,5 +1,5 @@
 <template>
-  <el-card :body-style="{ padding: '0px' }">
+  <el-card v-loading="loading" :body-style="{ padding: '0px' }">
     <div class="image-wrapper">
       <el-skeleton style="width: 100%">
         <template #template>
@@ -14,6 +14,7 @@
       </div>
     </div>
   </el-card>
+
 </template>
 <style>
 .el-card {
@@ -52,6 +53,9 @@
 
 </style>
 <script>
+import { ref } from 'vue'
+
+
 export default {
   name: 'Home',
 
@@ -66,6 +70,13 @@ export default {
     }
   },
 
-  setup () {}
+  setup () {
+    const loading = ref(true)
+
+
+  return{
+    loading,
+  }
+  }
 }
 </script>

@@ -13,23 +13,36 @@
             v-model="state.searchValue">
           </el-input>
         </div>
-        <div class="button-wrapper">
-          <el-button>회원가입</el-button>
+        <!--이 부분 수정했어요! 로그인 되었을때와 로그인 되지 않았을 때 표현하려고-->
+        <div v-if="!state.isLoggedIn" class="button-wrapper">
+          <el-button @click="clickSignup">회원가입</el-button>
           <el-button type="primary" @click="clickLogin">로그인</el-button>
+        </div>
+        <div v-if="state.isLoggedIn" class="button-wrapper">
+          <el-button @click="handleLogout">로그아웃</el-button>
+          <!-- 로그인과 비로그인 차이 -->
         </div>
       </div>
 
     </div>
     <div class="hide-on-big">
-      <div class="menu-icon-wrapper" @click="changeCollapse"><i class="el-icon-menu"></i></div>
+<!--이것도 변경했어요! 창 작아졌을 때 로그인이랑 회원가입 띄우려고!-->
+      <div class="menu-icon-wrapper" @click="changeCollapse">메뉴아이콘이어야 함(메뉴아이콘 넣기)<i class="el-icon-menu"></i></div>
       <div class="logo-wrapper" @click="clickLogo"><div class="ic ic-logo"/></div>
-      <div class="menu-icon-wrapper"><i class="el-icon-search"></i></div>
+      <div class="menu-icon-wrapper">원래 검색창이어야 하는 곳<i class="el-icon-search"></i></div>
+<!--끝-->
       <div class="mobile-sidebar-wrapper" v-if="!state.isCollapse">
         <div class="mobile-sidebar">
           <div class="mobile-sidebar-tool-wrapper">
             <div class="logo-wrapper"><div class="ic ic-logo"/></div>
+        <!--화면 작아지면 로그인/로그아웃 나오게하는 거-->
+        <div v-if="!state.isLoggedIn">
             <el-button type="primary" class="mobile-sidebar-btn login-btn" @click="clickLogin">로그인</el-button>
-            <el-button class="mobile-sidebar-btn register-btn">회원가입</el-button>
+            <el-button class="mobile-sidebar-btn register-btn" @click="clickSignup">회원가입</el-button>
+          </div>
+          <div v-if="state.isLoggedIn" class="button-wrapper">
+            <el-button type="primary" class="mobile-sidebar-btn logout-btn" @click="handleLogout">로그아웃</el-button>
+          </div>
           </div>
           <el-menu
             :default-active="String(state.activeIndex)"
@@ -80,7 +93,8 @@ export default {
         }
         return menuArray
       }),
-      activeIndex: computed(() => store.getters['menuStore/getActiveMenuIndex'])
+      activeIndex: computed(() => store.getters['menuStore/getActiveMenuIndex']),
+      isLoggedIn: computed(() => store.getters['authStore/getToken'] !== null),
     })
 
     if (state.activeIndex === -1) {
@@ -97,6 +111,14 @@ export default {
       })
     }
 
+    const handleLogout = () => {
+    store.dispatch('authStore/handleLogout');
+  };
+
+    // const log = () => {
+    //   console.log(state.isLoggedIn)
+    // }
+
     const clickLogo = () => {
       store.commit('menuStore/setMenuActive', 0)
       const MenuItems = store.getters['menuStore/getMenus']
@@ -110,11 +132,17 @@ export default {
       emit('openLoginDialog')
     }
 
+    const clickSignup = () => {
+      emit('openSignupDialog')
+    }
+
+
+
     const changeCollapse = () => {
       state.isCollapse = !state.isCollapse
     }
 
-    return { state, menuSelect, clickLogo, clickLogin, changeCollapse }
+    return { state, menuSelect, clickLogo, clickLogin, changeCollapse, clickSignup, handleLogout }
   }
 }
 </script>
@@ -129,7 +157,7 @@ export default {
     position: relative;
     top: 14px;
   }
-  
+
   .main-header .hide-on-big .logo-wrapper {
     display: inline-block;
     margin: 0 calc(50% - 51px)
