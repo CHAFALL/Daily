@@ -2,7 +2,6 @@ from collections import deque
 
 # 현재 상어가 노릴 수 있는 최적의 사냥감 찾기
 def bfs(i, j):
-    global sharksize
     Q = deque()
     Q.append((i, j))
 
