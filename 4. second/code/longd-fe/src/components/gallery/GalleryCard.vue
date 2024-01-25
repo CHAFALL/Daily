@@ -1,12 +1,7 @@
-<script setup></script>
-
 <template>
   <div class="card card-compact w-96 bg-base-100 shadow-xl">
     <figure>
-      <img
-        src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-        alt="Shoes"
-      />
+      <img :src="src" alt="#" />
     </figure>
     <div class="card-body">
       <h2 class="card-title">Shoes!</h2>
@@ -17,3 +12,13 @@
     </div>
   </div>
 </template>
+
+<script setup>
+defineProps({
+  src: {
+    type: String,
+  },
+});
+</script>
+
+<style lang="scss" scoped></style>
