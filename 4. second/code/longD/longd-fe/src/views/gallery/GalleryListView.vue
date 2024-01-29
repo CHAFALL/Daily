@@ -8,6 +8,9 @@
     </GalleryFilter>
 
     <div class="flex items-center space-x-4">
+      <button v-if="deleteActive" class="btn btn-outline btn-primary">
+        삭제
+      </button>
       <AppDropdown>
         <template v-slot>
           <li onclick="gallery_create.showModal()">
@@ -146,7 +149,7 @@ const previewImage = event => {
 
 const save = async () => {
   try {
-    // console.log(src);
+    console.log(src);
     await createAlbum({
       src: 'https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg',
       createdAt: Date.now(),

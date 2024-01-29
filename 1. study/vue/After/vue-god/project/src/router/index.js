@@ -199,6 +199,14 @@ const routes = [
       import(
         /* webpackChunkName: "advanced", webpackPrefetch:true */ '../views/5_advanced/ProvideView.vue'
       )
+  },
+  {
+    path: '/module/calendar',
+    name: 'FullCalendarView',
+    component: () =>
+      import(
+        /* webpackChunkName: "module", webpackPrefetch:true */ '../views/9_modules/FullCalendarView.vue'
+      )
   }
 ]
 
