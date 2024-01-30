@@ -11,15 +11,26 @@ import FullCalendar from '@fullcalendar/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
 
-// const handleDateClick = arg => {
-//   console.log(arg);
-//   alert('date click! ' + arg.dateStr);
-// };
+const handleDateClick = arg => {
+  console.log(arg);
+  alert('date click! ' + arg.dateStr);
+};
+
+const handleEventClick = clickInfo => {
+  if (
+    confirm(
+      `Are you sure you want to delete the event '${clickInfo.event.title}'`,
+    )
+  ) {
+    clickInfo.event.remove();
+  }
+};
 
 const calendarOptions = {
   plugins: [dayGridPlugin, interactionPlugin],
   initialView: 'dayGridMonth',
-  // dateClick: handleDateClick,
+  dateClick: handleDateClick,
+  eventClick: handleEventClick,
   editable: true, // 수정 가능?
   selectable: true,
   nowIndicator: true, // 현재 시간 마크
