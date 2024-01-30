@@ -207,6 +207,30 @@ const routes = [
       import(
         /* webpackChunkName: "module", webpackPrefetch:true */ '../views/9_modules/FullCalendarView.vue'
       )
+  },
+  {
+    path: '/module/font',
+    name: 'FontawesomeView',
+    component: () =>
+      import(
+        /* webpackChunkName: "module", webpackPrefetch:true */ '../views/9_modules/FontawesomeView.vue'
+      )
+  },
+  {
+    path: '/module/sweetalert2',
+    name: 'Sweetalert2View',
+    component: () =>
+      import(
+        /* webpackChunkName: "module", webpackPrefetch:true */ '../views/9_modules/Sweetalert2View.vue'
+      )
+  },
+  {
+    path: '/module/loading',
+    name: 'LoadingOverlayView',
+    component: () =>
+      import(
+        /* webpackChunkName: "module", webpackPrefetch:true */ '../views/9_modules/LoadingOverlayView.vue'
+      )
   }
 ]
 
