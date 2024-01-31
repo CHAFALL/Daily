@@ -28,6 +28,28 @@
       Hello world
     </button>
   </div>
+  <font-awesome-icon icon="fa-regular fa-image" size="3x" pull="left" />
+  <font-awesome-icon icon="fa-regular fa-calendar-check" size="3x" inverse />
+  <font-awesome-icon icon="fa-solid fa-phone" size="3x" beat />
+  <font-awesome-icon icon="fa-regular fa-image" size="3x" bounce />
+  <font-awesome-icon icon="fa-regular fa-calendar-check" size="3x" beat-fade />
+  <font-awesome-icon icon="fa-solid fa-phone" size="3x" beat />
+  <font-awesome-icon icon="fa-regular fa-image" size="3x" fade />
+  <font-awesome-icon icon="fa-regular fa-calendar-check" size="3x" flip />
+  <font-awesome-icon icon="fa-solid fa-phone" size="3x" shake />
+  <font-awesome-icon icon="fa-regular fa-image" size="3x" spin />
+  <font-awesome-icon
+    icon="fa-regular fa-calendar-check"
+    size="3x"
+    spin
+    spin-reverse
+  />
+  <font-awesome-icon icon="fa-solid fa-phone" size="3x" spin-pulse />
+  <span class="material-symbols-outlined"> calendar_month </span>
+  <span class="material-symbols-outlined"> photo_library </span>
+  <span class="material-symbols-outlined"> image </span>
+  <span class="material-symbols-outlined"> call </span>
+  <span class="material-symbols-outlined"> map </span>
 </template>
 
 <script setup>
@@ -113,3 +135,14 @@ const fetchAlbums = async () => {
 
 watchEffect(fetchAlbums);
 </script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 100,
+    'GRAD' 0,
+    'opsz' 48;
+
+  font-size: 60px;
+}
+</style>

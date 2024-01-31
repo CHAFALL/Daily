@@ -52,6 +52,8 @@ const handleDateSelect = selectInfo => {
     let calendarApi = selectInfo.view.calendar;
     calendarApi.unselect(); // clear date selection
     if (title) {
+      // 캘린더 저장 부분(이거 전에 백으로 보내서 ID를 받을까?)
+      // TITLE 알람에서 처리하면 될 듯
       calendarApi.addEvent({
         id: createEventId(),
         title,
@@ -119,6 +121,8 @@ const handleEvents = events => {
   currentEvents.value = events;
 };
 
+const data = ref({});
+
 // Variables
 const calendarOptions = ref({
   plugins: [
@@ -150,6 +154,41 @@ const calendarOptions = ref({
   eventChange:
   eventRemove:
   */
+  eventAdd: function (obj) {
+    // 이벤트가 추가되면 발생하는 이벤트
+    // console.log(obj.event._def.title);
+    // console.log(obj.event._instance.range.start);
+    // console.log(obj.event._instance.range.end);
+    // 여기서 백으로 보내서 id까지 넣어서 오기? obj에 우예 넣지? 어차피 이 안이니깐 상관없나?
+
+    data.value.title = obj.event._def.title;
+    data.value.start = obj.event._instance.range.start;
+    data.value.end = obj.event._instance.range.end;
+
+    console.log(data.value);
+  },
+  eventChange: function (obj) {
+    // 이벤트가 수정되면 발생하는 이벤트
+    // console.log(obj.event._def.title);
+    // console.log(obj.event._instance.range.start);
+    // console.log(obj.event._instance.range.end);
+    data.value.title = obj.event._def.title;
+    data.value.start = obj.event._instance.range.start;
+    data.value.end = obj.event._instance.range.end;
+
+    console.log(data.value);
+  },
+  eventRemove: function (obj) {
+    // 이벤트가 삭제되면 발생하는 이벤트
+    // console.log(obj.event._def.title);
+    // console.log(obj.event._instance.range.start);
+    // console.log(obj.event._instance.range.end);
+    data.value.title = obj.event._def.title;
+    data.value.start = obj.event._instance.range.start;
+    data.value.end = obj.event._instance.range.end;
+
+    console.log(data.value);
+  },
 });
 
 const currentEvents = ref([]);
