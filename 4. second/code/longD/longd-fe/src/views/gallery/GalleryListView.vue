@@ -29,7 +29,7 @@
         :src="item.src"
         :id="item.id"
         :deleteActive="deleteActive"
-        @click="goDetail(item.id)"
+        @click="goDetail(folderName, item.id)"
       ></GalleryCard>
     </template>
   </AppGrid>
@@ -108,15 +108,19 @@ const fetchAlbums = async () => {
 // watchEffect는 watch와 동일하지만 처음에 한번 바로 실행해주는 점이 다름
 watchEffect(fetchAlbums);
 
-const goDetail = id => {
+const folderName = '사물';
+
+const goDetail = (folderName, id) => {
   router.push({
     name: 'GalleryDetail',
     params: {
+      folderName,
       id,
     },
   });
 };
 
+// 여기도 수정 필요.
 const goCreate = () => {
   router.push({
     name: 'GalleryCreate',

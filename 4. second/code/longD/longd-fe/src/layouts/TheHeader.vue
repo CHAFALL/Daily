@@ -8,19 +8,32 @@
     <div>
       <ul class="menu menu-horizontal px-1">
         <li>
-          <RouterLink :to="{ name: 'GalleryList' }"
+          <RouterLink :to="{ name: 'GalleryFolder' }"
             ><img class="image" alt="Gallery" src="/static/img/image.png"
           /></RouterLink>
         </li>
-        <li><RouterLink :to="{ name: 'Calendar' }">Calendar</RouterLink></li>
+        <!-- <li>
+          <RouterLink :to="{ name: 'GalleryList' }"
+            ><img class="image" alt="Gallery" src="/static/img/image.png"
+          /></RouterLink>
+        </li> -->
         <li>
-          <RouterLink :to="{ name: 'Calendar2' }"
+          <RouterLink :to="{ name: 'Calendar' }"
             ><img class="image" alt="Calendar" src="/static/img/2x.png"
           /></RouterLink>
         </li>
         <li>
           <RouterLink :to="{ name: 'ViduMain' }"
             ><img class="image" alt="ViduMain" src="/static/img/im.png"
+          /></RouterLink>
+        </li>
+
+        <li>
+          <RouterLink :to="{ name: 'TestMap' }">맵TEST</RouterLink>
+        </li>
+        <li>
+          <RouterLink :to="{ name: 'Map' }"
+            ><img class="image" alt="Map" src="/static/img/1.png"
           /></RouterLink>
         </li>
         <li @click="lockPage()">

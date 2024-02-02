@@ -24,32 +24,13 @@
     <button @click="showAlert2" class="btn btn-outline btn-primary">
       Hello world
     </button>
+    <button @click="showAlert3" class="btn btn-outline btn-primary">
+      Hello world
+    </button>
     <button @click="showCombinedAlert" class="btn btn-outline btn-primary">
       Hello world
     </button>
   </div>
-  <font-awesome-icon icon="fa-regular fa-image" size="3x" pull="left" />
-  <font-awesome-icon icon="fa-regular fa-calendar-check" size="3x" inverse />
-  <font-awesome-icon icon="fa-solid fa-phone" size="3x" beat />
-  <font-awesome-icon icon="fa-regular fa-image" size="3x" bounce />
-  <font-awesome-icon icon="fa-regular fa-calendar-check" size="3x" beat-fade />
-  <font-awesome-icon icon="fa-solid fa-phone" size="3x" beat />
-  <font-awesome-icon icon="fa-regular fa-image" size="3x" fade />
-  <font-awesome-icon icon="fa-regular fa-calendar-check" size="3x" flip />
-  <font-awesome-icon icon="fa-solid fa-phone" size="3x" shake />
-  <font-awesome-icon icon="fa-regular fa-image" size="3x" spin />
-  <font-awesome-icon
-    icon="fa-regular fa-calendar-check"
-    size="3x"
-    spin
-    spin-reverse
-  />
-  <font-awesome-icon icon="fa-solid fa-phone" size="3x" spin-pulse />
-  <span class="material-symbols-outlined"> calendar_month </span>
-  <span class="material-symbols-outlined"> photo_library </span>
-  <span class="material-symbols-outlined"> image </span>
-  <span class="material-symbols-outlined"> call </span>
-  <span class="material-symbols-outlined"> map </span>
 </template>
 
 <script setup>
@@ -58,6 +39,24 @@ import { ref, watchEffect } from 'vue';
 import GalleryCard from '@/components/gallery/GalleryCard.vue';
 import Swal from 'sweetalert2';
 const items = ref([]);
+
+// 주어진 객체
+const data = {
+  coupleListId: 1,
+  title: 'ㅇㅁㄴ',
+  dataStart: new Date('2024-02-12T09:00:00'),
+  dataEnd: new Date('2024-02-15T09:00:00'),
+};
+
+// 필요한 필드만을 가진 새로운 객체 생성
+const newData = {
+  coupleListId: data.coupleListId,
+  title: data.title,
+  dataStart: data.dataStart,
+  dataEnd: data.dataEnd,
+};
+
+console.log(newData);
 
 const params = ref({
   _sort: 'createdAt', // 무엇을
@@ -92,36 +91,76 @@ const showCombinedAlert = async () => {
   }
 };
 
-const showAlert2 = async () => {
-  const { value: text } = await Swal.fire({
-    input: 'textarea',
-    inputLabel: 'Message',
-    inputPlaceholder: 'Type your message here...',
-    inputAttributes: {
-      'aria-label': 'Type your message here',
-    },
+const showAlert3 = async () => {
+  const { value: title } = await Swal.fire({
+    title: '당신의 추억을 입력해주세요.',
+    input: 'text',
+    inputLabel: '당신의 추억 제목',
+    inputPlaceholder: '추억을 입력해주세요.',
     showCancelButton: true,
   });
-  if (text) {
-    Swal.fire(text);
+
+  const { value: color } = await Swal.fire({
+    title: 'Select color',
+    input: 'select',
+    inputOptions: {
+      red: 'red',
+      orange: 'orange',
+      yellow: 'yellow',
+      green: 'green',
+      blue: 'blue',
+      indigo: 'indigo',
+      violet: 'violet',
+      purple: 'purple',
+      pink: 'pink',
+      brown: 'brown',
+      black: 'black',
+    },
+    inputPlaceholder: 'Select a color',
+    showCancelButton: true,
+  });
+  if (title && color) {
+    Swal.fire('Saved!', '', 'success');
+  }
+  return [title, color];
+};
+
+const showAlert2 = async () => {
+  const { value: color } = await Swal.fire({
+    title: 'Select color',
+    input: 'select',
+    inputOptions: {
+      red: 'red',
+      orange: 'orange',
+      yellow: 'yellow',
+      green: 'green',
+      blue: 'blue',
+      indigo: 'indigo',
+      violet: 'violet',
+      purple: 'purple',
+      pink: 'pink',
+      brown: 'brown',
+      black: 'black',
+    },
+    inputPlaceholder: 'Select a color',
+    showCancelButton: true,
+  });
+  if (color) {
+    Swal.fire(`You selected: ${color}`);
   }
 };
 
 const showAlert = async () => {
-  Swal.fire({
-    title: 'Do you want to save the changes?',
-    showDenyButton: true,
-    showCancelButton: true,
-    confirmButtonText: 'Save',
-    denyButtonText: `Don't save`,
-  }).then(result => {
-    /* Read more about isConfirmed, isDenied below */
-    if (result.isConfirmed) {
-      Swal.fire('Saved!', '', 'success');
-    } else if (result.isDenied) {
-      Swal.fire('Changes are not saved', '', 'info');
-    }
+  const { value: title } = await Swal.fire({
+    title: '당신의 추억을 입력해주세요.',
+    input: 'text',
+    inputLabel: '당신의 추억 제목',
+    inputPlaceholder: '추억을 입력해주세요.',
   });
+  if (title) {
+    Swal.fire('Saved!', '', 'success');
+    return title;
+  }
 };
 
 const fetchAlbums = async () => {
@@ -135,14 +174,3 @@ const fetchAlbums = async () => {
 
 watchEffect(fetchAlbums);
 </script>
-<style>
-.material-symbols-outlined {
-  font-variation-settings:
-    'FILL' 0,
-    'wght' 100,
-    'GRAD' 0,
-    'opsz' 48;
-
-  font-size: 60px;
-}
-</style>

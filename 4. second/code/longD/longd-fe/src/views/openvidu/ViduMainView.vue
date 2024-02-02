@@ -1,6 +1,15 @@
 <template>
   <div class="desktop">
-    <button @click="join(coupleid)">통화하기</button>
+    <!-- <div>
+      화면공유하면 이거 살려서 컴포넌트 구성
+    </div> -->
+    <button v-if="!viduStore.publisher" @click="join(coupleid)">
+      통화하기
+    </button>
+    <button v-else @click="disconnect()">통화끊기</button>
+    <button @click="viduStore.toggleAudio">음소거키고끄고</button>
+    <button @click="viduStore.toggleVideo">화면키고끄고</button>
+    <!-- <button v-else @click="disconnect()">볼륨조절</button> -->
 
     <div class="div">
       <ViduMine />
@@ -21,6 +30,13 @@ const viduStore = useViduStore();
 const coupleid = ref('aa');
 const join = function (coupleid) {
   viduStore.joinSession(coupleid);
+};
+const disconnect = function () {
+  viduStore.removeUser();
+  viduStore.leaveSession();
+  viduStore.subscriber = '';
+  viduStore.publisher = '';
+  viduStore.publisherTest = '';
 };
 </script>
 

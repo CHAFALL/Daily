@@ -1,15 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+import HomeView from '@/views/HomeView.vue';
+import ProfileView from '@/views/main/ProfileView.vue';
 import GalleryListView from '@/views/gallery/GalleryListView.vue';
 import GalleryDetailView from '@/views/gallery/GalleryDetailView.vue';
 import GalleryCreateView from '@/views/gallery/GalleryCreateView.vue';
 import CalendarView from '@/views/calendar/CalendarView.vue';
-import CalendarView2 from '@/views/calendar/CalendarView2.vue';
 import ViduMainView from '@/views/openvidu/ViduMainView.vue';
-import ClosedView from '../views/main/ClosedView.vue';
-import LoginSignUpView from '../views/main/LoginSignUpView.vue';
-import RequiredInfoView from '../views/main/RequiredInfoView.vue';
-import ConnectCodeView from '../views/main/ConnectCodeView.vue';
+import TestMapView from '@/views/map/TestMapView.vue';
+import MapView from '@/views/map/MapView.vue';
+import ClosedView from '@/views/main/ClosedView.vue';
+import LoginSignUpView from '@/views/main/LoginSignUpView.vue';
+import RequiredInfoView from '@/views/main/RequiredInfoView.vue';
+import ConnectCodeView from '@/views/main/ConnectCodeView.vue';
+import GalleryFolderView from '@/views/gallery/GalleryFolderView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,12 +31,22 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue'),
     },
     {
+      path: '/profile',
+      name: 'Profile',
+      component: ProfileView,
+    },
+    {
       path: '/gallery',
+      name: 'GalleryFolder',
+      component: GalleryFolderView,
+    },
+    {
+      path: '/gallery/:folderName',
       name: 'GalleryList',
       component: GalleryListView,
     },
     {
-      path: '/gallery/:id',
+      path: '/gallery/:folderName/:id',
       name: 'GalleryDetail',
       component: GalleryDetailView,
     },
@@ -48,32 +61,37 @@ const router = createRouter({
       component: CalendarView,
     },
     {
-      path: '/calendar2',
-      name: 'Calendar2',
-      component: CalendarView2,
-    },
-    {
-      path: '/vidumain/',
+      path: '/vidumain',
       name: 'ViduMain',
       component: ViduMainView,
     },
     {
-      path: '/closed/',
+      path: '/map',
+      name: 'Map',
+      component: MapView,
+    },
+    {
+      path: '/testmap',
+      name: 'TestMap',
+      component: TestMapView,
+    },
+    {
+      path: '/closed',
       name: 'Closed',
       component: ClosedView,
     },
     {
-      path: '/login/',
+      path: '/login',
       name: 'Login',
       component: LoginSignUpView,
     },
     {
-      path: '/requiredinfo/',
+      path: '/requiredinfo',
       name: 'RequiredInfo',
       component: RequiredInfoView,
     },
     {
-      path: '/connectcode/',
+      path: '/connectcode',
       name: 'ConnectCode',
       component: ConnectCodeView,
     },

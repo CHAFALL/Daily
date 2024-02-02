@@ -23,13 +23,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import FullCalendar from '@fullcalendar/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
-import { INITIAL_EVENTS, createEventId } from '@/utils/event-utils';
+import {
+  setCalendarInfo,
+  updateCalendarInfo,
+  getCalendarInfo,
+  delCalendarInfo,
+} from '@/utils/api/calendar';
 
+// import { INITIAL_EVENTS, createEventId } from '@/utils/event-utils';
 import Swal from 'sweetalert2';
 
 const titleAlert = async () => {
@@ -55,11 +61,11 @@ const handleDateSelect = selectInfo => {
       // 캘린더 저장 부분(이거 전에 백으로 보내서 ID를 받을까?)
       // TITLE 알람에서 처리하면 될 듯
       calendarApi.addEvent({
-        id: createEventId(),
+        // id: createEventId(),
         title,
         start: selectInfo.startStr,
         end: selectInfo.endStr,
-        allDay: selectInfo.allDay,
+        // allDay: selectInfo.allDay,
       });
     }
   });
@@ -121,7 +127,63 @@ const handleEvents = events => {
   currentEvents.value = events;
 };
 
-const data = ref({});
+let dateList = ref([]);
+
+const getCalendar = async () => {
+  try {
+    console.log(1);
+    const res = await getCalendarInfo(1);
+    dateList.value = res.data;
+    console.log('조회');
+    console.dir(dateList);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const saveCalendarTitle = async () => {
+  try {
+    console.log(date);
+    await setCalendarInfo({
+      ...date,
+    });
+    await getCalendar();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const changeCalendar = async () => {
+  try {
+    console.log('수정');
+    console.log(date.id);
+    await updateCalendarInfo(date.id, {
+      ...date,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+const deleteCalendar = async () => {
+  try {
+    console.log('삭제');
+    console.log(date.id);
+    console.log(date);
+    await delCalendarInfo(date.id);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const date = {
+  coupleListId: 1,
+  id: 0,
+  title: '',
+  start: '',
+  end: '',
+};
+
+const currentEvents = ref([]);
 
 // Variables
 const calendarOptions = ref({
@@ -130,7 +192,8 @@ const calendarOptions = ref({
     interactionPlugin, // needed for dateClick
   ],
   initialView: 'dayGridMonth',
-  initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed, 이걸로 저장하는 느낌을 줄 수 있을 듯
+  // initialEvents: INITIAL_EVENTS,
+  // alternatively, use the `events` setting to fetch from a feed, 이걸로 저장하는 느낌을 줄 수 있을 듯
   customButtons: {
     saveButton: {
       text: '저장하기',
@@ -145,53 +208,46 @@ const calendarOptions = ref({
   editable: true,
   selectable: true,
   selectMirror: true,
-  dayMaxEvents: true,
   select: handleDateSelect,
   eventClick: handleEventClick,
   eventsSet: handleEvents, // 이게 있어야 이벤트를 화면에 띄울 수 있음
-  /* you can update a remote database when these fire:
-  eventAdd:
-  eventChange:
-  eventRemove:
-  */
   eventAdd: function (obj) {
     // 이벤트가 추가되면 발생하는 이벤트
-    // console.log(obj.event._def.title);
-    // console.log(obj.event._instance.range.start);
-    // console.log(obj.event._instance.range.end);
-    // 여기서 백으로 보내서 id까지 넣어서 오기? obj에 우예 넣지? 어차피 이 안이니깐 상관없나?
-
-    data.value.title = obj.event._def.title;
-    data.value.start = obj.event._instance.range.start;
-    data.value.end = obj.event._instance.range.end;
-
-    console.log(data.value);
+    date.title = obj.event._def.title;
+    date.start = obj.event.startStr;
+    date.end = obj.event.endStr;
+    console.log(date);
+    saveCalendarTitle(date);
   },
   eventChange: function (obj) {
     // 이벤트가 수정되면 발생하는 이벤트
-    // console.log(obj.event._def.title);
-    // console.log(obj.event._instance.range.start);
-    // console.log(obj.event._instance.range.end);
-    data.value.title = obj.event._def.title;
-    data.value.start = obj.event._instance.range.start;
-    data.value.end = obj.event._instance.range.end;
-
-    console.log(data.value);
+    date.id = obj.event.id;
+    date.title = obj.event._def.title;
+    date.start = obj.event.startStr;
+    date.end = obj.event.endStr;
+    console.log('-----------');
+    console.log(obj);
+    // DB에서 id만 받을 수 있으면 끝인데
+    // 조회 먼저 해보자
+    console.log(date);
+    changeCalendar(date.id, date);
   },
   eventRemove: function (obj) {
     // 이벤트가 삭제되면 발생하는 이벤트
-    // console.log(obj.event._def.title);
-    // console.log(obj.event._instance.range.start);
-    // console.log(obj.event._instance.range.end);
-    data.value.title = obj.event._def.title;
-    data.value.start = obj.event._instance.range.start;
-    data.value.end = obj.event._instance.range.end;
-
-    console.log(data.value);
+    date.id = obj.event.id;
+    date.title = obj.event._def.title;
+    date.start = obj.event.startStr;
+    date.end = obj.event.endStr;
+    console.log(date);
+    deleteCalendar(date.id);
   },
+
+  events: dateList,
 });
 
-const currentEvents = ref([]);
+onMounted(() => {
+  getCalendar();
+});
 </script>
 
 <style lang="css">

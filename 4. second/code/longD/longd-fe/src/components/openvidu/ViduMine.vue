@@ -1,8 +1,8 @@
 <template>
-  <ov-videoconference> </ov-videoconference>
   <div v-if="viduStore.publisher">
     <video ref="videoElement" autoplay></video>
-    <!-- <canvas
+    <input type="color" v-model="selectedColor" />
+    <canvas
       ref="canvas"
       class="canvas"
       width="640"
@@ -10,9 +10,9 @@
       @mousedown="startDrawing"
       @mouseup="stopDrawing"
       @mousemove="draw"
-    ></canvas> -->
+    ></canvas>
   </div>
-  <button @click="check">여기</button>
+  <!-- <button @click="check">여기 이제 이거 필요없음 </button> -->
   <br />
   <button @click="viduStore.startRecording">녹화</button>
   <br />
@@ -22,12 +22,19 @@
 </template>
 
 <script setup>
-import { computed, watch, ref } from 'vue';
+import { computed, watch, ref, onMounted } from 'vue';
 import { useViduStore } from '@/stores/vidu.js';
+
 const viduStore = useViduStore();
 const videoElement = ref(null);
 const canvas = ref(null);
 const isDrawing = ref(false);
+const selectedColor = ref('#000000'); // 초기 색상은 검은색
+onMounted(() => {
+  if (viduStore.publisherTest) {
+    viduStore.publisher.addVideoElement(videoElement.value);
+  }
+});
 watch(
   () => viduStore.publisherTest,
   (newValue, oldValue) => {
@@ -48,10 +55,10 @@ watch(
 //     }, 0);
 //   },
 // );
-const check = function () {
-  console.log(viduStore.publisher);
-  viduStore.publisher.addVideoElement(videoElement.value);
-};
+// const check = function () {
+//   console.log(viduStore.publisher);
+//   viduStore.publisher.addVideoElement(videoElement.value);
+// };
 const enterPiPMode = async () => {
   try {
     if (document.pictureInPictureEnabled) {
@@ -63,14 +70,16 @@ const enterPiPMode = async () => {
     console.error('PiP 모드 진입 중 오류가 발생했습니다:', error);
   }
 };
-
 const startDrawing = () => {
   isDrawing.value = true;
 };
 
 const stopDrawing = () => {
   isDrawing.value = false;
+  const ctx = canvas.value.getContext('2d');
+  ctx.beginPath(); // 새로운 경로 시작
 };
+
 const draw = event => {
   if (!isDrawing.value) return;
 
@@ -81,16 +90,18 @@ const draw = event => {
   ctx.strokeStyle = 'black';
   ctx.lineWidth = 5;
   ctx.lineCap = 'round';
+  ctx.strokeStyle = selectedColor.value;
 
+  // 정확한 위치로 그리기
   ctx.lineTo(
-    event.clientX - canvasElement.offsetLeft,
-    event.clientY - canvasElement.offsetTop,
+    event.clientX - canvasElement.getBoundingClientRect().left,
+    event.clientY - canvasElement.getBoundingClientRect().top,
   );
   ctx.stroke();
-  ctx.beginPath();
+  ctx.beginPath(); // 새로운 경로 시작
   ctx.moveTo(
-    event.clientX - canvasElement.offsetLeft,
-    event.clientY - canvasElement.offsetTop,
+    event.clientX - canvasElement.getBoundingClientRect().left,
+    event.clientY - canvasElement.getBoundingClientRect().top,
   );
 };
 </script>
