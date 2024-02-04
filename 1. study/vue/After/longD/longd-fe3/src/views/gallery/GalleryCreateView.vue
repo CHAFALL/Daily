@@ -59,7 +59,6 @@ const uploadImages = async () => {
   try {
     // 서버로 이미지 전송하는 API 호출
     // await axios.post('/api/upload', formData);
-
     // 이미지 업로드 후 이미지 미리보기 배열 초기화
     imagePreviews.value = [];
     alert('Images uploaded successfully!');

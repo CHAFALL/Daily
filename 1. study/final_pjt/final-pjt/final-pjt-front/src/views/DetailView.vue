@@ -76,7 +76,7 @@ onMounted(() => {
 
       movie.value = res.data;
       genres.value = res.data.genres.map(genre => genre.name);
-   
+  
 
       // 장르 데이터 보내기(알고리즘을 위해)
       return axios({

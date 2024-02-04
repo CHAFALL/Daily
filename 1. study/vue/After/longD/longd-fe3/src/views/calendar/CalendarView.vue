@@ -44,28 +44,49 @@ const titleAlert = async () => {
     input: 'text',
     inputLabel: '당신의 추억 제목',
     inputPlaceholder: '추억을 입력해주세요.',
+    showCancelButton: true,
   });
   if (title) {
-    Swal.fire('Saved!', '', 'success');
-    return title;
+    const { value: color } = await Swal.fire({
+      title: 'Select color',
+      input: 'select',
+      inputOptions: {
+        default: 'default',
+        red: 'red',
+        orange: 'orange',
+        yellow: 'yellow',
+        green: 'green',
+        blue: 'blue',
+        indigo: 'indigo',
+        violet: 'violet',
+        purple: 'purple',
+        pink: 'pink',
+        brown: 'brown',
+        black: 'black',
+      },
+      inputPlaceholder: 'Select a color',
+      showCancelButton: true,
+    });
+    if (color) {
+      Swal.fire('Saved!', '', 'success');
+    }
+    return { title, color };
   }
 };
 
 // 추억 작성 메소드
 const handleDateSelect = selectInfo => {
   titleAlert().then(res => {
-    let title = res;
+    let title = res.title;
+    let color = res.color;
     let calendarApi = selectInfo.view.calendar;
     calendarApi.unselect(); // clear date selection
-    if (title) {
-      // 캘린더 저장 부분(이거 전에 백으로 보내서 ID를 받을까?)
-      // TITLE 알람에서 처리하면 될 듯
+    if (title && color) {
       calendarApi.addEvent({
-        // id: createEventId(),
         title,
+        color,
         start: selectInfo.startStr,
         end: selectInfo.endStr,
-        // allDay: selectInfo.allDay,
       });
     }
   });
@@ -73,18 +94,39 @@ const handleDateSelect = selectInfo => {
 
 // 내가 이벤트를 클릭했을 시
 const handleEventClick = clickInfo => {
-  console.log(clickInfo.event.id);
-  contentAlert(clickInfo);
+  if (clickInfo.event) {
+    console.log(clickInfo.event.id);
+    contentAlert(clickInfo);
+  }
 };
 
 // 클릭된 이벤트 정보 저장 변수
 let currentClickInfo = null;
 // let currentClickInfoId = null;
 
+const getContentById = function (dataArray, findId) {
+  for (const key in dataArray) {
+    if (dataArray[key].id == findId) {
+      return dataArray[key].content;
+    }
+  }
+  return '';
+};
+
 const contentAlert = async clickInfo => {
   currentClickInfo = clickInfo;
   // currentClickInfoId = currentClickInfo.event.id;
+
+  console.log('확인');
+  console.log(dateList.value);
+  console.log(clickInfo.event.id);
+
+  const content = getContentById(dateList.value, clickInfo.event.id);
+
+  console.log(content);
+
   let isSave = false;
+  const inputValue = content;
   const result = await Swal.fire({
     title: '추억내용',
     input: 'textarea',
@@ -93,6 +135,7 @@ const contentAlert = async clickInfo => {
     inputAttributes: {
       'aria-label': 'Type your message here',
     },
+    inputValue,
     showDenyButton: true,
     showCancelButton: true,
     confirmButtonText: '저장',
@@ -109,7 +152,16 @@ const contentAlert = async clickInfo => {
   }
 
   if (isSave && result.value) {
+    console.log('저장-------');
+    console.log(clickInfo);
     console.log(result.value);
+    date.id = clickInfo.event.id;
+    date.title = clickInfo.event._def.title;
+    date.content = result.value;
+    date.start = clickInfo.event.startStr;
+    date.end = clickInfo.event.endStr;
+    date.color = clickInfo.event.backgroundColor;
+    changeCalendar(date.id, date);
   }
 };
 
@@ -160,6 +212,7 @@ const changeCalendar = async () => {
     await updateCalendarInfo(date.id, {
       ...date,
     });
+    await getCalendar();
   } catch (err) {
     console.log(err);
   }
@@ -181,6 +234,7 @@ const date = {
   title: '',
   start: '',
   end: '',
+  color: '',
 };
 
 const currentEvents = ref([]);
@@ -216,7 +270,10 @@ const calendarOptions = ref({
     date.title = obj.event._def.title;
     date.start = obj.event.startStr;
     date.end = obj.event.endStr;
-    console.log(date);
+    // console.log('------------------');
+    // console.log(obj.event.backgroundColor);
+    date.color = obj.event.backgroundColor;
+    // console.log(date);
     saveCalendarTitle(date);
   },
   eventChange: function (obj) {
@@ -225,6 +282,7 @@ const calendarOptions = ref({
     date.title = obj.event._def.title;
     date.start = obj.event.startStr;
     date.end = obj.event.endStr;
+    date.color = obj.event.backgroundColor;
     console.log('-----------');
     console.log(obj);
     // DB에서 id만 받을 수 있으면 끝인데
@@ -235,13 +293,13 @@ const calendarOptions = ref({
   eventRemove: function (obj) {
     // 이벤트가 삭제되면 발생하는 이벤트
     date.id = obj.event.id;
-    date.title = obj.event._def.title;
-    date.start = obj.event.startStr;
-    date.end = obj.event.endStr;
-    console.log(date);
+    // date.title = obj.event._def.title;
+    // date.start = obj.event.startStr;
+    // date.end = obj.event.endStr;
+    // date.color = obj.event.backgroundColor;
+    // console.log(date);
     deleteCalendar(date.id);
   },
-
   events: dateList,
 });
 
