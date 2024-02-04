@@ -1,0 +1,13 @@
+내일 할 일
+https://www.gymcoding.co/cd9bb8ec-6fec-4ba9-b388-c808caf61880
+
+해야 될 것!
+모달 구현
+생성 부분 좀 더 보완 -> axios 로 들어가는 것 , 미리보기를 카드로 하는게 맞나?
+폴더 -> stack 이용
+삭제 - > 체크를 통해 여러개 삭제를 할 수 있는 것 구현, 알림
+메인 -> Mask, avatar, badge
+채팅 쌓인 수 => Indicator
+apppagination을 했을 시 check가 남아있는 현상
+삭제 활성화시 goDetail 비활성화
+삭제 취소 시 취소할 리스트 초기화
