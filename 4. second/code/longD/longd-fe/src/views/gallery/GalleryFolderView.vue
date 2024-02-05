@@ -3,14 +3,14 @@
     <div class="flex items-center space-x-4">
       <AppDropdown>
         <template v-slot>
-          <li @click="folderCreate"><a>폴더 추가</a></li>
+          <li @click="folderCreate"><a>폴더 생성</a></li>
           <li @click="folderDelete"><a>폴더 삭제</a></li>
         </template>
       </AppDropdown>
     </div>
   </div>
 
-  <GalleryFolderGrid :items="folders">
+  <GalleryFolderGrid :items="folders" @totalView="totalView">
     <template v-slot="{ item }">
       <p :id="item.id" @click="goList(item.folderName)">
         {{ item.folderName }}
@@ -45,10 +45,12 @@ const folderCreate = async () => {
   });
   if (title) {
     Swal.fire('Saved!', '', 'success');
+    fetchFolders();
     try {
       console.log(title);
       await createFolder({ folderName: title });
       // 새로고침 해야 추가되는 현상있음
+      // 조회 박으면 해결될 것
       router.push({ name: 'GalleryFolder' });
     } catch (error) {
       console.log(error);
@@ -74,6 +76,15 @@ const fetchFolders = async () => {
 onMounted(() => {
   fetchFolders();
 });
+
+const totalView = () => {
+  router.push({
+    name: 'GalleryList',
+    params: {
+      folderName: '전체보기',
+    },
+  });
+};
 
 // 해당 폴더의 사진 리스트 보러가기
 const goList = folderName => {

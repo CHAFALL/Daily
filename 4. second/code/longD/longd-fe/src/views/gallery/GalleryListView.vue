@@ -32,7 +32,7 @@
   <AppGrid :items="items">
     <template v-slot="{ item }">
       <GalleryCard
-        :src="item.src"
+        :src="item.pathUrl"
         :id="item.id"
         :deleteActive="deleteActive"
         @click="goDetail(folderName, item.id)"
@@ -103,7 +103,12 @@ import AppPagination from '@/components/app/AppPagination.vue';
 import AppGrid from '@/components/app/AppGrid.vue';
 import { ref, computed, watchEffect } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { getAlbums } from '@/utils/api/albums';
+import {
+  getGalleryTotalList,
+  createGallery,
+  deleteGallery,
+  getGalleryFolderList,
+} from '@/utils/api/albums';
 // import { createAlbum } from '@/utils/api/albums';
 
 const route = useRoute();
@@ -149,18 +154,42 @@ const totalCheckedEvent = data => {
   console.log(totalChecked.value);
 };
 
+const coupleId = ref(1);
 // 해당 폴더의 리스트 조회
 const items = ref([]);
 const fetchAlbums = async () => {
-  try {
-    const { data, headers } = await getAlbums(params.value);
-    items.value = data;
-    totalCount.value = headers['x-total-count'];
-    // console.log(data);
-    // 이거 활용해서 분류에 이용하기!!!!
-    console.log(route.params.folderName);
-  } catch (err) {
-    console.err(err);
+  if (route.params.folderName === '전체보기') {
+    try {
+      const { data, headers } = await getGalleryTotalList(
+        coupleId.value,
+        params.value,
+      );
+      items.value = data;
+      // totalCount.value = headers['x-total-count'];
+      totalCount.value = data.length;
+      // console.log(data);
+      // 이거 활용해서 분류에 이용하기!!!!
+      console.log(route.params.folderName);
+    } catch (err) {
+      console.error(err);
+    }
+  } else {
+    // 서버 켜지면 test 필요.
+    // 폴더명으로 필터처리 후 조회(백에서 해줌)
+    try {
+      const { data, headers } = await getGalleryFolderList(
+        coupleId.value,
+        route.params.folderName,
+        params.value,
+      );
+      console.log('폴더 조회');
+      items.value = data;
+      // totalCount.value = headers['x-total-count'];
+      totalCount.value = data.length;
+      // console.log(data);
+    } catch (err) {
+      console.error(err);
+    }
   }
 };
 
@@ -194,12 +223,15 @@ const toggleDelete = () => {
 };
 
 // 삭제 체크 표시된 item들 삭제
-const removeItems = () => {
+const removeItems = async () => {
   if (confirm('정말로 삭제하시겠습니까?') === false) {
     return;
   }
+  await deleteGallery(totalChecked.value);
+  await fetchAlbums();
   // 삭제 메소드만 넣으면 끝
   // 근데 왜 체크 표시 안 없어질 것 같지???
+
   deleteActive.value = !deleteActive.value;
   totalChecked.value = []; // totalChecked 리스트를 빈 배열로 설정
   console.log('삭제');
@@ -227,12 +259,19 @@ const removeImage = index => {
 const uploadImages = async () => {
   const formData = new FormData();
   for (let i = 0; i < imagePreviews.value.length; i++) {
-    formData.append('images[]', imagePreviews.value[i]);
+    // formData.append('images[]', imagePreviews.value[i]);
+    formData.append('pathUrl', 'https://picsum.photos/200/300');
+    // console.log(formData);
+    // console.log(imagePreviews.value);
+    // const imageFile = formData.get('images[]');
+    // console.log(imageFile);
+    // const path_url = formData.get('path_url[]');
+    // console.log(path_url);
   }
 
   try {
     // 서버로 이미지 전송하는 API 호출
-    // await axios.post('/api/upload', formData);
+    await createGallery(coupleId.value, formData);
     // 이미지 업로드 후 이미지 미리보기 배열 초기화
     imagePreviews.value = [];
     alert('Images uploaded successfully!');
