@@ -1,35 +1,41 @@
 <template>
-  <div class="flex justify-between">
-    <GalleryFilter
-      v-model:id="params.id_like"
-      :limit="params._limit"
-      @update:limit="changeLimit"
-    >
-    </GalleryFilter>
-
-    <div class="flex items-center space-x-4">
-      <button
-        v-if="deleteActive"
-        @click="removeItems"
-        class="btn btn-outline btn-primary"
+  <div class="flex justify-between mb-10 mr-10">
+    <button class="ml-10" @click="goFolder">
+      <font-awesome-icon icon="fa-solid fa-arrow-left" size="lg" />
+    </button>
+    <div class="flex">
+      <GalleryFilter
+        v-model:id="params.id_like"
+        :limit="params._limit"
+        @update:limit="changeLimit"
+        class="mx-2"
       >
-        삭제
-      </button>
-      <AppDropdown>
-        <template v-slot>
-          <li onclick="gallery_create.showModal()">
-            <a>추가</a>
-          </li>
-          <li v-if="!deleteActive" @click="toggleDelete"><a>삭제</a></li>
-          <li v-if="deleteActive" @click="toggleDelete">
-            <a>삭제 취소 </a>
-          </li>
-        </template>
-      </AppDropdown>
+      </GalleryFilter>
+
+      <div class="flex items-center space-x-4">
+        <button
+          v-if="deleteActive"
+          @click="removeItems"
+          class="btn btn-outline btn-primary"
+        >
+          삭제
+        </button>
+        <AppDropdown>
+          <template v-slot>
+            <li onclick="gallery_create.showModal()">
+              <a>추가</a>
+            </li>
+            <li v-if="!deleteActive" @click="toggleDelete"><a>삭제</a></li>
+            <li v-if="deleteActive" @click="toggleDelete">
+              <a>삭제 취소 </a>
+            </li>
+          </template>
+        </AppDropdown>
+      </div>
     </div>
   </div>
 
-  <AppGrid :items="items">
+  <AppGrid class="mb-10" :items="items">
     <template v-slot="{ item }">
       <GalleryCard
         :src="item.pathUrl"
@@ -86,12 +92,13 @@
       </button>
     </template>
   </AppModal>
-
-  <AppPagination
-    :current-page="params._page"
-    :page-count="pageCount"
-    @page="page => (params._page = page)"
-  />
+  <div class="flex justify-center">
+    <AppPagination
+      :current-page="params._page"
+      :page-count="pageCount"
+      @page="page => (params._page = page)"
+    />
+  </div>
 </template>
 
 <script setup>
@@ -116,11 +123,11 @@ const router = useRouter();
 
 // 조회 관련 파라미터
 const params = ref({
-  _sort: 'createdAt', // 무엇을
-  _order: 'desc', // 내림차순
   _limit: 6, // 몇개씩 조회
   _page: 1, // 현재 페이지를 조회
-  id_like: '', // 해당 요소 검색 기능
+  _sort: 'id', // 무엇을
+  _order: 'desc', // 내림차순
+  // id_like: '', // 해당 요소 검색 기능
 });
 
 // 페이지네이션에서 페이지의 수는 전체 item 수로 결정남
@@ -159,14 +166,12 @@ const coupleId = ref(1);
 const items = ref([]);
 const fetchAlbums = async () => {
   if (route.params.folderName === '전체보기') {
+    console.log('전체보기');
     try {
-      const { data, headers } = await getGalleryTotalList(
-        coupleId.value,
-        params.value,
-      );
+      const { data } = await getGalleryTotalList(coupleId.value, params.value);
+      console.log(data);
       items.value = data;
-      // totalCount.value = headers['x-total-count'];
-      totalCount.value = data.length;
+      totalCount.value = data[0].size;
       // console.log(data);
       // 이거 활용해서 분류에 이용하기!!!!
       console.log(route.params.folderName);
@@ -177,15 +182,15 @@ const fetchAlbums = async () => {
     // 서버 켜지면 test 필요.
     // 폴더명으로 필터처리 후 조회(백에서 해줌)
     try {
-      const { data, headers } = await getGalleryFolderList(
+      const { data } = await getGalleryFolderList(
         coupleId.value,
         route.params.folderName,
         params.value,
       );
       console.log('폴더 조회');
       items.value = data;
-      // totalCount.value = headers['x-total-count'];
-      totalCount.value = data.length;
+      totalCount.value = data[0].size;
+      // totalCount.value = data.length;
       // console.log(data);
     } catch (err) {
       console.error(err);
@@ -274,7 +279,7 @@ const uploadImages = async () => {
     await createGallery(coupleId.value, formData);
     // 이미지 업로드 후 이미지 미리보기 배열 초기화
     imagePreviews.value = [];
-    alert('Images uploaded successfully!');
+    await fetchAlbums();
   } catch (error) {
     console.error('Error uploading images:', error);
   }
@@ -283,6 +288,13 @@ const uploadImages = async () => {
 // 취소했을 때도 미리보기 남아있는 것을 방지하기 위함
 const cancelImages = () => {
   imagePreviews.value = [];
+};
+
+// folder화면으로 가기
+const goFolder = () => {
+  router.push({
+    name: 'GalleryFolder',
+  });
 };
 
 // // 참고 (데이터 전송 관련 방법 2가지)
