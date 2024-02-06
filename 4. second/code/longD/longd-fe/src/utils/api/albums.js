@@ -1,5 +1,10 @@
 import { api } from '.';
 
+// 현재 커플의 갤러리 폴더 이름 리스트를 DB에서 불러옵니다.
+export function getGalleryFolderName(coupleId) {
+  return api.get(`/galleryCategory/getList/${coupleId}`);
+}
+
 // 현재 커플의 갤러리 전체를 DB에서 불러옵니다.
 export function getGalleryTotalList(coupleId, params) {
   return api.get(`/gallery/getList/${coupleId}`, { params });
@@ -16,12 +21,17 @@ export function getGalleryDetail(id) {
   return api.get(`/gallery/get/${id}`);
 }
 
+// 갤러리 DB에 폴더 값을 저장합니다, 로그인한 회원의 coupleId가 같이 입력됩니다.
+export function createFolder(data) {
+  return api.post('/galleryCategory/add', data);
+}
+
 // 갤러리 DB에 값을 저장합니다, 로그인한 회원의 coupleId가 같이 입력됩니다.
 export function createGallery(coupleId, data) {
   return api.post(`/gallery/add/${coupleId}`, data, {
-    header: {
-      'Context-Type': 'multipart/form-data',
-    },
+    // headers: {
+    //   'Content-Type': 'multipart/form-data',
+    // },
   });
 }
 
