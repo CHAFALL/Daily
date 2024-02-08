@@ -19,7 +19,10 @@
       </div>
     </figure>
     <div class="card-body">
-      <h2 class="card-title">{{ id }}</h2>
+      <h2 class="card-title">
+        {{ id }}
+        {{ folderName }}
+      </h2>
     </div>
   </div>
 </template>
@@ -38,6 +41,9 @@ const props = defineProps({
   },
   deleteActive: {
     type: Boolean,
+  },
+  folderName: {
+    type: String,
   },
 });
 

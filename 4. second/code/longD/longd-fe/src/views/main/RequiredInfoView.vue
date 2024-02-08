@@ -8,12 +8,22 @@
         아래 필수 정보를 확인하고, 수정 후 제출 버튼을 눌러주세요.
       </p>
     </div>
-
     <form action="#" method="POST" class="mx-auto mt-10 max-w-xl sm:mt-10">
       <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
         <div>
-          <label for="img">프로필 사진 업로드</label>
-          <input type="file" name="img" id="img" autocomplete="img" />
+          <label class="btn btn-primary" for="img">프로필 사진 업로드</label>
+          <input
+            type="file"
+            id="img"
+            autocomplete="img"
+            @change="fileUpload"
+            hidden
+          />
+          <img
+            v-if="Info_state.profilePicture"
+            :src="Info_state.profilePicture"
+            alt="Uploaded Image"
+          />
         </div>
         <!-- ID -->
         <div class="sm:col-span-2">
@@ -25,13 +35,12 @@
           <div class="mt-2.5">
             <input
               type="text"
-              v-model="Info_state.userId"
+              v-model="Info_state.nickname"
               name="nickname"
               id="nickname"
               autocomplete="nickname"
               class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
-            <!-- <input type="text" name="nickname" id="nickname" autocomplete="nickname" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" /> -->
           </div>
         </div>
         <!-- 이름 -->
@@ -50,7 +59,6 @@
               autocomplete="name"
               class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
-            <!-- <input type="text" name="name" id="name" autocomplete="name" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" /> -->
           </div>
         </div>
         <!-- 생년월일 -->
@@ -69,7 +77,6 @@
               autocomplete="birthday"
               class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
-            <!-- <input @change="check" v-model="test" type="date" name="birth" id="birth" autocomplete="birthday" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" /> -->
           </div>
         </div>
         <!-- 이메일 -->
@@ -88,7 +95,6 @@
               autocomplete="email"
               class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
-            <!-- <input type="email" name="email" id="email" autocomplete="email" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" /> -->
           </div>
         </div>
         <!-- 거주국가랑 성별도 입력해야함 -->
@@ -104,7 +110,6 @@
             name="gender"
             class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           >
-            <!-- <select id="gender" name="gender" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" > -->
             <option value="선택안함">선택안함</option>
             <option value="남성">남성</option>
             <option value="여성">여성</option>
@@ -121,8 +126,8 @@
             class="block text-sm font-semibold leading-6 text-gray-900"
             >거주국</label
           >
-          <!-- <select v-model="Info_state.addressNation" id="addressNation" name="addressNation" class="h-full rounded-md border-0 bg-transparent bg-none py-0 pl-4 pr-9 text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"> -->
           <select
+            v-model="Info_state.address_nation"
             id="addressNation"
             name="addressNation"
             class="h-full rounded-md border-0 bg-transparent bg-none py-0 pl-4 pr-9 text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
@@ -140,6 +145,7 @@
           >
           <!-- 나중에 나라 고르면 도시 선택하도록 만들기 -->
           <select
+            v-model="Info_state.address_city"
             id="addressCity"
             name="addressCity"
             class="h-full rounded-md border-0 bg-transparent bg-none py-0 pl-4 pr-9 text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
@@ -153,7 +159,7 @@
         <!-- 이거 DB로 보내서 확인시키기 -->
         <br />
         <div class="sm:col-span-2">
-          <strong>🪄상대에게 전달할 연결코드를 정해주세요.</strong>
+          <strong>♡ 상대에게 전달할 연결코드를 정해주세요.</strong>
         </div>
         <div>
           <label
@@ -163,8 +169,8 @@
           >
           <div class="mt-2.5">
             <input
-              type="text"
-              v-model="code"
+              type="number"
+              v-model="Info_state.code"
               name="code"
               id="code"
               autocomplete="code"
@@ -208,6 +214,7 @@
 import { ref, onMounted } from 'vue';
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 import { BaseInfo, sendinfo } from '@/utils/api/user';
+import { uploadImage } from '@/utils/api/photo';
 import { useRouter } from 'vue-router';
 import { useMainDisplayStore } from '@/stores/maindisplay.js';
 import Swal from 'sweetalert2';
@@ -215,8 +222,21 @@ import Swal from 'sweetalert2';
 const router = useRouter();
 const mainDisplayStore = useMainDisplayStore();
 const Info_state = ref({});
-const code = ref();
 const codeCheck = ref();
+
+const fileUpload = event => {
+  const formData = new FormData();
+  formData.append('file', event.target.files[0]);
+  uploadImage(
+    formData,
+    success => {
+      Info_state.value.profilePicture = success.data;
+    },
+    error => {
+      console.log('사진을 변환할 수 없어요.', error);
+    },
+  );
+};
 
 onMounted(() => {
   BaseInfo(
@@ -230,18 +250,17 @@ onMounted(() => {
 });
 
 const send = () => {
-  if (code.value === codeCheck.value) {
+  if (Info_state.value.code === codeCheck.value) {
     if (
-      Info_state.value.userId &&
+      Info_state.value.nickname &&
       Info_state.value.name &&
       Info_state.value.email &&
       Info_state.value.birth &&
-      code.value
+      Info_state.value.code
     ) {
       sendinfo(
         Info_state.value,
         data => {
-          //success
           console.log('sendinfo 성공');
           mainDisplayStore.logOutPage = false;
           router.push({ name: 'ConnectCode' });

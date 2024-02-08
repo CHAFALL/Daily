@@ -123,6 +123,7 @@ import {
   deleteGallery,
   getGalleryFolderList,
 } from '@/utils/api/albums';
+import { uploadImage } from '@/utils/api/photo';
 import { useGalleryStore } from '@/stores/gallery.js';
 const galleryStore = useGalleryStore();
 
@@ -241,6 +242,7 @@ const toggleDelete = () => {
 };
 
 // 삭제 체크 표시된 item들 삭제
+
 const removeItems = async () => {
   if (confirm('정말로 삭제하시겠습니까?') === false) {
     return;
@@ -256,12 +258,13 @@ const removeItems = async () => {
 };
 
 // 생성 모달 관련
+const images = ref([]); // 저장될 이미지
 const imagePreviews = ref([]); // 이미지 미리보기를 위한 배열
-
 const handleFileChange = event => {
   const files = event.target.files;
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
+    images.value.push(file);
     const reader = new FileReader();
     reader.onload = () => {
       imagePreviews.value.push(reader.result); // 이미지 미리보기 배열에 추가
@@ -272,6 +275,7 @@ const handleFileChange = event => {
 
 const removeImage = index => {
   imagePreviews.value.splice(index, 1); // 이미지 미리보기 삭제
+  images.value.splice(index, 1); // 저장될 이미지 삭제
 };
 
 let categoryId = null;
@@ -290,27 +294,44 @@ const getCategoryId = async () => {
   }
 };
 
+const pathUrlList = ref([]);
+
 // 넣었던 사진은 또 못 넣는 버그가 있음
 const uploadImages = async () => {
   const formData = new FormData();
-  for (let i = 0; i < imagePreviews.value.length; i++) {
-    // formData.append('images[]', imagePreviews.value[i]);
-    formData.append('pathUrl', 'https://picsum.photos/200/300');
-    formData.append('categoryId', categoryId);
-    // 카테고리 이름도 보내주기
-    // console.log(formData);
-    // console.log(imagePreviews.value);
-    // const imageFile = formData.get('images[]');
-    // console.log(imageFile);
-    // const path_url = formData.get('path_url[]');
-    // console.log(path_url);
+  for (let i = 0; i < images.value.length; i++) {
+    formData.append('file', images.value[i]);
+    uploadImage(
+      formData,
+      success => {
+        pathUrlList.value = success.data;
+        console.log(pathUrlList.value);
+      },
+      error => {
+        console.log('사진을 변환할 수 없어요.', error);
+      },
+    );
   }
+
+  const formData2 = [];
+  console.log(pathUrlList.value);
+  let data = {};
+  for (let i = 0; i < pathUrlList.value.length; i++) {
+    data = {
+      pathUrl: pathUrlList.value[i],
+      categoryId: categoryId,
+    };
+
+    formData2.push(data);
+  }
+  console.log(formData2.value);
 
   try {
     // 서버로 이미지 전송하는 API 호출
-    await createGallery(coupleId.value, formData);
+    // await createGallery(coupleId.value, formData2);
     // 이미지 업로드 후 이미지 미리보기 배열 초기화
     console.log('사진 추가');
+    images.value = [];
     imagePreviews.value = [];
     await fetchAlbums();
   } catch (error) {
