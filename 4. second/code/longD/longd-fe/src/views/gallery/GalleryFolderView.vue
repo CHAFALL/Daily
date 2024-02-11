@@ -1,10 +1,10 @@
 <template>
-  <div class="flex justify-end">
-    <div class="flex items-center space-x-4">
+  <div class="flex justify-end mb-10 mr-10">
+    <div class="flex items-center space-x-4" style="z-index: 999">
       <AppDropdown>
         <template v-slot>
-          <li @click="folderCreate"><a>폴더 생성</a></li>
-          <li @click="folderDelete"><a>폴더 삭제</a></li>
+          <li class="font-bold" @click="folderCreate"><a>폴더 생성</a></li>
+          <li class="font-bold" @click="folderDelete"><a>폴더 삭제</a></li>
         </template>
       </AppDropdown>
     </div>
@@ -12,13 +12,27 @@
 
   <GalleryFolderGrid :items="folderFirstItem" @totalView="totalView">
     <template v-slot="{ item }">
-      <GalleryCard
-        :id="item.id"
-        :src="item.pathUrl"
-        :folderName="item.folderName"
-        @click="goList(item.folderName)"
-      >
-      </GalleryCard>
+      <div class="stack w-full h-64" @click="goList(item.folderName)">
+        <GalleryCard
+          :id="item.id"
+          :src="item.pathUrl"
+          :folderName="item.folderName"
+        >
+        </GalleryCard>
+        <GalleryCard
+          :id="item.id"
+          :src="item.pathUrl"
+          :folderName="item.folderName"
+        >
+        </GalleryCard>
+        <GalleryCard
+          :id="item.id"
+          :src="item.pathUrl"
+          :folderName="item.folderName"
+        >
+        </GalleryCard>
+      </div>
+      <p class="mt-2 ml-4 font-bold">{{ item.folderName }}</p>
     </template>
   </GalleryFolderGrid>
 </template>
@@ -92,14 +106,13 @@ const fetchFolders = async () => {
           coupleId.value,
           params2.value,
         );
-        // if문 이용해서 data2 꼬라지 보고
         let data3 = {};
         if (data2.length === 0) {
           console.log('데이터가 없습니다.');
           data3 = {
             folderName: folder.name,
             pathUrl:
-              'https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg',
+              'https://i.pinimg.com/564x/b4/bd/75/b4bd756f0d38cf1589b6a9ebc8b5fc32.jpg',
           };
         } else {
           data3 = {
@@ -111,10 +124,8 @@ const fetchFolders = async () => {
       } catch (err) {
         console.error(err);
       }
+      console.log(folderFirstItem.value);
     }
-
-    console.log('------------------');
-    // console.log(folders.value);
   } catch (err) {
     console.error(err);
   }
