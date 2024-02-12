@@ -72,7 +72,10 @@
 
     <template v-slot:footer>
       <!-- 파일 업로드 입력 필드 -->
-      <label for="file-upload" class="btn btn-outline btn-primary mt-4">
+      <label
+        for="file-upload"
+        class="btn btn-outline border-pink-400 mt-4 text-gray-500 hover:bg-pink-300"
+      >
         파일 선택하기
       </label>
       <input
@@ -85,11 +88,14 @@
       <button
         @click="uploadImages"
         :disabled="imagePreviews.length === 0"
-        class="btn btn-outline btn-primary mx-2"
+        class="btn btn-outline border-pink-400 mt-4 text-gray-500 hover:bg-pink-300 mx-2"
       >
         등록하기
       </button>
-      <button @click="cancelImages" class="btn btn-outline btn-primary mx-2">
+      <button
+        @click="cancelImages"
+        class="btn btn-outline border-gray-400 hover:bg-gray-300 mx-2"
+      >
         취소
       </button>
     </template>
