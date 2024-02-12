@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-end mb-10 mr-10">
-    <div class="flex items-center space-x-4 z-50">
+    <div class="flex items-center space-x-4" style="z-index: 999">
       <AppDropdown>
         <template v-slot>
           <li class="font-bold" @click="folderCreate"><a>폴더 생성</a></li>

@@ -29,7 +29,7 @@
               <a class="font-bold">삭제</a>
             </li>
             <li v-if="deleteActive" @click="toggleDelete">
-              <a class="font-bold">삭제 취소 </a>
+              <a>삭제 취소 </a>
             </li>
           </template>
         </AppDropdown>
