@@ -2,6 +2,7 @@
   <!-- h-1/4, h-3/4 - 차지할 비율을 나타냄, w-1/4도 있음(가로버전) -->
   <div class="h-[45rem] flex flex-col">
     <ChatDisplayView
+      @chatoff="TurnOffChat"
       :messages="messages"
       :count="count"
       class="border-4 border-blue-500 h-3/4"
@@ -27,6 +28,7 @@ const messages = reactive([]);
 const senderId = ref('');
 const room = ref(null);
 const count = ref(0);
+const emit = defineEmits(['offChat']);
 
 // const createRoom = async () => {
 //   const params = new URLSearchParams();
@@ -42,7 +44,9 @@ const count = ref(0);
 //   const response = await stompApi.get(`/chat/room/${coupleId.value}`);
 //   room.value = response.data;
 // };
-
+const TurnOffChat = function () {
+  emit('offChat');
+};
 const sendMessage = message => {
   ws.value.send(
     '/app/chat/message',
@@ -75,13 +79,6 @@ const connect = function (couple, sender) {
     frame => {
       coupleId.value = couple;
       senderId.value = sender;
-      console.log(
-        '커넥트때 확인용',
-        coupleId.value,
-        useUserStore.getUserState?.coupleListId,
-        couple,
-        sender,
-      );
       ws.value.subscribe(`/topic/chat/room/${couple}`, message => {
         const recv = JSON.parse(message.body);
         recvMessage(recv);

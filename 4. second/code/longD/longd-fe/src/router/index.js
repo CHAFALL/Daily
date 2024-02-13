@@ -12,13 +12,14 @@ import TestMapView from '@/views/map/TestMapView.vue';
 import MapView from '@/views/map/MapView.vue';
 import MapSearch from '@/components/plan/MapSearch.vue';
 import MapPlan from '@/components/plan/MapPlan.vue';
-import PlanList from '@/components/plan/PlanList.vue';
-import PlanDetail from '@/components/plan/PlanDetail.vue';
+import PlanList from '@/views/map/PlanListView.vue';
+import PlanDetail from '@/views/map/PlanDetailView.vue';
 import ClosedView from '@/views/main/ClosedView.vue';
 import LoginSignUpView from '@/views/main/LoginSignUpView.vue';
 import RequiredInfoView from '@/views/main/RequiredInfoView.vue';
 import ConnectCodeView from '@/components/main/ConnectCodeView.vue';
 import GalleryFolderView from '@/views/gallery/GalleryFolderView.vue';
+import bucketListView from '@/views/bucketList/bucketListView.vue';
 import { useUserStore } from '@/stores/user.js';
 import { loginstate } from '@/utils/api/user';
 
@@ -139,6 +140,11 @@ const router = createRouter({
       name: 'Login',
       component: LoginSignUpView,
     },
+    {
+      path: '/bucketList',
+      name: 'bucketList',
+      component: bucketListView,
+    },
   ],
 });
 router.beforeEach((to, from, next) => {
@@ -153,8 +159,11 @@ router.beforeEach((to, from, next) => {
       if (!userStore.isLogin) {
         next({ name: 'Login' });
       } else {
-        // next();
         if (userStore.getUserState.coupleListId !== null) {
+          if (to.name === 'ConnectCode') {
+            next('/');
+            return;
+          }
           next();
         } else {
           if (to.name === 'ConnectCode') {

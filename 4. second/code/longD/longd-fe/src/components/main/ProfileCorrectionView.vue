@@ -57,6 +57,27 @@
       </div>
     </div>
 
+    <!-- 닉네임 -->
+    <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+      <div class="sm:col-span-2">
+        <label
+          for="nickname"
+          class="block text-sm font-semibold leading-6 text-gray-900"
+          >닉네임</label
+        >
+        <div class="mt-2.5">
+          <input
+            type="text"
+            v-model="userInfo.nickname"
+            name="nickname"
+            id="nickname"
+            autocomplete="nickname"
+            class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          />
+        </div>
+      </div>
+    </div>
+
     <!-- 생년월일 -->
     <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
       <div class="sm:col-span-2">
@@ -156,10 +177,9 @@
         <div class="mt-2.5">
           <!-- v-for를 써서 userStore.closedPassword 해야한다 -->
           <input
-            type="number"
-            min="0000"
-            max="9999"
+            type="text"
             v-model="userInfo.passwordSimple"
+            @input="handlePasswordInput"
             name="closedPassword[index]"
             id="closedPassword"
             autocomplete="closedPassword"
@@ -191,6 +211,7 @@ import router from '@/router';
 import { sendinfo, getNationList } from '@/utils/api/user';
 import { uploadImage } from '@/utils/api/photo';
 import { useUserStore } from '@/stores/user.js';
+import Swal from 'sweetalert2';
 
 const userStore = useUserStore();
 const userInfo = userStore.getUserState;
@@ -214,11 +235,10 @@ const fileUpload = event => {
   const formData = new FormData();
   formData.append('file', event.target.files[0]);
   console.log(event.target.files[0]);
-  console.log(userInfo.profilePicture);
   uploadImage(
     formData,
     success => {
-      userInfo.profilePicture = success.data[0];
+      userInfo.profilePicture = success.data[0]['pathUrl'];
     },
     success2 => {
       console.log('사진 변환 완료!');
@@ -229,8 +249,25 @@ const fileUpload = event => {
   );
 };
 
+//이메일형식확인용
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const choiceDate = () => {
   console.log(userInfo);
+  const today = new Date().toISOString().split('T')[0];
+  if (userInfo.birth > today) {
+    Swal.fire('생년월일을 확인해주세요');
+    return;
+  }
+  if (!emailRegex.test(userInfo.email)) {
+    Swal.fire('이메일 형식을 확인해주세요');
+    return;
+  }
+  if (userInfo.passwordSimple.length !== 4) {
+    Swal.fire('화면잠금 비밀번호를 확인해주세요');
+    return;
+  }
+
   sendinfo(
     userInfo,
     success => {
