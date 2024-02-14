@@ -5,13 +5,14 @@
       @chatoff="TurnOffChat"
       :messages="messages"
       :count="count"
-      class="border-4 border-blue-500 h-3/4"
+      :nickname="nickname"
+      :lovername="lovername"
+      class="overflow-scroll h-3/4 w-full"
     ></ChatDisplayView>
     <ChatInputView
       @messageToMain="sendMessage"
-      class="border-4 border-blue-500 h-1/4"
-    >
-    </ChatInputView>
+      class="w-full h-1/12"
+    ></ChatInputView>
   </div>
 </template>
 
@@ -28,22 +29,10 @@ const messages = reactive([]);
 const senderId = ref('');
 const room = ref(null);
 const count = ref(0);
+const nickname = ref('');
+const lovername = ref('');
 const emit = defineEmits(['offChat']);
 
-// const createRoom = async () => {
-//   const params = new URLSearchParams();
-//   params.append('roomName', coupleId.value);
-//   try {
-//     const response = await stompApi.post('/chat/room', params);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
-
-// const findRoom = async () => {
-//   const response = await stompApi.get(`/chat/room/${coupleId.value}`);
-//   room.value = response.data;
-// };
 const TurnOffChat = function () {
   emit('offChat');
 };
@@ -107,7 +96,22 @@ const connect = function (couple, sender) {
 
 onMounted(() => {
   if (userStore.getUserState?.coupleListId !== undefined) {
-    console.log('온마운트시점', userStore.getUserState?.coupleListId);
+    nickname.value = userStore.getUserState?.nickname;
+    coupleId.value = userStore.getUserState?.coupleListId;
+    stompApi
+      .get('/user/findNickname', {
+        params: {
+          coupleListId: userStore.getUserState?.coupleListId,
+          myNickname: userStore.getUserState?.nickname,
+        },
+      })
+      .then(response => {
+        lovername.value = response.data;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
     stompApi
       .get(`/chat/messages/${userStore.getUserState?.coupleListId}?size=30`)
       .then(res => {
@@ -117,7 +121,6 @@ onMounted(() => {
         });
       })
       .then(res => {
-        coupleId.value = userStore.getUserState?.coupleListId;
         senderId.value = userStore.getUserState?.id;
         connect(
           userStore.getUserState?.coupleListId,

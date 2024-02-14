@@ -21,12 +21,16 @@
       </button>
     </div>
     <div class="flex flex-col">
-      <div class="flex flex-1">
-        <div class="w-1/2 border-4 border-blue-400 aspect-ratio">
+      <div class="flex gap-3">
+        <div
+          class="w-1/2 aspect-ratio shadow-xl flex justify-center items-center rounded-xl"
+        >
           <ViduMine v-if="viduStore.publisherTest" />
           <div v-else class="border border-blue-400">아직 사람이 없을 시</div>
         </div>
-        <div class="mx-4 w-1/2 border-4 border-blue-400 aspect-ratio">
+        <div
+          class="w-1/2 aspect-ratio shadow-xl flex justify-center items-center rounded-xl"
+        >
           <ViduYours v-if="viduStore.hasSubscriber" />
           <div v-else class="border border-blue-400">아직 사람이 없을 시</div>
         </div>

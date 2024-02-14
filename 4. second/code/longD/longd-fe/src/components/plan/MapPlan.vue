@@ -1,16 +1,43 @@
 <template>
   <!-- 제목 입력 -->
-  <label for="title">제목</label>
-  <input id="title" type="text" v-model="planTitle" />
-  <!-- 일정 입력하기 -->
-  <div>
-    <label for="start">시작 날짜:</label>
-    <input id="start" type="date" v-model="startDay" />
-    <label for="end">종료 날짜:</label>
-    <input id="end" type="date" v-model="endDay" />
-    <button class="btn" @click="addRangeToList">일정 추가</button>
-    <button class="btn btn-outline" @click="clearList">일정 초기화</button>
+  <div class="flex">
+    <label class="flex items-center" for="title">제목: </label>
+    <input
+      class="input input-bordered input-sm flex-1"
+      id="title"
+      type="text"
+      placeholder="일정 제목을 입력해주세요."
+      v-model="planTitle"
+    />
   </div>
+  <!-- 일정 입력하기 -->
+  <div class="flex flex-col">
+    <div class="flex justify-between">
+      <label for="start">시작 날짜:</label>
+      <input id="start" type="date" v-model="startDay" />
+    </div>
+    <div class="flex justify-between">
+      <label for="end">종료 날짜:</label>
+      <input id="end" type="date" v-model="endDay" />
+    </div>
+  </div>
+  <div class="flex justify-end mr-1">
+    <button
+      class="btn btn-sm mr-1"
+      style="background-color: #ffeded"
+      @click="addRangeToList"
+    >
+      일정 추가
+    </button>
+    <button
+      class="btn btn-sm"
+      style="background-color: #ffeded"
+      @click="clearList"
+    >
+      일정 초기화
+    </button>
+  </div>
+
   <!-- 즐겨찾기 목록 -->
   <p>즐겨찾기 목록</p>
   <!-- 로컬에 저장할 수 있도록 하기 -->
@@ -55,20 +82,23 @@
       </div>
     </div>
   </div>
-  <button class="btn" @click="sendPlan()">저장</button>
+
+  <button @click="openModal()">저장</button>
 </template>
 
 <script setup>
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { usePlanStore } from '@/stores/plan';
-import { postPlanData } from '@/utils/api/plan';
-
+import { postPlanAllData } from '@/utils/api/plan';
 import Swal from 'sweetalert2';
 
-// 즐겨찾기 항목용
+const router = useRouter();
+
+// 즐겨찾기용
 const planStore = usePlanStore();
 
-// 백에 보낼 것들 전부 넣기
+// 최종 백에 넘겨줄 것 다 담을 변수
 const planAll = ref();
 
 // 일정 제목(백에 넘겨줄 것)
@@ -80,9 +110,8 @@ const endDay = ref('');
 // 날짜 리스트를 저장할 배열
 const dateList = ref([]);
 
-// 시작일과 종료일이 유효한 범위인지 확인하는 computed 속성
+// 시작일과 종료일이 유효한 범위인지 확인
 const isRangeValid = computed(() => {
-  // 시작일과 종료일이 모두 선택되었고, 시작일이 종료일보다 이전인지 확인
   return startDay.value && endDay.value && startDay.value <= endDay.value;
 });
 
@@ -99,7 +128,8 @@ const addRangeToList = () => {
         daysToAdd.push(isoDate);
       }
     }
-    dateList.value = dateList.value.concat(daysToAdd).sort(); // 날짜를 추가하고 정렬
+    // 날짜를 추가하고 정렬
+    dateList.value = dateList.value.concat(daysToAdd).sort();
   } else {
     Swal.fire('날짜의 범위가 맞지 않습니다. 확인 후 다시 입력해주세요!');
   }
@@ -128,7 +158,7 @@ const removeDatesOutsideRange = (start, end) => {
 };
 
 // 시작일과 종료일이 변경될 때 새로운 일정 범위를 계산하여
-// 해당 범위 이외의 날짜를 리스트에서 제거(위 함수 사용)
+// 해당 범위 이외의 날짜를 리스트에서 제거(위에 있는 removeDatesOutsideRange 함수 사용)
 const handleDateRangeChange = () => {
   if (isRangeValid.value) {
     const start = new Date(startDay.value);
@@ -147,7 +177,6 @@ watch([startDay, endDay], () => {
 
 // 드래그 앤 드롭 이벤트 처리
 const onDragStart = place => {
-  // event.dataTransfer.setData('place', JSON.stringify(place));
   event.dataTransfer.setData('application/json', JSON.stringify(place));
 };
 
@@ -184,7 +213,7 @@ const onDrop = (event, date) => {
   console.log(place, date, placeList.value);
 };
 
-// 삭제버튼 눌렀을 때 제거되도록
+// 삭제버튼 눌렀을 때 제거
 const removePlace = (date, placeIndex) => {
   // datePlaceMap에서 제거
   const places = datePlaceMap.value[date];
@@ -196,35 +225,60 @@ const removePlace = (date, placeIndex) => {
   console.log(placeList.value);
 };
 
+// 모달 띄우기
+const openModal = () => {
+  Swal.fire({
+    title:
+      "일정 계획이 모두 끝나셨나요? 아래 '여행 일정 생성' 버튼을 누르시면 여행일정이 생성됩니다.",
+    showCancelButton: true,
+    allowEscapeKey: false,
+    confirmButtonText: '여행 일정 생성',
+    cancelButtonText: '계속 편집 하기',
+  }).then(result => {
+    if (result.isConfirmed) {
+      if (
+        planTitle.value &&
+        startDay.value &&
+        endDay.value &&
+        placeList.value.length !== 0
+      ) {
+        console.log('sendPlan함수 실행!');
+        sendPlan();
+      } else {
+        console.log(
+          planTitle.value,
+          startDay.value,
+          endDay.value,
+          placeList.value,
+        );
+        Swal.fire('입력되지 않은 정보가 있습니다. 다시 확인해주세요.');
+      }
+    } else {
+      Swal.fire('일정 계획이 끝나면 꼭 저장 버튼을 눌러주세요!');
+    }
+  });
+};
+
 // 정보 보내기
 const sendPlan = () => {
-  console.log(
-    'planTitle :',
-    planTitle.value,
-    'startDay :',
-    startDay.value,
-    'endDay :',
-    endDay.value,
-    'placeList :',
-    placeList.value,
-  );
+  console.log('sendPlan 함수 실행될 예정');
   planAll.value = {
     title: planTitle.value,
     dateStart: startDay.value,
     dateEnd: endDay.value,
     planInfo: placeList.value,
   };
-  postPlanData(
+  postPlanAllData(
     planAll.value,
     success => {
       console.log('여행일정이 등록되었습니다.', success);
       Swal.fire('저장되었습니다.');
+      router.push({ name: 'PlanList' });
     },
     error => {
       console.log('여행 일정이 등록되지 않음', error);
     },
   );
-
   console.log(planAll.value);
 };
 

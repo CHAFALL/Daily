@@ -61,7 +61,12 @@
         </li> -->
         <li>
           <details ref="dropdown2">
-            <summary>여행</summary>
+            <summary
+              :class="{ 'text-pink-400': isMapActive || isPlandListActive }"
+            >
+              여행
+            </summary>
+
             <ul
               class="p-2 bg-base-100 rounded-t-none"
               style="z-index: 999"
@@ -121,7 +126,7 @@
         <li @click="logOut()">
           <span>로그아웃</span>
         </li>
-        <li>
+        <!-- <li>
           <details>
             <summary>profile</summary>
             <ul class="p-2 bg-base-100 rounded-t-none">
@@ -137,7 +142,7 @@
               </li>
             </ul>
           </details>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>
@@ -165,9 +170,9 @@ const isGalleryActive = computed(
 const isCalendarActive = computed(
   () => router.currentRoute.value.name === 'Calendar',
 );
-const isTestMapActive = computed(
-  () => router.currentRoute.value.name === 'TestMap',
-);
+// const isTestMapActive = computed(
+//   () => router.currentRoute.value.name === 'TestMap',
+// );
 const isMapActive = computed(
   () =>
     router.currentRoute.value.name === 'MapSearch' ||
@@ -218,6 +223,11 @@ function closeDropdown2() {
 </script>
 
 <style scoped>
+a,
+summary,
+span {
+  font-size: 24px;
+}
 .image {
   width: 40px;
   height: 40px;
