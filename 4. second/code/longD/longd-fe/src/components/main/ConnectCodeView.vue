@@ -7,7 +7,8 @@
       <p class="mt-2 text-lg leading-8 text-gray-600">
         상대의 정보를 입력해주세요! 나의 정보가 아닌
         <strong>상대의 정보</strong>를 입력해야 연결이 됩니다. 둘 중 한 명만
-        입력하면 됩니다. * 나의 연결 코드 : {{ userStore.getUserState.code }}
+        입력하면 됩니다. <br />
+        <strong>* 나의 연결 코드 : {{ userStore.getUserState.code }}</strong>
       </p>
     </div>
     <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
@@ -118,40 +119,35 @@ const coupleData = ref();
 const userStore = useUserStore();
 const startDay = ref();
 const choiceDate = async () => {
-  // checkInfo.value.name = checkInfo.name;
-  // checkInfo.value.birth = checkInfo.birth;
-  // checkInfo.value.email = checkInfo.email;
-  // checkInfo.value.code = checkInfo.code;
-  // 백으로 보내주기
-  // 이름, 생일, 이메일, 연결코드가 동일하면 아래 실행, 동일하지 않으면 틀렸다고 뜨기
   coupleMatching(
     checkInfo.value,
     success => {
       console.log(success.data);
-      // 4가지 경우의 수
       if (success.data === '코드가 일치하지 않습니다.') {
         Swal.fire(
-          '코드가 일치하지 않습니다. 상대방이 전해준 코드가 맞는지 확인해주세요.',
+          '코드가 일치하지 않습니다.',
+          '상대방이 전해준 코드가 맞는지 확인해주세요.',
         );
         console.log(checkInfo.value);
       }
       if (success.data === '상대방 이름 또는 생일이 일치하지 않습니다.') {
         Swal.fire(
-          '상대방 이름 또는 생일이 일치하지 않습니다. 다시 확인해주세요.',
+          '상대방 이름 또는 생일이 일치하지 않습니다.',
+          '다시 확인해주세요.',
         );
         console.log(checkInfo.value);
       }
       if (success.data === '상대방이 coupleListId를 가지고 있는 상태입니다.') {
-        Swal.fire('이미 다른 사람과 연결된 사람입니다. 다시 확인해주세요.');
+        Swal.fire('이미 다른 사람과 연결된 사람입니다.', '다시 확인해주세요.');
         console.log(checkInfo.value);
       }
       if (success.data === '상대방이 존재하지 않습니다.') {
         Swal.fire(
-          '동일한 이메일 정보를 가진 사람이 없습니다. 다시 확인해주세요.',
+          '동일한 이메일 정보를 가진 사람이 없습니다.',
+          '다시 확인해주세요.',
         );
       }
       if (success.data === '커플리스트를 만드는데 성공했습니다.') {
-        // 커플리스트 정보조회&수정
         coupleDataGet(
           success => {
             coupleData.value = success.data;
@@ -177,8 +173,7 @@ const choiceDate = async () => {
             });
             startDay.value = date;
             if (startDay.value) {
-              await Swal.fire('아래 날짜가 맞나요?', startDay.value);
-              // 화면 전환(DB로 보내주고 - 이거는 메인화면에서 날짜 설정한 거 써야해..!)
+              await Swal.fire('우리가 처음 만난 날', startDay.value);
               coupleData.value.startDay = startDay.value;
               console.log(startDay.value);
               console.log(coupleData.value.startDay);

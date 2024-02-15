@@ -10,7 +10,11 @@
     </div>
   </div>
 
-  <GalleryFolderGrid :items="folderFirstItem" @totalView="totalView">
+  <GalleryFolderGrid
+    :items="folderFirstItem"
+    @totalView="totalView"
+    @totalVideo="totalVideo"
+  >
     <template v-slot="{ item }">
       <div class="stack w-full h-64" @click="goList(item.folderName)">
         <GalleryCard
@@ -47,7 +51,7 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { getGalleryFolderName, getGalleryFolderList } from '@/utils/api/albums';
 import Swal from 'sweetalert2';
-import { createFolder } from '@/utils/api/albums';
+import { createFolder, deleteFolder } from '@/utils/api/albums';
 import { useGalleryStore } from '@/stores/gallery.js';
 import GalleryCard from '@/components/gallery/GalleryCard.vue';
 import { useUserStore } from '@/stores/user';
@@ -147,9 +151,9 @@ const folderDelete = async () => {
     cancelButtonColor: '#a0a0a0',
   });
   if (folder) {
-    Swal.fire(`당신이 선택한 폴더는 ${folder} 입니다.`); // 삭제 모양으로 만들기
+    Swal.fire(`당신이 선택한 폴더는 ${folder.name} 입니다.`); // 삭제 모양으로 만들기
     try {
-      // await deleteFolder(형식 맞추기);
+      await deleteFolder(folder.id);
       fetchFolders();
     } catch (error) {
       console.error(error);
@@ -172,6 +176,12 @@ const totalView = () => {
     params: {
       folderName: '전체보기',
     },
+  });
+};
+
+const totalVideo = () => {
+  router.push({
+    name: 'VideoList',
   });
 };
 

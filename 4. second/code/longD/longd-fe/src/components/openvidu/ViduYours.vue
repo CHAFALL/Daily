@@ -11,6 +11,7 @@
 import { computed, watch, ref, onMounted } from 'vue';
 import { useViduStore } from '@/stores/vidu.js';
 import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router';
+import { Session } from 'openvidu-browser';
 const viduStore = useViduStore();
 const videoElement = ref();
 // const check = function () {
@@ -33,6 +34,15 @@ onMounted(() => {
   if (document.pictureInPictureElement) {
     exitPiPMode();
   }
+
+  watch(
+    () => viduStore.subscriber,
+    (newValue, oldValue) => {
+      if (viduStore.subscriber) {
+        viduStore.subscriber.addVideoElement(videoElement.value);
+      }
+    },
+  );
 });
 // watch(
 //   () => viduStore.hasSubscriber,
@@ -63,6 +73,10 @@ onBeforeRouteLeave((to, from, next) => {
       next();
     }, 50);
   } else {
+    if (to.name === 'Login' || to.name === 'Closed') {
+      exitPiPMode();
+      viduStore.removeUser();
+    }
     next();
   }
 });

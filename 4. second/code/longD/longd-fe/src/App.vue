@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto">
+  <div :class="{ 'chrome-zoom': isChrome }">
     <TheHeader
       v-show="
         userStore.isLogin &&
@@ -20,18 +20,19 @@
         "
         :class="{
           'w-1/4': isChatting,
-          'w-1/10': !isChatting,
+          'w-1/5': !isChatting,
         }"
       >
-        <div v-if="isChatting">
+        <div v-if="isChatting" class="fixed right-0">
           <TheChatting @offChat="chatFalse"></TheChatting>
         </div>
-        <div v-else>
+        <div v-else class="fixed right-10">
           <TheNochatting @onChat="chatTrue"></TheNochatting>
         </div>
-        <ViduMainView class="hihi"></ViduMainView>
       </div>
+      <ViduMainView class="hihi"></ViduMainView>
     </div>
+    <ViduMainView class="hihi"></ViduMainView>
   </div>
 </template>
 <script setup>
@@ -42,7 +43,7 @@ import TheNochatting from './layouts/TheNochatting.vue';
 import ViduMainView from './views/openvidu/ViduMainView.vue';
 import { useUserStore } from '@/stores/user.js';
 import { useMainDisplayStore } from '@/stores/maindisplay.js';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 const userStore = useUserStore();
 const mainDisplayStore = useMainDisplayStore();
 const isChatting = ref(true);
@@ -52,6 +53,12 @@ const chatFalse = function () {
 const chatTrue = function () {
   isChatting.value = true;
 };
+const isChrome = ref(false);
+onMounted(() => {
+  const userAgent = navigator.userAgent.toLowerCase();
+  isChrome.value =
+    /chrome/.test(userAgent) && !/edge|edg\/|opr\//.test(userAgent);
+});
 // if, else로 하지 말고, 버전 1,2,3으로 구분해서 채팅관련된 것이 아예 없도록 하던가 하면 될 듯.
 </script>
 
@@ -65,6 +72,19 @@ const chatTrue = function () {
 .check {
   display: none;
 }
+.chatting-container,
+.nochatting-container {
+  position: fixed;
+  top: 50%; /* 세로 가운데 정렬을 위해 top 50% 설정 */
+  right: 0; /* 오른쪽 끝으로 이동 */
+  transform: translateY(
+    -50%
+  ); /* 세로 가운데 정렬을 위해 translateY(-50%) 설정 */
+  z-index: 1000; /* 필요에 따라 z-index 조절 */
+}
+/* .chrome-zoom {
+  zoom: 90%;
+} */
 </style>
 
 <style>
@@ -96,11 +116,19 @@ const chatTrue = function () {
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: 'HakgyoansimGgooreogiR';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimGgooreogiR.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
 body,
 html {
   /* font-family: 'TTHakgyoansimKkokkomaR', sans-serif; */
   /* font-family: 'omyu_pretty', sans-serif; */
   font-family: 'Beeunhye', sans-serif;
-  font-size: 20px;
+  /* font-family: 'HakgyoansimGgooreogiR', sans-serif; */
+  font-size: 22px;
 }
 </style>

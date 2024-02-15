@@ -38,6 +38,10 @@ export const useViduStore = defineStore('vidu', () => {
       publisher.value.element.volume = volume.value / 100; // 볼륨을 0~1 사이 값으로 조절
     }
   };
+  const isRecording = ref(false);
+  const isrecoding = computed(() => {
+    return isRecording.value;
+  });
   //세션들어가기
   const joinSession = function (coupleid) {
     //토큰부터받아오고
@@ -113,7 +117,7 @@ export const useViduStore = defineStore('vidu', () => {
             resolution: '640x480',
             frameRate: 30,
             insertMode: 'APPEND',
-            mirror: false,
+            mirror: true,
           });
 
           // 스트림이 만들어졌을떄
@@ -216,6 +220,7 @@ export const useViduStore = defineStore('vidu', () => {
       })
       .then(res => {
         // 녹화 성공 알림
+        isRecording.value = true;
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-end',
@@ -242,33 +247,70 @@ export const useViduStore = defineStore('vidu', () => {
   //녹화 끝
   const stopRecording = function (coupleid) {
     console.log('커플아디', typeof coupleid);
-    viduapi
-      .post('recording/stop', {
-        recording: forceRecordingId.value,
-        coupleListId: coupleid,
-      })
-      .then(res => {
-        //나중에 녹화가 완료되었습니다 알림같은거 뜨게하기
-        // 녹화 완료 알림
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 1500,
-          didOpen: toast => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          },
+    //여기에 만들어줘 name에 담기게
+    //
+    // viduapi
+    //   .post('recording/stop', {
+    //     recording: forceRecordingId.value,
+    //     coupleListId: coupleid,
+    //     name,
+    //   })
+    //   .then(res => {
+    //     //나중에 녹화가 완료되었습니다 알림같은거 뜨게하기
+    //     // 녹화 완료 알림
+    //     isRecording.value = false;
+    //     const Toast = Swal.mixin({
+    //       toast: true,
+    //       position: 'top-end',
+    //       showConfirmButton: false,
+    //       timer: 1500,
+    //       didOpen: toast => {
+    //         toast.onmouseenter = Swal.stopTimer;
+    //         toast.onmouseleave = Swal.resumeTimer;
+    //       },
+
+
+    const { value: name } = Swal.fire({
+      title: '추억 이름을 입력해주세요.',
+      input: 'text',
+      inputLabel: '',
+      inputPlaceholder: '추억을 입력해주세요.',
+      showCancelButton: true,
+      confirmButtonColor: '#FF9CBD',
+      cancelButtonColor: '#a0a0a0',
+    });
+    if (name) {
+      viduapi
+        .post('recording/stop', {
+          recording: forceRecordingId.value,
+          coupleListId: coupleid,
+          name,
+        })
+        .then(res => {
+          console.log('여기까지 오니??', name);
+          //나중에 녹화가 완료되었습니다 알림같은거 뜨게하기
+          // 녹화 완료 알림
+          isRecording.value = false;
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            didOpen: toast => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            },
+          });
+          Toast.fire({
+            icon: 'success',
+            title: '녹화가 완료되었습니다.',
+          });
+        })
+        .catch(error => {
+          console.error(error);
+          throw error;
         });
-        Toast.fire({
-          icon: 'success',
-          title: '녹화가 완료되었습니다.',
-        });
-      })
-      .catch(error => {
-        console.error(error);
-        throw error;
-      });
+    }
   };
 
   //세션에서 나가기
@@ -324,5 +366,6 @@ export const useViduStore = defineStore('vidu', () => {
     toggleAudio,
     toggleVideo,
     adjustVolume,
+    isrecoding,
   };
 });

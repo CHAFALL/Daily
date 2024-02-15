@@ -1,89 +1,124 @@
 <template>
-  <!-- 제목 입력 -->
-  <div class="flex">
-    <label class="flex items-center" for="title">제목: </label>
-    <input
-      class="input input-bordered input-sm flex-1"
-      id="title"
-      type="text"
-      placeholder="일정 제목을 입력해주세요."
-      v-model="planTitle"
-    />
-  </div>
-  <!-- 일정 입력하기 -->
-  <div class="flex flex-col">
-    <div class="flex justify-between">
-      <label for="start">시작 날짜:</label>
-      <input id="start" type="date" v-model="startDay" />
-    </div>
-    <div class="flex justify-between">
-      <label for="end">종료 날짜:</label>
-      <input id="end" type="date" v-model="endDay" />
-    </div>
-  </div>
-  <div class="flex justify-end mr-1">
-    <button
-      class="btn btn-sm mr-1"
-      style="background-color: #ffeded"
-      @click="addRangeToList"
-    >
-      일정 추가
-    </button>
-    <button
-      class="btn btn-sm"
-      style="background-color: #ffeded"
-      @click="clearList"
-    >
-      일정 초기화
-    </button>
-  </div>
-
-  <!-- 즐겨찾기 목록 -->
-  <p>즐겨찾기 목록</p>
-  <!-- 로컬에 저장할 수 있도록 하기 -->
   <div
-    v-for="place in planStore?.hopeList"
-    :key="place.place_id"
-    draggable="true"
-    @dragstart="onDragStart(place)"
+    class="container max-h-[600px] border-2 border-red-200 rounded-lg overflow-y-auto"
   >
-    <div class="stats shadow">
-      <div class="stat">
-        <div class="favorite-place">
-          {{ place.title }}
+    <!-- 제목 입력 -->
+    <div class="flex h-7 rounded-full shadow-md m-2">
+      <div class="w-1/5 bg-red-50 rounded-tl-full rounded-bl-full text-center">
+        <label class="flex items-center ml-2 test" for="title">제목</label>
+      </div>
+      <div class="w-4/5 input input-bordered input-xs rounded-lg ml-1">
+        <input
+          class="test test-input"
+          id="title"
+          type="text"
+          placeholder="일정 제목을 입력해주세요."
+          v-model="planTitle"
+        />
+      </div>
+    </div>
+    <!-- 일정 입력하기 -->
+    <div class="flex h-7 rounded-full shadow-sm mt-6 mx-2">
+      <div class="w-1/5 bg-red-50 rounded-tl-full rounded-bl-full text-center">
+        <label class="flex items-center ml-1 test" for="start">시작일</label>
+      </div>
+      <div class="w-4/5 input input-bordered input-xs rounded-lg ml-1 mt-1">
+        <input
+          class="test test-input mx-1"
+          id="start"
+          type="date"
+          v-model="startDay"
+        />
+      </div>
+    </div>
+    <div class="flex h-7 rounded-full shadow-md mb-1 mx-2">
+      <div class="w-1/5 bg-red-50 rounded-tl-full rounded-bl-full text-center">
+        <label class="flex items-center ml-2 test" for="end">종료일</label>
+      </div>
+      <div class="w-4/5 input input-bordered input-xs rounded-lg ml-1">
+        <input
+          class="test test-input ml-1"
+          id="end"
+          type="date"
+          v-model="endDay"
+        />
+      </div>
+    </div>
+    <div class="flex justify-end mr-1 mb-2">
+      <button
+        class="btn btn-sm mr-1 shadow-md"
+        style="background-color: #ffcbcb"
+        @click="addRangeToList"
+      >
+        일정 추가
+      </button>
+      <button
+        class="btn btn-sm shadow-md"
+        style="background-color: #ffcbcb"
+        @click="clearList"
+      >
+        일정 초기화
+      </button>
+    </div>
+    <div class="bg-red-100 rounded-lg text-center mb-1 mt-6 mx-1">
+      <!-- 즐겨찾기 목록 -->
+      <p class="test">즐겨찾기 목록</p>
+    </div>
+    <!-- 로컬에 저장할 수 있도록 하기 -->
+    <div
+      class="flex flex-col w-full min-h-200px h-auto bg-white items-center shadow-md"
+      v-for="place in planStore?.hopeList"
+      :key="place.place_id"
+      draggable="true"
+      @dragstart="onDragStart(place)"
+    >
+      <div class="stats shadow-md mx-2 h-7 rounded-lg my-1">
+        <div class="h-6">
+          <div class="favorite-place mx-3 test">
+            {{ place.title }}
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- 날짜별 드롭하는 곳 만들기 -->
-  <div v-for="(date, index) in dateList" :key="index">
-    {{ date }}
-    <div
-      class="flex flex-col w-full min-h-200px h-auto bg-gray-400/10 justify-center items-center mt-6 rounded"
-      @dragover.prevent
-      @drop="onDrop($event, date)"
-    >
-      <div>
-        여기에 원하는 장소를 넣어주세요.
-        <div
-          v-for="(place, placeIndex) in getPlacesForDate(date)"
-          :key="placeIndex"
-        >
-          <div class="stats shadow">
-            <div class="stat">
-              <div class="favorite-place">
-                <strong>{{ place.title }}</strong>
-                <button @click="removePlace(date, placeIndex)">X</button>
+    <!-- 날짜별 드롭하는 곳 만들기 -->
+    <div v-for="(date, index) in dateList" :key="index">
+      <div class="bg-red-100 rounded-lg text-center shadow-md mt-2 mx-1 test">
+        {{ date }}
+      </div>
+      <div
+        class="flex flex-col w-full min-h-200px h-auto bg-white justify-center items-center rounded-lg shadow-xl"
+        @dragover.prevent
+        @drop="onDrop($event, date)"
+      >
+        <div>
+          여기에 원하는 장소를 넣어주세요.
+          <div
+            v-for="(place, placeIndex) in getPlacesForDate(date)"
+            :key="placeIndex"
+          >
+            <div class="stats shadow">
+              <div class="stat">
+                <div class="favorite-place">
+                  <strong>{{ place.title }}</strong>
+                  <button @click="removePlace(date, placeIndex)">X</button>
+                </div>
               </div>
             </div>
           </div>
+          <!-- {{ placeList }} -->
         </div>
-        <!-- {{ placeList }} -->
       </div>
     </div>
+    <div class="flex justify-end mt-2">
+      <button
+        class="btn btn-sm mr-1"
+        style="background-color: #ffcbcb"
+        @click="openModal()"
+      >
+        저장
+      </button>
+    </div>
   </div>
-
-  <button @click="openModal()">저장</button>
 </template>
 
 <script setup>
@@ -131,7 +166,7 @@ const addRangeToList = () => {
     // 날짜를 추가하고 정렬
     dateList.value = dateList.value.concat(daysToAdd).sort();
   } else {
-    Swal.fire('날짜의 범위가 맞지 않습니다. 확인 후 다시 입력해주세요!');
+    Swal.fire('날짜의 범위가 맞지 않습니다.', '확인 후 다시 입력해주세요!');
   }
 };
 
@@ -210,7 +245,6 @@ const onDrop = (event, date) => {
   addPlaceToDate(date, place);
   // 수정된 place를 placeList에 추가
   placeList.value = [...placeList.value, place];
-  console.log(place, date, placeList.value);
 };
 
 // 삭제버튼 눌렀을 때 제거
@@ -222,18 +256,21 @@ const removePlace = (date, placeIndex) => {
   }
   // placeList에서 제거
   placeList.value.splice(placeIndex, 1);
-  console.log(placeList.value);
 };
 
 // 모달 띄우기
 const openModal = () => {
   Swal.fire({
     title:
-      "일정 계획이 모두 끝나셨나요? 아래 '여행 일정 생성' 버튼을 누르시면 여행일정이 생성됩니다.",
+      '일정 계획이 모두 끝나셨나요?' +
+      '<br>' +
+      "아래 '여행 일정 생성' 버튼을 누르시면 여행일정이 생성됩니다.",
     showCancelButton: true,
     allowEscapeKey: false,
     confirmButtonText: '여행 일정 생성',
     cancelButtonText: '계속 편집 하기',
+    confirmButtonColor: '#FF9CBD',
+    cancelButtonColor: '#a0a0a0',
   }).then(result => {
     if (result.isConfirmed) {
       if (
@@ -261,7 +298,6 @@ const openModal = () => {
 
 // 정보 보내기
 const sendPlan = () => {
-  console.log('sendPlan 함수 실행될 예정');
   planAll.value = {
     title: planTitle.value,
     dateStart: startDay.value,
@@ -279,7 +315,6 @@ const sendPlan = () => {
       console.log('여행 일정이 등록되지 않음', error);
     },
   );
-  console.log(planAll.value);
 };
 
 // 컴포넌트가 마운트될 때 이벤트 리스너 추가
@@ -298,3 +333,31 @@ onUnmounted(() => {
   });
 });
 </script>
+
+<style scoped>
+.test {
+  font-weight: 600;
+}
+
+.test-input {
+  font-size: large;
+}
+
+/* 스크롤바 커스터마이징 */
+.container::-webkit-scrollbar {
+  width: 12px; /* 스크롤바 너비 */
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: #f56868; /* 스크롤바 색상 */
+  border-radius: 4px; /* 스크롤바 모양 */
+}
+
+.container::-webkit-scrollbar-track {
+  background-color: #cbd5e0; /* 스크롤바 트랙 색상 */
+}
+
+div::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}
+</style>
