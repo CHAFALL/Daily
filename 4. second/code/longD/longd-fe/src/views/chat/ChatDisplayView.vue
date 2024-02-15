@@ -1,6 +1,10 @@
 <template>
   <div class="bg-slate-50 rounded-lg shadow-md border-b-2">
+<<<<<<< HEAD
     <div class="bg-slate-50 pl-3 z-50">
+=======
+    <div class="bg-slate-50 pl-3 z-50 w-full" style="position: fixed">
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
       <button @click="turnOff">>>>></button>
     </div>
     <div class="chat-container p-1" ref="chatContainer">
@@ -179,7 +183,11 @@ div::-webkit-scrollbar {
   margin-left: 1rem; /* 왼쪽 마진 설정 */
 }
 p {
+<<<<<<< HEAD
   font-size: 20px;
+=======
+  font-size: 16px;
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
 }
 .chat-bubble {
   padding: 0.5rem;

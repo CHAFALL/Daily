@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div>
     <div class="flex-col">
       <div class="flex justify-end ml-10">
@@ -28,10 +29,42 @@
           </template>
         </AppDropdown>
       </div>
+=======
+  <div class="flex-col">
+    <div class="flex justify-end">
+      <AppDropdown>
+        <template v-slot>
+          <li class="font-bold lis">
+            <div>
+              <label for="img">메인 사진 변경</label>
+              <input
+                type="file"
+                id="img"
+                autocomplete="img"
+                @change="changImg"
+                hidden
+              />
+            </div>
+          </li>
+          <li class="font-bold lis" @click="changeDday()">
+            <a>처음 만난 날 변경</a>
+          </li>
+          <li class="font-bold lis" @click="unConnectLove()">
+            <a>상대와 연결 끊기</a>
+          </li>
+          <li class="font-bold lis" @click="deleteMyData()">
+            <a>회원 탈퇴</a>
+          </li>
+        </template>
+      </AppDropdown>
+    </div>
+    <div class="">
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
       <!-- 백그라운드 이미지 -->
       <div class="flex justify-center">
         <figure class="relative">
           <div class="flex justify-center">
+<<<<<<< HEAD
             <div
               class="h-[650px] w-[600px] object-cover overflow-hidden rounded-sm shadow-xl bg-stone-100 border border-stone-300 mt-4"
             >
@@ -42,24 +75,40 @@
               />
             </div>
             <div class="absolute top-0 left-1/2 transform -translate-x-1/2">
+=======
+            <img :src="coupleInfo.coupleImgUrl" alt="backgroundImage" />
+            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 m-4">
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
               <!-- 디데이 -->
               <div class="text-wrapper-3">D+{{ coupleDday }}</div>
               <!-- 프로필 부분 -->
               <div class="flex justify-center items-center">
                 <RouterLink :to="{ name: 'Profile' }"
                   ><img
+<<<<<<< HEAD
                     class="myProfile rounded-full h-[4rem] w-[4rem]"
+=======
+                    class="myProfile rounded-full h-[6rem] w-[6rem]"
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
                     alt="내 프로필"
                     :src="userStore?.getUserState?.profilePicture"
                 /></RouterLink>
                 <img
+<<<<<<< HEAD
                   class="heart-suit h-[2rem] w-[2rem]"
+=======
+                  class="heart-suit h-[4rem] w-[4rem]"
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
                   alt="Heart suit"
                   src="/static/img/heart-suit.png"
                 />
                 <RouterLink :to="{ name: 'PartnerInfo' }">
                   <img
+<<<<<<< HEAD
                     class="partnerProfile rounded-full h-[4rem] w-[4rem]"
+=======
+                    class="partnerProfile rounded-full h-[6rem] w-[6rem]"
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
                     alt="상대 프로필"
                     :src="partnerInfo?.profilePicture"
                 /></RouterLink>
@@ -131,7 +180,10 @@ const changeDday = () => {
       const { value: date } = await Swal.fire({
         title: '여러분이 처음 만난 날을 입력해주세요.',
         input: 'date',
+<<<<<<< HEAD
         confirmButtonColor: '#FF9CBD',
+=======
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
         didOpen: () => {},
         preConfirm: () => {
           const selectedDate = Swal.getInput().value;
@@ -147,7 +199,11 @@ const changeDday = () => {
         },
       });
       if (date) {
+<<<<<<< HEAD
         await Swal.fire('우리가 처음 만난 날', `<strong>${date}</strong>`);
+=======
+        await Swal.fire('우리가 처음 만난 날', date);
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
         coupleInfo.value.startDay = date;
         startDay.value = dayjs(date);
         await coupleDataModify(
@@ -174,9 +230,13 @@ const changeDday = () => {
 const unConnectLove = () => {
   Swal.fire({
     title:
+<<<<<<< HEAD
       '상대와 연결을 끊으실건가요?' +
       '<br>' +
       '연결을 끊으면 우리의 모든 추억이 삭제됩니다.',
+=======
+      '상대와 연결을 끊으실건가요? 연결을 끊으면 우리의 모든 추억이 삭제됩니다.',
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
     showCancelButton: true,
     allowEscapeKey: false,
     confirmButtonText: '그래도 연결 끊기',
@@ -200,9 +260,13 @@ const deleteMyData = () => {
   // 진짜 회원탈퇴할건지 물어보기
   Swal.fire({
     title:
+<<<<<<< HEAD
       '회원탈퇴를 원하시나요?' +
       '<br>' +
       '회원탈퇴를 하면 롱디와의 모든 추억이 삭제됩니다.',
+=======
+      '회원탈퇴를 원하시나요? 회원탈퇴를 하면 롱디와의 모든 추억이 삭제됩니다.',
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
     showCancelButton: true,
     allowEscapeKey: false,
     confirmButtonText: '회원 탈퇴',
@@ -282,5 +346,9 @@ watchEffect(() => {
 
 .lis {
   /* width: 10rem;... */
+}
+
+.lis {
+  /* width: 10rem; */
 }
 </style>

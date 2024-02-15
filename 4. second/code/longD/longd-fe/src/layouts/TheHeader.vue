@@ -28,9 +28,13 @@
         </li>
         <li>
           <details ref="dropdown1">
+<<<<<<< HEAD
             <summary
               :class="{ 'text-red-300': isViduMainActive || isViduVideoActive }"
             >
+=======
+            <summary :class="{ 'text-red-300': isViduActive }">
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
               화상통화
             </summary>
             <ul
@@ -39,6 +43,7 @@
               @click="closeDropdown"
             >
               <li>
+<<<<<<< HEAD
                 <RouterLink
                   :to="{ name: 'ViduMain' }"
                   :class="{ 'text-red-300': isViduMainActive }"
@@ -49,6 +54,12 @@
                 <RouterLink
                   :to="{ name: 'ViduVideo' }"
                   :class="{ 'text-red-300': isViduVideoActive }"
+=======
+                <RouterLink :to="{ name: 'ViduMain' }"><a>main</a></RouterLink>
+              </li>
+              <li>
+                <RouterLink :to="{ name: 'ViduVideo' }"
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
                   ><a>같이보기</a></RouterLink
                 >
               </li>
@@ -58,7 +69,11 @@
         <li>
           <details ref="dropdown2">
             <summary
+<<<<<<< HEAD
               :class="{ 'text-red-300': isMapActive || isPlanListActive }"
+=======
+              :class="{ 'text-red-300': isMapActive || isPlandListActive }"
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
             >
               여행✈
             </summary>
@@ -69,6 +84,7 @@
               @click="closeDropdown2"
             >
               <li>
+<<<<<<< HEAD
                 <RouterLink
                   :to="{ name: 'Map' }"
                   :class="{ 'text-red-300': isMapActive }"
@@ -82,16 +98,45 @@
                 >
                   <a>여행목록</a></RouterLink
                 >
+=======
+                <a
+                  ><RouterLink
+                    :to="{ name: 'Map' }"
+                    :class="{ 'text-red-300': isMapActive }"
+                    >일정계획</RouterLink
+                  ></a
+                >
+              </li>
+              <li>
+                <a>
+                  <RouterLink
+                    :to="{ name: 'PlanList' }"
+                    :class="{ 'text-red-300': isPlandListActive }"
+                    >여행목록</RouterLink
+                  >
+                </a>
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
               </li>
             </ul>
           </details>
         </li>
         <li>
+<<<<<<< HEAD
           <RouterLink
             :to="{ name: 'bucketList' }"
             :class="{ 'text-pink-400': isBucketListActive }"
             ><a> 버킷리스트</a>
           </RouterLink>
+=======
+          <a>
+            <RouterLink
+              :to="{ name: 'bucketList' }"
+              :class="{ 'text-red-300': isBucketListActive }"
+            >
+              버킷리스트
+            </RouterLink>
+          </a>
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
         </li>
       </ul>
     </div>

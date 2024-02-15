@@ -3,6 +3,7 @@
     class="container max-h-[600px] border-2 border-red-200 rounded-lg overflow-y-auto"
   >
     <!-- 제목 입력 -->
+<<<<<<< HEAD
     <div class="flex h-7 rounded-full shadow-md m-2">
       <div class="w-1/5 bg-red-50 rounded-tl-full rounded-bl-full text-center">
         <label class="flex items-center ml-2 test" for="title">제목</label>
@@ -48,18 +49,51 @@
       <button
         class="btn btn-sm mr-1 shadow-md"
         style="background-color: #ffcbcb"
+=======
+    <div class="flex">
+      <label class="flex items-center" for="title">제목: </label>
+      <input
+        class="input input-bordered input-sm flex-1"
+        id="title"
+        type="text"
+        placeholder="일정 제목을 입력해주세요."
+        v-model="planTitle"
+      />
+    </div>
+    <!-- 일정 입력하기 -->
+    <div class="flex flex-col">
+      <div class="flex justify-between">
+        <label for="start">시작 날짜:</label>
+        <input id="start" type="date" v-model="startDay" />
+      </div>
+      <div class="flex justify-between">
+        <label for="end">종료 날짜:</label>
+        <input id="end" type="date" v-model="endDay" />
+      </div>
+    </div>
+    <div class="flex justify-end mr-1">
+      <button
+        class="btn btn-sm mr-1"
+        style="background-color: #ffeded"
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
         @click="addRangeToList"
       >
         일정 추가
       </button>
       <button
+<<<<<<< HEAD
         class="btn btn-sm shadow-md"
         style="background-color: #ffcbcb"
+=======
+        class="btn btn-sm"
+        style="background-color: #ffeded"
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
         @click="clearList"
       >
         일정 초기화
       </button>
     </div>
+<<<<<<< HEAD
     <div class="bg-red-100 rounded-lg text-center mb-1 mt-6 mx-1">
       <!-- 즐겨찾기 목록 -->
       <p class="test">즐겨찾기 목록</p>
@@ -67,14 +101,27 @@
     <!-- 로컬에 저장할 수 있도록 하기 -->
     <div
       class="flex flex-col w-full min-h-200px h-auto bg-white items-center shadow-md"
+=======
+
+    <!-- 즐겨찾기 목록 -->
+    <p>즐겨찾기 목록</p>
+    <!-- 로컬에 저장할 수 있도록 하기 -->
+    <div
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
       v-for="place in planStore?.hopeList"
       :key="place.place_id"
       draggable="true"
       @dragstart="onDragStart(place)"
     >
+<<<<<<< HEAD
       <div class="stats shadow-md mx-2 h-7 rounded-lg my-1">
         <div class="h-6">
           <div class="favorite-place mx-3 test">
+=======
+      <div class="stats shadow">
+        <div class="stat">
+          <div class="favorite-place">
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
             {{ place.title }}
           </div>
         </div>
@@ -82,11 +129,17 @@
     </div>
     <!-- 날짜별 드롭하는 곳 만들기 -->
     <div v-for="(date, index) in dateList" :key="index">
+<<<<<<< HEAD
       <div class="bg-red-100 rounded-lg text-center shadow-md mt-2 mx-1 test">
         {{ date }}
       </div>
       <div
         class="flex flex-col w-full min-h-200px h-auto bg-white justify-center items-center rounded-lg shadow-xl"
+=======
+      {{ date }}
+      <div
+        class="flex flex-col w-full min-h-200px h-auto bg-gray-400/10 justify-center items-center mt-6 rounded"
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
         @dragover.prevent
         @drop="onDrop($event, date)"
       >
@@ -112,7 +165,11 @@
     <div class="flex justify-end mt-2">
       <button
         class="btn btn-sm mr-1"
+<<<<<<< HEAD
         style="background-color: #ffcbcb"
+=======
+        style="background-color: #ffeded"
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
         @click="openModal()"
       >
         저장
@@ -335,6 +392,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+<<<<<<< HEAD
 .test {
   font-weight: 600;
 }
@@ -343,6 +401,8 @@ onUnmounted(() => {
   font-size: large;
 }
 
+=======
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
 /* 스크롤바 커스터마이징 */
 .container::-webkit-scrollbar {
   width: 12px; /* 스크롤바 너비 */
@@ -356,8 +416,11 @@ onUnmounted(() => {
 .container::-webkit-scrollbar-track {
   background-color: #cbd5e0; /* 스크롤바 트랙 색상 */
 }
+<<<<<<< HEAD
 
 div::-webkit-scrollbar {
   display: none; /* for Chrome, Safari, and Opera */
 }
+=======
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
 </style>

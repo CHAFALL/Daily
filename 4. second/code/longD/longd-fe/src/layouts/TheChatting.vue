@@ -7,7 +7,11 @@
       :count="count"
       :nickname="nickname"
       :lovername="lovername"
+<<<<<<< HEAD
       class="overflow-scroll h-11/12 w-full"
+=======
+      class="overflow-scroll h-1/2 w-full"
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
     ></ChatDisplayView>
     <ChatInputView
       @messageToMain="sendMessage"

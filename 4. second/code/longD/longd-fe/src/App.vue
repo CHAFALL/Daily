@@ -1,5 +1,9 @@
 <template>
+<<<<<<< HEAD
   <div :class="{ 'chrome-zoom': isChrome }">
+=======
+  <div class="container mx-auto" :class="{ 'chrome-zoom': isChrome }">
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
     <TheHeader
       v-show="
         userStore.isLogin &&
@@ -23,7 +27,11 @@
           'w-1/5': !isChatting,
         }"
       >
+<<<<<<< HEAD
         <div v-if="isChatting" class="fixed right-0">
+=======
+        <div v-if="isChatting" class="fixed">
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
           <TheChatting @offChat="chatFalse"></TheChatting>
         </div>
         <div v-else class="fixed right-10">
@@ -72,6 +80,7 @@ onMounted(() => {
 .check {
   display: none;
 }
+<<<<<<< HEAD
 .chatting-container,
 .nochatting-container {
   position: fixed;
@@ -85,6 +94,11 @@ onMounted(() => {
 /* .chrome-zoom {
   zoom: 90%;
 } */
+=======
+.chrome-zoom {
+  zoom: 90%;
+}
+>>>>>>> 8495d94509e1a62cd0fceeba6fddf4986e70922f
 </style>
 
 <style>

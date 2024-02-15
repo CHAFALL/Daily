@@ -31,6 +31,10 @@ export const usePlanStore = defineStore('plan', () => {
     // 해당 장소가 hopeList에 있는지 확인하여 선택 여부를 반환합니다.
     return hopeList.value.some(item => item.title === place.name);
   };
+  const isHeartSelected = function (place) {
+    // 해당 장소가 hopeList에 있는지 확인하여 선택 여부를 반환합니다.
+    return hopeList.value.some(item => item.title === place.name);
+  };
 
   return {
     hopeList,
