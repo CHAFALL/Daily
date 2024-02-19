@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HelloController {
     @GetMapping("hello")
     public String hello(Model model) {
-        model.addAttribute("data", "hello!!!");
-        // 여기서 return은 화면 이름을 뜻함
-        return "hello";
+        model.addAttribute("data", "hello!!");
+        return "hello"; // 화면 이름
     }
 }

@@ -1,0 +1,23 @@
+package jpabook.jpashop.domain.item;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+// 상속관계 매핑이기 때문에 상속관계 전략을 지정해야됨
+// 전략은 부모 테이블에서(우린 SINGLE_TABLE로)
+
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "dtype")
+@Getter @Setter
+public abstract class Item {
+    @Id
+    @GeneratedValue
+    @Column(name = "item_id")
+    private Long id;
+
+    private String name;
+    private int price;
+    private int stockQuantity;
+}
