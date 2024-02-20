@@ -1,0 +1,27 @@
+spring:
+# 참고로 test와 main의 설정들을 따로 가져가는 것이 좋다
+
+# 이 설정들이 없어도 default로 메모리 모드로 돌려버림(심지어 다 없어도 됨)
+#  datasource:
+#    url: jdbc:h2:mem:testdb #in 메모리로 db없이 동작함
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
+#
+#  jpa:
+#    hibernate:
+#      # 애플리케이션 실행 시점에 테이블을 전부 지우고
+#      # 내가 가지고 있는 엔티티를 통해 다시 생성함
+#      ddl-auto: create
+#    properties:
+#      hibernate:
+#        # 얘는 system out을 통해서 보여줌
+#        # 그래서 주석처리 해줌
+#        # show_sql: true
+#        format_sql: true
+
+      logging:
+        level:
+          # 얘는 로그를 통해서 보여줌
+          org.hibernate.SQL: debug
+          org.hibernate.orm.jdbc.bind: trace #스프링 부트 3.x, hibernate6

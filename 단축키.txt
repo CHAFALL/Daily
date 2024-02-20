@@ -1,0 +1,3 @@
+생성자 생성 : Alt + Insert
+파일 내에 찾기: Ctrl + Shift + F
+합치기(인라인): Ctrl + Alt + N

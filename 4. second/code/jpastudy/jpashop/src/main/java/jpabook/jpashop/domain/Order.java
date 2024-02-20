@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.FetchType.*;
+
 @Entity
 @Table(name = "orders")
 @Getter @Setter
@@ -18,15 +20,24 @@ public class Order {
 
     // 주문이 다, 회원이 1
     // 연관 관계 주인을 정해줌(혼란 방지)
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     // 매핑을 member_id로 (fk키 = member_id)
     @JoinColumn(name = "member_id")
     private Member member;
-
-    @OneToMany(mappedBy = "order")
+    // cascad = CascadeType.ALL : Order 엔티티에 적용된
+    // 모든 변경이 연관된 엔티티에도 적용이 됨
+    // 예)
+    // persit(orderItemA)
+    // persit(orderItemB)
+    // persit(orderItemC)
+    // persit(order)
+    // 이걸
+    // persit(order)
+    // 이거만 해도 됨
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="delivery_id")
     // 1대1은 많이 접근하는 곳에다가 함(이번에는 order가 많음)
     private Delivery delivery;
@@ -34,4 +45,23 @@ public class Order {
     private LocalDateTime orderDate; // 주문시간
     @Enumerated(EnumType.STRING)
     private OrderStatus status; // 주문 상태 [ORDER, CANCEL]
+
+    //==연관 관계 메서드==//
+    // 양쪽 세팅하는 것을 원자적으로 한코드로 해결
+    // (연관 된 것 중에 어디에 위치하면 좋냐면)
+    // (핵심적으로 컨트롤 하는 쪽이 들고 있는 것이 낫다)
+    public void setMember(Member member) {
+        this.member = member;
+        member.getOrders().add(this);
+    }
+
+    public void addOrderItem(OrderItem orderItem) {
+        orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        delivery.setOrder(this);
+    }
 }
