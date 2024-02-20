@@ -1,3 +1,8 @@
+자동완성 : Ctrl + Shift + Enter
+아래에 같은 것 복사 붙여넣기 : Ctrl + D
+테스트 만들기: Ctrl + Shift + T
+변수 뽑아오기: Ctrl + Alt + V
+원하는 곳으로 옮기기: Alt + Shift +방향키
 생성자 생성 : Alt + Insert
 파일 내에 찾기: Ctrl + Shift + F
 합치기(인라인): Ctrl + Alt + N
