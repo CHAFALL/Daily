@@ -61,3 +61,5 @@ total = 0
 putQueen(0)
 
 print(total)
+
+
