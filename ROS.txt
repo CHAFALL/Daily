@@ -1,0 +1,12 @@
+# b_drive 실행하는 법
+
+# 실행 권한 부여하기
+roscd beginner_tutorials
+cd scripts
+chmod +x b_drive.py
+
+# ROS Bridge 실행
+roslaunch rosbridge_server rosbridge_websocket.launch
+
+# b_drive.py 실행
+rosrun beginner_tutorials b_drive.py
