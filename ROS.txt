@@ -1,4 +1,15 @@
+#rqt
+
+
 # b_drive 실행하는 법
+
+#폴더 만들기
+catkin_create_pkg chapter6
+
+이렇게 안하면 못 잡아낸다.
+
+catkin_make
+
 
 # 실행 권한 부여하기
 roscd beginner_tutorials
@@ -10,3 +21,8 @@ roslaunch rosbridge_server rosbridge_websocket.launch
 
 # b_drive.py 실행
 rosrun beginner_tutorials b_drive.py
+
+
+
+# 좌표 파악 사이트
+https://www.latlong.net/lat-long-utm.html
