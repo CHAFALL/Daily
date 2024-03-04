@@ -3,6 +3,8 @@
 
 # b_drive 실행하는 법
 
+# source ~/catkin_ws/devel/setup.bash
+
 #폴더 만들기
 catkin_create_pkg chapter6
 
