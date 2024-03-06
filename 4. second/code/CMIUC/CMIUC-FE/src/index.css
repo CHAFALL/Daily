@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Galmuri11";
+  src: url(./assets/font/Galmuri11.ttf);
+}
+
+body {
+  font-family: "Galmuri11";
+  font-weight: bold;
+}

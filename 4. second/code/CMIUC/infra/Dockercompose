@@ -1,0 +1,39 @@
+version: '3'
+services:
+  frontend:
+    container_name: front_cmiuc
+    # volumes:
+    #   - ../CMIUC-FE:/app
+    image: infra-frontend:latest
+    build:
+      context: ../CMIUC-FE
+      dockerfile: ../CMIUC-FE/Dockerfile
+    ports:
+      - 5173:5173
+
+  backend:
+    container_name: back_cmiuc
+    image: infra-backend:latest
+    build:
+      context: ../CMIUC-BE
+      dockerfile: ../CMIUC-BE/Dockerfile
+    ports:
+      - 8081:8081
+    environment:
+      - MARIA_URL=${MARIA_URL}
+      - MARIA_USERNAME=${MARIA_USERNAME}
+      - MARIA_PASSWORD=${MARIA_PASSWORD}
+      - MARIA_DRIVER=${MARIA_DRIVER}
+      - MARIA_DDL_SETTING=${MARIA_DDL_SETTING}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - WHITELIST=${WHITELIST}
+      - KAKAO_CLIENT_ID=${KAKAO_CLIENT_ID}
+      - NAVER_CLIENT_ID=${NAVER_CLIENT_ID}
+      - NAVER_SECRET=${NAVER_SECRET}
+      - OPENVIDU_URL=${OPENVIDU_URL}
+      - OPENVIDU_SECRET=${OPENVIDU_SECRET}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - API_DOCS_PATH=${API_DOCS_PATH}
+      - SWAGGER_UI_PATH=${SWAGGER_UI_PATH}

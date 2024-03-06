@@ -1,0 +1,110 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKERCOMPOSE_FILE = "infra/Dockercompose"
+        Author_ID = sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
+        Author_Name = sh(script: "git show -s --pretty=%ae", returnStdout: true).trim()
+    }
+    
+    stages {
+        stage("CI/CD start") {
+            steps {
+                script {
+                    mattermostSend (
+                        color: '#D0E0E3',
+                        icon: "https://jenkins.io/images/logos/jenkins/jenkins.png",
+                        message: "배포 중입니둥글레차~. ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}(${Author_Name})\n(<${env.BUILD_URL}|Details>)"
+                    )
+                }
+            }
+        }
+
+        stage("Checkout") {
+            steps {
+                script {
+                    git credentialsId: env.CREDENTIALSID, url: env.URL, branch: "master"
+                }
+            }
+        }
+
+        // stage("Stop old container") {
+        //     steps {
+        //         script {
+        //             sh "docker-compose -f ${DOCKERCOMPOSE_FILE} down"
+        //         }
+        //     }
+        // }
+        
+        stage("Delete old frontend") {
+            steps {
+                sh "docker rm -f ${env.FRONT_CONTAINER}"
+                sh "docker rmi -f ${env.FRONT_IMAGE}"
+            }
+        }
+        
+        stage("Delete old backend") {
+            steps {
+                sh "docker rm -f ${env.BACK_CONTAINER}"
+                sh "docker rmi -f ${env.BACK_IMAGE}"
+            }
+        }
+        
+        stage("Deploy") {
+            steps {
+                script {
+                    sh "docker-compose -f ${DOCKERCOMPOSE_FILE} up -d --build"
+                }
+            }
+        }
+        
+        // stage("Build new frontend") {
+        //     steps {
+        //         dir("${env.FRONT_PATH}") {
+        //             sh "docker build -t ${env.FRONT_IMAGE} ."
+        //         }
+        //     }
+        // }
+        
+        // stage("Build new backend") {
+        //     steps {
+        //         dir("${env.BACK_PATH}") {
+        //             sh "docker build -t ${env.BACK_IMAGE} ."
+        //         }
+        //     }
+        // }
+        
+        // stage("Run new frontend") {
+        //     steps {
+        //         sh "docker run -d -p ${env.FRONT_PORT_IN}:${env.FRONT_PORT_OUT} --name ${env.FRONT_CONTAINER} ${env.FRONT_IMAGE}"
+        //     }
+        // }
+        
+        // stage("Run new backend") {
+        //     steps {
+        //         sh "docker run -d -p ${env.BACK_PORT_IN}:${env.BACK_PORT_OUT} --name ${env.BACK_CONTAINER} ${env.BACK_IMAGE}"
+        //     }
+        // }
+    }
+
+    post {
+        success {
+            script {
+                mattermostSend (
+                    color: 'good',
+                    icon: "https://jenkins.io/images/logos/jenkins/jenkins.png",
+                    message: "배포 성공입니당나귀!. ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}(${Author_Name})\n(<${env.BUILD_URL}|Details>)"
+                )
+            }
+        }
+        failure {
+            script {
+                mattermostSend (
+                    color: 'danger',
+                    icon: "https://jenkins.io/images/logos/jenkins/jenkins.png",
+                    message: "배포 실패입니다람쥐ㅠㅠ. ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}(${Author_Name})\n(<${env.BUILD_URL}|Details>)"
+                )
+            }
+        }
+    }
+}
