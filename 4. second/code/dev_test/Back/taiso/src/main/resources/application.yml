@@ -2,8 +2,8 @@ spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/taiso
-    username: ssafy
-    password: 1234
+    username: root
+    password: ssafy
 
   jpa:
     hibernate:
@@ -12,8 +12,20 @@ spring:
       hibernate:
         format_sql: true
 #        show-sql: true
+
       logging:
         level:
           # 얘는 로그를 통해서 보여줌
           org.hibernate.SQL: debug
-          org.hibernate.orm.jdbc.bind: trace #스프링 부트 3.x, hibernate6
+          #스프링 부트 3.x, hibernate6
+          org.hibernate.orm.jdbc.bind: info
+
+  servlet:
+    multipart:
+      max-request-size: 30MB
+      max-file-size: 10MB
+
+com:
+  d212:
+    upload:
+      path: upload
