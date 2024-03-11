@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { postAdd } from "../../api/productsApi";
 import FetchingModal from "../common/FetchingModal";
 import ResultModal from "../common/ResultModal";
+import useCustomMove from "../../hooks/useCustomMove";
 
 const initState = {
   pname: "",
@@ -20,6 +21,8 @@ function AddComponent(props) {
 
   const [fetching, setFetching] = useState(false)
   const [result, setResult] = useState(false)
+
+  const {moveToList} = useCustomMove()
 
   // 이렇게 2가지를 설정해줘야 됨.
   // multipart/form-data   FormData()
@@ -61,6 +64,7 @@ function AddComponent(props) {
 
   const closeModal = () => {
     setResult(null)
+    moveToList()
   }
 
   return (

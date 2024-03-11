@@ -1,4 +1,5 @@
 import React from "react";
+import ListComponent from "../../components/products/ListComponent";
 
 function ListPage(props) {
   return (
@@ -7,6 +8,7 @@ function ListPage(props) {
 shadow-md"
     >
       <div className="text-2xl m-4 font-extrabold">Products List Page</div>
+      <ListComponent />
     </div>
   );
 }

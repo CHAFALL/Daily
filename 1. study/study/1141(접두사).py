@@ -15,26 +15,57 @@
 #
 #     print(subset1, subset2)
 
-
-
-# 부분집합 전체에서 부터 점차 줄어드는 식으로 해서 구하기
-# break 걸면 시간 단축
-# 짧은 놈이 긴 놈에 있는 지를 판단할 것
-# 긴 놈은 짧은 놈의 접두사가 될 수 x
-
-
-
 # 부분집합 구하기
-def powerset(k, p):
+# def powerset(k, p):
+#
+#     if k == N:
+#         print(p)
+#         return
+#     else:
+#         powerset(k + 1, p + [arr[k]])
+#         powerset(k + 1, p)
+#
 
-    if k == N:
-        print(p)
-        return
-    else:
-        powerset(k + 1, p + [arr[k]])
-        powerset(k + 1, p)
+#
+# powerset(0, [])
+
+
+#--------------------------------------------
 
 N = int(input())
 arr = [input() for _ in range(N)]
 
-powerset(0, [])
+# 긴 놈은 짧은 놈의 접두사가 될 수 x
+# 길이 순 나열하기
+arr.sort(key=len)
+
+ans = arr[:]
+for i in range(N):
+    # 나보다 긴 놈만 비교하면 돼!
+    for j in range(i + 1, N):
+        if arr[j].startswith(arr[i]):
+            ans.remove(arr[i])
+            break
+
+print(len(ans))
+
+#--------------------------------------
+
+N = int(input())
+arr = [input() for _ in range(N)]
+
+# 긴 놈은 짧은 놈의 접두사가 될 수 x
+# 길이 순 나열하기
+arr.sort(key=len)
+
+ans = arr[:]
+for i in range(N):
+    # 나보다 긴 놈만 비교하면 돼!
+    for j in range(i + 1, N):
+        # 접두사 체크
+        if arr[i] ==arr[j][0:len(arr[i])]:
+            ans.remove(arr[i])
+            break
+
+print(len(ans))
+
