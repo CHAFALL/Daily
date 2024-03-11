@@ -54,7 +54,7 @@ public class TodoRepositoryTests {
 
         Optional<Todo> result = todoRepository.findById(tno);
 
-        // 문제 있으면 예외로 던지고 아니면 todo 끄집어 냄
+        // 문제 있으면 예외로 던지고 아니면todo 끄집어 냄
         Todo todo = result.orElseThrow();
 
         log.info(todo);

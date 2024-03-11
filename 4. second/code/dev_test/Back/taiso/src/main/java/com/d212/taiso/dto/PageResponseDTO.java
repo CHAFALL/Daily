@@ -29,7 +29,9 @@ public class PageResponseDTO<E> {
     @Builder(builderMethodName = "withAll")
     public PageResponseDTO(List<E> dtoList, PageRequestDTO pageRequestDTO, long total) {
         this.dtoList = dtoList;
+
         this.pageRequestDTO = pageRequestDTO;
+
         this.totalCount = (int) total;
 
         // 끝 페이지 end
@@ -52,8 +54,8 @@ public class PageResponseDTO<E> {
 
         this.nextPage = next ? end + 1 : 0;
 
-
         this.totalPage = this.pageNumList.size();
+
         this.current = pageRequestDTO.getPage();
 
 
