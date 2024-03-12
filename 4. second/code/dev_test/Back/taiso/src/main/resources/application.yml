@@ -11,14 +11,16 @@ spring:
     properties:
       hibernate:
         format_sql: true
-#        show-sql: true
+        show_sql: true
 
       logging:
         level:
           # 얘는 로그를 통해서 보여줌
           org.hibernate.SQL: debug
           #스프링 부트 3.x, hibernate6
-          org.hibernate.orm.jdbc.bind: info
+          org.hibernate.orm.jdbc.bind: trace
+          org.springframework.security.web: trace
+
 
   servlet:
     multipart:

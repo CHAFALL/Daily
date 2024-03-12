@@ -14,19 +14,17 @@ const initState = {
 
 const host = API_SERVER_HOST;
 
-
-
 function ReadComponent({ pno }) {
   const [product, setProduct] = useState(initState);
   const [fetching, setFetching] = useState(false);
 
-  const { moveToList, moveToModify, page, size} = useCustomMove();
+  const { moveToList, moveToModify, page, size } = useCustomMove();
 
   useEffect(() => {
     setFetching(true);
     getOne(pno).then((data) => {
       console.log(data);
-      setProduct(data)
+      setProduct(data);
       setFetching(false);
     });
   }, [pno]);
@@ -87,7 +85,7 @@ function ReadComponent({ pno }) {
         <button
           type="button"
           className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
-          onClick={() => moveToList({page, size})}
+          onClick={() => moveToList({ page, size })}
         >
           List
         </button>
