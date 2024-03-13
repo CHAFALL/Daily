@@ -1,0 +1,61 @@
+server:
+  port: ENC(p6Yp6yUvamdiU4l6toB1EQ==)
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    context-path: ENC(bnnF1c6qrOahmW6jymzmPA==)
+
+spring:
+  profiles:
+    active: local # 기본설정
+    group:
+      local:
+        - db-local
+        - auth-local
+      server:
+        - db-server
+        - auth-server
+    include:
+      - key
+      - db
+      - oauth
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: Asia/Seoul
+    show-sql: true
+
+  servlet:
+    multipart:
+      max-file-size: 300MB #파일 하나 최대 크기
+      max-request-size: 300MB # 한 번에 최대 업로드 가능 용량
+
+springdoc: #swagger
+  packages-to-scan: com.qzp.bid
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    path: /bid-ui.html            # Swagger UI 경로 => localhost:8000/bid-ui.html
+    tags-sorter: alpha            # alpha: 알파벳 순 태그 정렬, method: HTTP Method 순 정렬
+    operations-sorter: alpha      # alpha: 알파벳 순 태그 정렬, method: HTTP Method 순 정렬
+  api-docs:
+    path: /api-docs/json
+    groups:
+      enabled: true
+  cache:
+    disabled: true
+
+vito:
+  client_id: ENC(tFsXZHiu8O3G0eNpEvYa9R+Nq6kG5Lx47HWFMw3PxVo=)
+  client_secret: ENC(SvJta6O71FfeYxyDgMGKeoTB1bDaEZ0oUIX+ZGrlrLh+e8vxbV4cas+h+wDjpEjiad92DLLf2HU=)
+
+clova:
+  client_id: ENC(zkzK2m1uA9jTUhCsLduWM346Hsptsxvp)
+  client_secret: ENC(OGKEiL8HAoGRyAjQgZzmzWTkOt/IXPPxlh8am4O3J1sM5c757N3+qNbKVIPjSuyfD4YPLHNBeck=)

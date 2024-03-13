@@ -1,0 +1,12 @@
+version: '3'
+services:
+  backend:
+    image: bid_backend
+    ports:
+      - "8081:8081"
+    volumes:
+      - /home/ubuntu/workspace/bid/backend/images:/app/src/main/resources/static/images
+      - /home/ubuntu/workspace/bid/backend/logs:/app/logs
+      - /opt/openvidu/recordings:/app/openvidu/recordings
+    environment:
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
