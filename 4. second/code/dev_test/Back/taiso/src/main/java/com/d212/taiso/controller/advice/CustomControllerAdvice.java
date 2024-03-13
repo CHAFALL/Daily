@@ -1,5 +1,6 @@
 package com.d212.taiso.controller.advice;
 
+import com.d212.taiso.util.CustomJWTException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
+
+// 에러 예외 관련
 
 @RestControllerAdvice
 public class CustomControllerAdvice {
@@ -22,4 +25,11 @@ public class CustomControllerAdvice {
     public ResponseEntity<?> notExist(MethodArgumentNotValidException e) {
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(Map.of("msg", e.getMessage()));
     }
+
+    @ExceptionHandler(CustomJWTException.class)
+    protected ResponseEntity<?> handleJWTException(CustomJWTException e) {
+        String msg = e.getMessage();
+        return ResponseEntity.ok().body(Map.of("error", msg));
+    }
+
 }

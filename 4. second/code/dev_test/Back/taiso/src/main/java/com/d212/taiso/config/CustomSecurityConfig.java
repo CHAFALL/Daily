@@ -3,10 +3,12 @@ package com.d212.taiso.config;
 import com.d212.taiso.security.filter.JWTCheckFilter;
 import com.d212.taiso.security.handler.APILoginFailHandler;
 import com.d212.taiso.security.handler.APILoginSuccessHandler;
+import com.d212.taiso.security.handler.CustomAccessDeniedHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,6 +25,7 @@ import java.util.Arrays;
 @Configuration
 @Log4j2
 @RequiredArgsConstructor
+@EnableMethodSecurity
 public class CustomSecurityConfig {
 
     @Bean
@@ -52,6 +55,10 @@ public class CustomSecurityConfig {
 
         // 이 필터(UsernamePasswordAuthenticationFilter)가 동작하기 전에 해줘
         http.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        http.exceptionHandling(config -> {
+            config.accessDeniedHandler(new CustomAccessDeniedHandler());
+        });
 
         return http.build();
     }

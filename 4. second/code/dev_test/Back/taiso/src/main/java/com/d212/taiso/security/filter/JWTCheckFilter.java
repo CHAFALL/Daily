@@ -6,6 +6,7 @@ package com.d212.taiso.security.filter;
 // 3. 잘못 되면 어떻게 할 건지 (잘 되었을 때는 그냥 원래 하던거를 하면 됨.)
 
 
+import com.d212.taiso.dto.MemberDTO;
 import com.d212.taiso.util.JWTUtil;
 import com.google.gson.Gson;
 import jakarta.servlet.FilterChain;
@@ -13,10 +14,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Map;
 
 // 스프링 웹 시큐리티는 굉장히 많은 여러 종류의 필터를 지원한다.
@@ -36,6 +40,12 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
 
         log.info("check uri----------" + path);
+
+
+        // 회원 쪽은 체크하지 마!
+        if (path.startsWith("/api/member/")) {
+            return true;
+        }
 
         // 부정의 부정은 긍정, 즉 false == check
         return false;
@@ -60,7 +70,35 @@ public class JWTCheckFilter extends OncePerRequestFilter {
             String accessToken = authHeaderStr.substring(7);
             Map<String, Object> claims = JWTUtil.validateToken(accessToken);
             log.info("JWT claims: " + claims);
+
+
+
+//            filterChain.doFilter(request, response);
+
+
+            // 권한 관련-------------------------(참고)
+            // 사용자의 토큰이 성공을 했다면 사용자에 대한 정보를 끄집어낼 수 o
+            // 이 사용자의 정보를 가지고 멤버 DTO를 구성
+            String email = (String) claims.get("email");
+            String pw = (String) claims.get("pw");
+            String nickname = (String) claims.get("nickname");
+            Boolean social = (Boolean) claims.get("social");
+            List<String> roleNames = (List<String>) claims.get("roleNames");
+
+            MemberDTO memberDTO = new MemberDTO( email, pw, nickname, social.booleanValue(),
+                    roleNames);
+            log.info("-----------------------------------");
+            log.info(memberDTO);
+            log.info(memberDTO.getAuthorities());
+            UsernamePasswordAuthenticationToken authenticationToken
+                    = new UsernamePasswordAuthenticationToken(memberDTO,pw,memberDTO.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
             filterChain.doFilter(request, response);
+
+            // 권한 관련 끝---------------
+
+
         }catch(Exception e){
             log.error("JWT Check Error..............");
             log.error(e.getMessage());
@@ -75,7 +113,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         }
 
 
-        // 성공하면 목적지로 (그냥 다음 것 타요.)
-        filterChain.doFilter(request, response);
+        // 성공하면 목적지로 (그냥 다음 것 타요.) (이거 뭔데???)
+//        filterChain.doFilter(request, response);
     }
 }
