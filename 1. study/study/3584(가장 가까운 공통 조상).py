@@ -33,10 +33,10 @@ for tc in range(1, T+1):
     ancestor_A = ancestor(A)
     ancestor_B = ancestor(B)
 
-    for a in ancestor_A:
-        if a in ancestor_B:
-            common_ancestor = a
-            print(a)
+    for target in ancestor_A:
+        if target in ancestor_B:
+            common_ancestor = target
+            print(target)
             break
 
 #---------------------------------------------------
@@ -67,8 +67,8 @@ for tc in range(1, T+1):
     ancestor_A = ancestor(A)
     ancestor_B = ancestor(B)
 
-    for a in ancestor_A:
-        if a in ancestor_B:
-            common_ancestor = a
-            print(a)
+    for target in ancestor_A:
+        if target in ancestor_B:
+            common_ancestor = target
+            print(target)
             break
