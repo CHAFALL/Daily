@@ -4,7 +4,7 @@ import { getList } from "../../api/productsApi";
 import FetchingModal from "../common/FetchingModal";
 import { API_SERVER_HOST } from "../../api/todoApi";
 import PageComponent from "../common/PageComponent";
-
+import useCustomLogin from "../../hooks/useCustomLogin";
 
 const initState = {
   dtoList: [],
@@ -22,6 +22,8 @@ const initState = {
 const host = API_SERVER_HOST;
 
 function ListComponent(props) {
+  const { exceptionHandle } = useCustomLogin();
+
   const { moveToList, moveToRead, page, size, refresh } = useCustomMove();
 
   const [serverData, setServerData] = useState(initState);
@@ -31,10 +33,13 @@ function ListComponent(props) {
   useEffect(() => {
     setFetching(true);
 
-    getList({ page, size }).then((data) => {
-      setFetching(false);
-      setServerData(data);
-    });
+    getList({ page, size })
+      .then((data) => {
+        console.log(data);
+        setFetching(false);
+        setServerData(data);
+      })
+      .catch((err) => exceptionHandle(err));
   }, [page, size, refresh]);
 
   return (
@@ -68,8 +73,10 @@ function ListComponent(props) {
           </div>
         ))}
       </div>
-      <PageComponent serverData={serverData} movePage={moveToList}></PageComponent>
-
+      <PageComponent
+        serverData={serverData}
+        movePage={moveToList}
+      ></PageComponent>
     </div>
   );
 }

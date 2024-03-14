@@ -1,0 +1,15 @@
+// 내 코드 기반으로 자동 완성 (1달 무료)
+github copilot
+// 오타 체크
+code spell checker
+// 누가 작성했어?
+gitlens - git supercharged
+// 모듈 용량 체크
+import cost 
+// todo tree
+내가 어디까지 했더라? // todo
+
+
+// 인프라 보조 플러그인 //
+better shell syntax
+
