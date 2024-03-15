@@ -1,2 +1,5 @@
 # 스프링 yml 분리
 https://velog.io/@stbpiza/Spring-Boot-%ED%99%98%EA%B2%BD-%EB%B6%84%EB%A6%AC%ED%95%98%EA%B8%B0
+
+# 북마크
+https://blog.naver.com/spacecw/221510228828
