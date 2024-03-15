@@ -8,9 +8,7 @@ def solution(genres, plays):
     for i in range(N):
         total.append((genres[i], plays[i], i))  # 장르, 플레이 수, 인덱스
 
-    # total.sort(key = lambda x: (x[0], -x[1], x[2]))
-
-# 장르별 전체 플레이 수를 알아야 됨. 그거에 따라서 숫자 부여?
+    total.sort(key = lambda x: (x[0], -x[1], x[2]))
 
     for i in range(N):
         # 장르가 딕셔너리에 없다면
@@ -19,10 +17,11 @@ def solution(genres, plays):
         else:
             genres_total[total[i][0]] += total[i][1]
 
-    for i in range(len(genres_total)):
+    genres_total = list(genres_total.items()) # 리스트로 변환
+    genres_total.sort(key = lambda x: (-x[1]))
 
-
-
+    print(genres_total)
+    # 곡이 하나만 있을 수 있음.
 
     answer = []
     return answer
