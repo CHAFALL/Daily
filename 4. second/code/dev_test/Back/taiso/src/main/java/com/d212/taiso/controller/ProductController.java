@@ -74,8 +74,7 @@ public class ProductController {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
-
+        
         return Map.of("result", pno);
     }
 

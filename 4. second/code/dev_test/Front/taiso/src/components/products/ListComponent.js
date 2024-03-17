@@ -5,6 +5,7 @@ import FetchingModal from "../common/FetchingModal";
 import { API_SERVER_HOST } from "../../api/todoApi";
 import PageComponent from "../common/PageComponent";
 import useCustomLogin from "../../hooks/useCustomLogin";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const initState = {
   dtoList: [],
@@ -26,25 +27,35 @@ function ListComponent(props) {
 
   const { moveToList, moveToRead, page, size, refresh } = useCustomMove();
 
-  const [serverData, setServerData] = useState(initState);
 
-  const [fetching, setFetching] = useState(false);
 
-  useEffect(() => {
-    setFetching(true);
+  const { data, isFetching, error, isError } = useQuery({
+    queryKey: ["products/list", { page, size, refresh }],
+    queryFn: () => getList({ page, size }),
+    staleTime: 1000 * 60
+  });
 
-    getList({ page, size })
-      .then((data) => {
-        console.log(data);
-        setFetching(false);
-        setServerData(data);
-      })
-      .catch((err) => exceptionHandle(err));
-  }, [page, size, refresh]);
+
+  // 현재 페이지를 눌렀을 때 새롭게 조회를 해줘야 한다!! (방법 1 비추)
+  // const queryClient = useQueryClient()
+  // const handleClickPage = (pageParam) => {
+  //   if (pageParam.page === parseInt(page)){
+  //     queryClient.invalidateQueries("products/list")
+  //   }
+  //   moveToList(pageParam)
+  // }
+
+  // (방법 2) -> 저번처럼 refresh 이용
+  
+  const handleClickPage = (pageParam) => {
+    moveToList(pageParam)
+  }
+
+  const serverData = data || initState;
 
   return (
     <div className="border-2 border-blue-100 mt-10 mr-2 ml-2">
-      {fetching ? <FetchingModal /> : <></>}
+      {isFetching ? <FetchingModal /> : <></>}
       <div className="flex flex-wrap mx-auto p-6">
         {serverData.dtoList.map((product) => (
           <div
@@ -75,7 +86,7 @@ function ListComponent(props) {
       </div>
       <PageComponent
         serverData={serverData}
-        movePage={moveToList}
+        movePage={handleClickPage}
       ></PageComponent>
     </div>
   );

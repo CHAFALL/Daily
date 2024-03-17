@@ -3,6 +3,7 @@ import { postAdd } from "../../api/productsApi";
 import FetchingModal from "../common/FetchingModal";
 import ResultModal from "../common/ResultModal";
 import useCustomMove from "../../hooks/useCustomMove";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const initState = {
   pname: "",
@@ -19,8 +20,11 @@ function AddComponent(props) {
   // 리액트에서 고유하게 번호(도메 엘리먼트)를 식별할 때 쓰는 것을 useRef라고 함
   const uploadRef = useRef();
 
-  const [fetching, setFetching] = useState(false)
-  const [result, setResult] = useState(false)
+  // useQuery 같은 경우는 보관을 해야 해서 key 값이 필요하지만 얘는 그냥 처리를 해주는 것이므로 key 값 같은 것 필요 없음.
+  const addMutation = useMutation({mutationFn: (product) => postAdd(product)})
+
+
+  // 근데 왜 추가했는데 바로 새로운 데이터가 보여지지 않지?? 기존에 stailTime으로 설정해둔 것이 있어서 그럼 -> closeModal쪽으로 ㄱㄱㄱ
 
   const {moveToList} = useCustomMove()
 
@@ -53,18 +57,22 @@ function AddComponent(props) {
 
     console.log(formData)
 
-    setFetching(true)
+    // 원래는 이렇게 직접 호출을 했는데 직접 호출하지 않고 addMutation.mutate()라는 함수를 이용
+    // postAdd(formData).then(data => {
+    //   setFetching(false)
+    //   setResult(data.result)
+    // })
 
-    postAdd(formData).then(data => {
-      setFetching(false)
-      setResult(data.result)
-    })
+    addMutation.mutate(formData)
 
   };
 
+  const queryClient = useQueryClient()
+
   const closeModal = () => {
-    setResult(null)
-    moveToList()
+    queryClient.invalidateQueries("products/list")
+    moveToList({page:1})
+    
   }
 
   return (
@@ -129,14 +137,19 @@ function AddComponent(props) {
           </button>
         </div>
       </div>
-      {fetching ? <FetchingModal /> : <></>}
-      {result ? <ResultModal
+      {addMutation.isPending ? <FetchingModal /> : <></>}
+      {addMutation.isSuccess ? <ResultModal
         callbackFn={closeModal}
         title={'Product Add Result'}
-        content = {`${result} 번 상품 등록 완료`}
+        content = {`${addMutation.data.result} 번 상품 등록 완료`}
       ></ResultModal> : <></>}
     </div>
   );
 }
+
+
+// 상품 등록을 할 때는 useMutation을 이용
+// useQuery는 select라고 생각하면 되고
+// useMutation은 말 그대로 내가 데이터를 변경하고 싶을 때 이용
 
 export default AddComponent;
