@@ -38,13 +38,4 @@ public class MemberController {
         memberService.memberJoin(memberJoinReq);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.JOIN_SUCCESS, true));
     }
-
-
-    // Todo 회원탈퇴 부분에서 안되는 이유가 회원부분은 모두 필터로 토큰 검사부분을 건너뛰어나서 토큰으로부터 회원정보를 조회할 수 없는 듯
-    // 그래서 email 정보를 직접 받거나 해야될 듯 -> 그럼 dto를 또 만들어??
-    @DeleteMapping("/")
-    public ResponseEntity<ResultResponse> memberDelete() {
-        memberService.memberDelete();
-        return ResponseEntity.ok(ResultResponse.of(ResultCode.MEMBER_DELETE_SUCCESS, true));
-    }
 }

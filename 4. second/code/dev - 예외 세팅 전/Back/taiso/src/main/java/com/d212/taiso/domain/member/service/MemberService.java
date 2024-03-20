@@ -9,8 +9,6 @@ public interface MemberService {
 
     void memberJoin(MemberJoinReq memberJoinReq);
 
-    void memberDelete();
-
     // 비밀번호 암호화로 인해 지움.
 //    default Member memberJoinReqToEntity(MemberJoinReq memberJoinReq){
 //        return Member.builder()
