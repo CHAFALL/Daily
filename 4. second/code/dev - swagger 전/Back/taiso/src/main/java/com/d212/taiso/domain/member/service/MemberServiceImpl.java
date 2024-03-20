@@ -8,8 +8,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 @Log4j2
 @Service
 @RequiredArgsConstructor
@@ -29,7 +27,6 @@ public class MemberServiceImpl implements MemberService{
                 .email(memberJoinReq.getEmail())
                 .pw(passwordEncoder.encode(memberJoinReq.getPw()))
                 .name(memberJoinReq.getName())
-                .createTime(LocalDateTime.now())
                 .faceImg(memberJoinReq.getFaceImg())
                 .build();
         memberRepository.save(member);
