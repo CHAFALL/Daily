@@ -1,0 +1,69 @@
+# 거꾸로 하면 변환할 수 없는 경우도 더 빨리 반환 가능할 듯
+# 생각해보니 거꾸로는 안 될 듯
+# 좀 어렵네
+# BFS (최소 단계이므로)? # 완전탐색인가?? 50개 이하라 완탐은 아닌 듯
+from collections import deque
+def solution(begin, target, words):
+    answer = 0
+    if target not in words:
+        return answer
+
+    answer = bfs(begin, target, words)
+    return answer
+
+def bfs(begin, target, words):
+    N = len(words[0]) # 단어의 길이 미리 빼둠 (모두 동일)
+    # 초기 설정
+    Q = deque()
+    Q.append((begin, 0))  # 바뀔 단어, step
+
+    while Q:
+        currnet, step = Q.popleft()
+        # 종료 조건
+        if currnet == target:
+            return step
+
+        for word in words:
+            count = 0
+            for i in range(N):
+                if currnet[i] != word[i]:
+                    count += 1
+            if count == 1:
+                Q.append((word, step + 1))
+
+
+
+
+
+
+#----
+# from collections import deque
+#
+#
+# def solution(begin, target, words):
+#     if target not in words:
+#         return 0
+#
+#     return bfs(begin, target, words)
+#
+#
+# # 최소 단계를 찾아야 하므로 bfs
+# def bfs(begin, target, words):
+#     queue = deque()
+#     queue.append([begin, 0])  # 시작 단어와 단계 0으로 초기화
+#
+#     while queue:
+#         now, step = queue.popleft()
+#
+#         if now == target:
+#             return step
+#
+#         # 단어를 모두 체크하면서, 해당 단어가 변경될 수 있는지 체크
+#         for word in words:
+#             count = 0
+#             for i in range(len(now)):  # 단어의 길이만큼 반복하여
+#                 if now[i] != word[i]:  # 단어에 알파벳 한개씩 체크하기
+#                     count += 1
+#
+#             if count == 1:
+#                 queue.append([word, step + 1])
