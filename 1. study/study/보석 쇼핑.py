@@ -21,7 +21,7 @@ def solution(gems):
 
         # 모든 종류가 내 사전에 있을 시
         if len(gems_dic) == M:
-            while True:
+            while start < end:
                 # 맨 앞놈 보석 종류의 보석이 2개 이상이면 빼도 문제 없자너.
                 if gems_dic[gems[start]] > 1:
                     gems_dic[gems[start]] -= 1
@@ -43,3 +43,5 @@ def solution(gems):
 # len(gems_dic) 이것이 가능한 것도 처음 암
 
 print(solution(["DIA", "RUBY", "RUBY", "DIA", "DIA", "EMERALD", "SAPPHIRE", "DIA"]))
+
+
