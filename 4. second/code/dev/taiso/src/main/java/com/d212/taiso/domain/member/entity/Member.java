@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Table(name = "member")
+//@EntityListeners(AuditingEntityListener.class)
 public class Member {
 
     @Id
@@ -28,6 +30,8 @@ public class Member {
     private String faceImg;
     @CreatedDate
     private LocalDateTime createDate;
+
+    @Builder.Default
     private boolean deleteFlag = false;
 
     public void changePwd(String pwd) {

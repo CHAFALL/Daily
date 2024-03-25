@@ -1,6 +1,9 @@
 package com.d212.taiso.domain.reservation.dto;
 
 import java.time.LocalDateTime;
+
+import com.d212.taiso.domain.place.entity.Place;
+import lombok.Builder;
 import lombok.Data;
 
 
@@ -9,13 +12,19 @@ import lombok.Data;
  */
 
 // Todo
-// 전체 예약 리스트 (미완)
 @Data
+@Builder
 public class RsvListRes {
 
     private Long rsvId;
 
     private Long placeId;
+
+    private double latitude; // 위도
+
+    private double longitude; // 경도
+
+    private String address;
 
     private LocalDateTime time; // 예약 일시 (출발 시간)
 

@@ -1,18 +1,14 @@
-package com.d212.taiso.domain.rsvdetail.entity;
+package com.d212.taiso.domain.reservation.entity;
 
 import static jakarta.persistence.FetchType.*;
 
 import com.d212.taiso.domain.member.entity.Member;
-import com.d212.taiso.domain.place.entity.Place;
-import com.d212.taiso.domain.reservation.entity.Reservation;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
+
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -46,12 +42,11 @@ public class RsvDetail {
 //    @JoinColumn(name = "place_id")
 //    private Place place;
 
-
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "email")
     private Member member;
 
-    private int cnt = 1; // 경유 인원
+    private int cnt; // 경유 인원
 
     @Column(name = "orders")
     private int orders; // 경유 순서
