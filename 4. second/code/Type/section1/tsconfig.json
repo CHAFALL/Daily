@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    // 컴파일 결과 생성되는 js 버전
+    "target": "ESNext",
+    "module": "CommonJS",
+    // 컴파일 된 js 파일 위치
+    "outDir": "dist",
+    // 엄격 여부
+    "strict": true,
+    // 각각을 어떤 모듈로 감지할 것이냐
+    // 개별 모듈로 취급되도록 export 자동 기입(force), (기본은 글로벌 모듈)
+    "moduleDetection": "force",
+    "skipLibCheck": true
+  },
+  // ts-node가 esm module로 동작하도록
+  "ts-node": {
+    "esm": true
+  },
+  // src 아래에 있는 모든 파일들을 한방에 컴파일해라 (tsc 터미널 창에 입력해보기!)
+  "include": ["src"],
+  
+}
