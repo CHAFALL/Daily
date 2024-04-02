@@ -6,10 +6,11 @@ import { BookmarkType } from '../../interfaces/Bookmark';
 import { getBookmarkList } from '../../apis/bookmarkApi';
 
 export const Favorite = () => {
-	
 	const [bookmarkList, setBookmarkList] = useState<BookmarkType[]>([]);
 
 	const [editMode, setEditMode] = useState(false);
+	const [isPlaceStartSetting] = useState(false);
+	const [isPlaceEndSetting] = useState(false);
 
 	useEffect(() => {
 		handleGetBookmarkList();
@@ -29,16 +30,30 @@ export const Favorite = () => {
 		setEditMode(!editMode);
 	};
 
+	//삭제 함수
+	const onClickDelete = (bookmarkId: number) => {
+		setBookmarkList(bookmarkList.filter((bookmark) => bookmark.bookmarkId !== bookmarkId));
+	};
+
 	return (
 		<>
 			<div className='animate-fadeIn flex flex-col'>
 				<div className='flex ml-3 my-6 justify-between'>
 					<BackButton2 />
 					<div className="flex font-['Pretendard-Bold'] text-[26px] pl-2">즐겨찾기</div>
-					<div className='mt-2 mr-8 opacity-70' onClick={toggleEditMode}>편집</div>
+					<div className='mt-2 mr-8 opacity-70' onClick={toggleEditMode}>
+						{editMode ? '취소' : '편집'}
+					</div>
 				</div>
 				{bookmarkList.map((bookmark) => (
-					<FavoriteListElement key={bookmark.bookmarkId} {...bookmark} editMode={editMode}/>
+					<FavoriteListElement
+						key={bookmark.bookmarkId}
+						{...bookmark}
+						editMode={editMode}
+						isPlaceStartSetting={isPlaceStartSetting}
+						isPlaceEndSetting={isPlaceEndSetting}
+						onClickDelete = {onClickDelete}
+					/>
 				))}
 			</div>
 			<BottomNav />

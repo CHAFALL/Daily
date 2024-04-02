@@ -11,14 +11,14 @@ import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import { BackButton } from '../../components/BackButton';
+import { HomeBackButton } from '../../components/HomeBackButton';
 import { useNavigate } from 'react-router-dom';
 import { FaBusSimple } from 'react-icons/fa6';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import 'dayjs/locale/ko';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -26,13 +26,66 @@ import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import NewReservationStore from '../../store/NewReservationStore';
+import { addRsv } from '../../apis/reservationApi';
+import { RsvInputType } from '../../interfaces/Reservation';
 
 export const NewReservation = () => {
+	const {
+		setStartBookmarkId,
+		setStartLatitude,
+		setStartLongitude,
+		setStartAddress,
+		setEndBookmarkId,
+		setEndLatitude,
+		setEndLongitude,
+		setEndAddress,
+		setTime,
+		setCnt,
+	} = NewReservationStore();
+	const [rsvObj, setRsvObj] = useState<RsvInputType>({
+		startBookmarkId: null,
+		startLatitude: null,
+		startLongitude: null,
+		startAddress: null,
+		endBookmarkId: null,
+		endLatitude: null,
+		endLongitude: null,
+		endAddress: null,
+		time: '',
+		cnt: 1,
+	});
 	const [date, setDate] = useState<Dayjs | null | undefined>(dayjs());
 	const [daytime, setDaytime] = useState<string>('오전');
 	const [rsvTime, setRsvTime] = useState<string>('');
 	const [userCnt, setUserCnt] = useState<number>(1);
 	const navigate = useNavigate();
+
+	const startBookmarkId = JSON.parse(localStorage?.getItem('NewReservation')).state?.startBookmarkId;
+	const startLatitude = JSON.parse(localStorage?.getItem('NewReservation')).state?.startLatitude;
+	const startLongitude = JSON.parse(localStorage?.getItem('NewReservation')).state?.startLongitude;
+	const startAddress = JSON.parse(localStorage?.getItem('NewReservation')).state?.startAddress;
+	const endBookmarkId = JSON.parse(localStorage?.getItem('NewReservation')).state?.endBookmarkId;
+	const endLatitude = JSON.parse(localStorage?.getItem('NewReservation')).state?.endLatitude;
+	const endLongitude = JSON.parse(localStorage?.getItem('NewReservation')).state?.endLongitude;
+	const endAddress = JSON.parse(localStorage?.getItem('NewReservation')).state?.endAddress;
+	const time = JSON.parse(localStorage?.getItem('NewReservation')).state?.time;
+	const cnt = JSON.parse(localStorage?.getItem('NewReservation')).state?.cnt;
+
+	useEffect(() => {
+		setRsvObj({
+			startBookmarkId,
+			startLatitude,
+			startLongitude,
+			startAddress,
+			endBookmarkId,
+			endLatitude,
+			endLongitude,
+			endAddress,
+			time,
+			cnt,
+		});
+	}, [rsvTime, userCnt]);
 
 	const goSetDeparture = () => {
 		navigate('/setDeparture');
@@ -47,19 +100,40 @@ export const NewReservation = () => {
 	};
 
 	const handleRsvTimeChange = (event: SelectChangeEvent) => {
-		console.log(date?.format('YYYY-MM-DD') + 'T' + event.target.value);
 		setRsvTime(event.target.value as string);
+		if (date) {
+			setTime(date?.format('YYYY-MM-DD ') + event.target.value);
+		}
 	};
 
 	const handleCntChange = (event: SelectChangeEvent) => {
 		setUserCnt(event.target.value as unknown as number);
+		setCnt(event.target.value as unknown as number);
+	};
+
+	const submitNewRsv = () => {
+		console.log(rsvObj);
+		addRsv(rsvObj).then((res) => {
+			console.log(res);
+			setStartBookmarkId(null);
+			setStartLatitude(null);
+			setStartLongitude(null);
+			setStartAddress(null);
+			setEndBookmarkId(null);
+			setEndLatitude(null);
+			setEndLongitude(null);
+			setEndAddress(null);
+			setTime(null);
+			setCnt(1);
+			navigate('/history', { replace: true });
+		});
 	};
 
 	return (
 		<>
 			<div className='fixed z-10 top-0 w-[100%] h-[15%] flex-col justify-evenly items-end bg-white'>
 				<div className='flex'>
-					<BackButton />
+					<HomeBackButton />
 					<div className='fixed flex justify-center w-[100%] top-[3%] mx-[5px] font-["Pretendard-Bold"] text-[25px]'>
 						<div>장소 찾기</div>
 					</div>
@@ -91,24 +165,24 @@ export const NewReservation = () => {
 						</AccordionSummary>
 						<AccordionDetails>
 							<Stack spacing={1.5}>
-								<FormControl orientation='horizontal' sx={{ gap: 1 }}>
-									<div className='w-[100%] h-[100%] bg-white border-2 border-[#C4B5FC] rounded-lg divide-y divide-dashed divide-[#C4B5FC]'>
+								<FormControl orientation='horizontal' sx={{ gap: 3 }}>
+									<div className='w-[100%] h-[100%] py-2 bg-white border-2 border-[#C4B5FC] rounded-md divide-y divide-dashed divide-[#C4B5FC]'>
 										<div className='h-[100%] flex items-center' onClick={goSetDeparture}>
 											<span className='mx-[5px]'>
 												<FaBusSimple color='navy' className='mx-[5px]' />
 											</span>
-											<span className='mx-[5px]'>출발지 : {}</span>
+											<span className='mx-[5px]'>출발지 : {startAddress}</span>
 										</div>
 									</div>
 								</FormControl>
 
 								<FormControl orientation='horizontal' sx={{ gap: 1 }}>
-									<div className='w-[100%] h-[100%] bg-white border-2 border-[#C4B5FC] rounded-lg divide-y divide-dashed divide-[#C4B5FC]'>
+									<div className='w-[100%] h-[100%] py-2 bg-white border-2 border-[#C4B5FC] rounded-md divide-y divide-dashed divide-[#C4B5FC]'>
 										<div className='h-[100%] flex items-center' onClick={goSetArrival}>
 											<span className='mx-[5px]'>
 												<FaBusSimple color='skyblue' className='mx-[5px]' />
 											</span>
-											<span className='mx-[5px]'>목적지 : {}</span>
+											<span className='mx-[5px]'>목적지 : {endAddress}</span>
 											<span></span>
 										</div>
 									</div>
@@ -231,7 +305,9 @@ export const NewReservation = () => {
 			</div>
 			<div className='fixed z-10 bottom-0 w-[100%] h-[15%] flex flex-col justify-center items-center bg-white'>
 				<div className=' w-[70%] h-[40%] flex justify-center items-center bg-[#3422F2] rounded-full'>
-					<span className='flex justify-center w-[100%] font-["Pretendard-Bold"] text-[25px] text-white'>
+					<span
+						className='flex justify-center w-[100%] font-["Pretendard-Bold"] text-[25px] text-white'
+						onClick={submitNewRsv}>
 						예약하기
 					</span>
 				</div>

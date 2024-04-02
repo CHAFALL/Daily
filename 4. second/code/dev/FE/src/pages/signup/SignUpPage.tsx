@@ -1,8 +1,9 @@
-import { useState, FormEvent } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import CssBaseline from '@mui/material/CssBaseline';
 import {
 	Avatar,
 	Button,
-	CssBaseline,
 	TextField,
 	FormControl,
 	FormHelperText,
@@ -48,13 +49,19 @@ export const SignUpPage = () => {
 	const [registerError, setRegisterError] = useState<string>('');
 	const [color, setColor] = useState<string>('info');
 
-	const { moveToLogin } = useCustomLogin();
+	const { moveToLogin, isLogin } = useCustomLogin();
+	const navigate = useNavigate();
 
-	
+	useEffect(() => {
+		if (isLogin) {
+			navigate('/main');
+		}
+	}, []);
+
 	const [email, setEmail] = useState<string>('');
 
 	// 이메일 입력시 변화
-	const handleEmailChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+	const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setEmail(e.target.value);
 	};
 
