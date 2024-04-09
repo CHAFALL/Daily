@@ -14,3 +14,4 @@ Hierarchy (물체 누르고) -> QWERTY -> Q : 기존 W : 이동 E : 회전 R : �
 Local/Global : X
 바로 복제 : Ctrl + D
 한칸만 더 실행 (디버깅) : F10, F11
+다른 이름으로 저장 : Ctrl + Shift + S
