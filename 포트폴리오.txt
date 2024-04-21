@@ -1,0 +1,10 @@
+프로젝트 성과 및 배운 점
+
+- 모듈화 및 코드 리팩토링의 중요성
+- 적절한 전역 상태 관리 필요
+- 동적 페이지 크롤링
+
+내 목표는 풀스택으로 어떤 언어를 쓰는지 간에 흐름을 알고 끝내자였음
+
+#--
+https://docs.google.com/spreadsheets/d/13I4t_qFQWcC4xSWIejVJseZGw-rsZUHPQIYh0jEc8nE/edit#gid=0

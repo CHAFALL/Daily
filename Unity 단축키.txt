@@ -15,3 +15,4 @@ Local/Global : X
 바로 복제 : Ctrl + D
 한칸만 더 실행 (디버깅) : F10, F11
 다른 이름으로 저장 : Ctrl + Shift + S
+생성자 알아서 만들기 : ctor쓰고 Tab
