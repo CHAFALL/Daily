@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./images/Dog.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" href="./css/reset.css" />
+
+    <link rel="stylesheet" href="./css/style.css" />
+
+    <script src="./js/main.js" defer></script>
+    <script
+      src="https://kit.fontawesome.com/bca3cda4cb.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- ScrollReveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <!-- typeit -->
+    <script src="https://unpkg.com/typeit@8.8.3/dist/index.umd.js"></script>
+
+    <title>포트폴리오</title>
+    <!-- 웹 사이트의 설명을 도와주는 메타 태그 -->
+    <meta
+      name="description"
+      content="CHAFA의 웹 개발 포트폴리오입니다. 주로 웹 풀스택과 게임개발을 다루고 있습니다."
+    />
+
+    <meta name="author" content="CHAFA" />
+
+    <meta name="keywords" content="웹개발, 풀스택, 게임" />
+
+    <!-- OG Tag -->
+    <meta property="og:title" content="CHAFA 포트폴리오" />
+    <meta
+      property="og:description"
+      content="CHAFA의 웹 개발 포트폴리오입니다. 주로 웹 풀스택과 게임개발을 다루고 있습니다."
+    />
+    <meta
+      property="og:image"
+      content="https://yourwebsite.com/images/Dog.jpg"
+    />
+    <meta property="og:url" content="https://yourwebsite.com" />
+    <meta property="og:type" content="website" />
+  </head>
+
+  <body>
+    <header class="header">
+      <nav class="nav container">
+        <!-- 이미지(로고) -->
+        <div class="nav__logo">
+          <img class="nav__img" src="./images/Dog.png" alt="로고" />
+
+          <a href="#" class="nav_brand">CHAFA</a>
+        </div>
+
+        <!-- 메뉴 -->
+        <div class="nav__menu" id="nav__menu">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a href="#home" class="nav__link active-link">Home</a>
+            </li>
+            <li class="nav__item">
+              <a href="#about" class="nav__link">About</a>
+            </li>
+            <li class="nav__item">
+              <a href="#skills" class="nav__link">Skills</a>
+            </li>
+            <li class="nav__item">
+              <a href="#work" class="nav__link">Work</a>
+            </li>
+            <li class="nav__item">
+              <a href="#contact" class="nav__link">Contact</a>
+            </li>
+          </ul>
+        </div>
+        <div class="nav__toggle" id="nav-toggle">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <!-- Home -->
+      <section class="home container section" id="home">
+        <!-- Home Data -->
+        <div class="home__data">
+          <h2 id="typeit" class="home__title"></h2>
+
+          <a href="#contact" class="button">Contact</a>
+
+          <div class="home__social">
+            <a href="#" target="_blank" title="유튜브 링크">
+              <i class="fa-brands fa-youtube home__social-icon"></i>
+            </a>
+            <a href="#" target="_blank" title="인스타그램 링크">
+              <i class="fa-brands fa-instagram home__social-icon"></i>
+            </a>
+            <a href="#" target="_blank" title="깃허브 링크">
+              <i class="fa-brands fa-github home__social-icon"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Home Image -->
+        <img
+          class="home__img"
+          src="./images/home/Dog.jpg"
+          alt="프로필 이미지"
+        />
+      </section>
+
+      <!-- About -->
+      <section class="about section bg-grey-1" id="about">
+        <h2 class="section__title">About</h2>
+
+        <div class="about__container container">
+          <!-- 이미지 -->
+          <img class="about__img" src="./images/about/Dog.jpg" alt="프로필" />
+          <!-- 문자열 -->
+          <div class="about__data">
+            <h3 class="about__subtitle">저는 이렇게 생각합니다.</h3>
+            <p class="about__text">
+              프로그래밍을 배우는 사람의 마음을 너무 잘 압니다. 저도 여러분과
+              똑같은 입장이었던 적이 있기 때문입니다. 개발자로 취업 후 1년 정도
+              다니고 퇴사를 결심한 적이 있습니다. 왜냐하면 프로그래밍을 잘
+              모르고 취업했기 때문입니다.
+              <br /><br />
+              퇴사 후 학원에 다니며 하루 4시간 자면서 열심히 살았습니다. 과거로
+              돌아가도 그때처럼 공부할 자신이 없을 정도니까요. 그리고 현재 저는
+              인프런과 유튜브에서 웹 개발 입문자와 실무자들을 위한 웹 개발
+              지식을 공유하고 있습니다.
+              <br /><br />
+              제 강의는 제가 프로그래밍을 잘 알지 못했던 시절과 개발자로서
+              지식공유를 하며 어려움을 겪었던 분들의 입장에서 이해하기 쉽고,
+              현업에서도 꿀리지 않도록 알차게 구성한 강의입니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section class="skills section" id="skills">
+        <h2 class="section__title">Skills</h2>
+
+        <div class="skills__container container">
+          <!-- 스킬 데이터 -->
+          <div>
+            <h3 class="skills__subtitle">Profesional Skills</h3>
+            <p class="skills__text">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+              Explicabo dolorem sequi inventore amet, fugit voluptates
+              repellendus enim aliquam quod quaerat vero reiciendis itaque? Vero
+              cum laboriosam fugiat distinctio et consequatur.
+            </p>
+            <div>
+              <article class="skills__data">
+                <div class="skills__names">
+                  <!-- icon -->
+                  <i class="fa-brands fa-html5 skills__icon"></i>
+                  <!-- skill name -->
+                  <span class="skills__name">HTML5</span>
+                </div>
+                <div>
+                  <!-- percentage -->
+                  <span class="skills__percentage">85%</span>
+                </div>
+                <progress
+                  class="skills__progress"
+                  id="html5"
+                  max="100"
+                  value="85"
+                ></progress>
+              </article>
+
+              <article class="skills__data">
+                <div class="skills__names">
+                  <!-- icon -->
+                  <i class="fa-brands fa-css3-alt skills__icon"></i>
+                  <!-- skill name -->
+                  <span class="skills__name">CSS3</span>
+                </div>
+                <div>
+                  <!-- percentage -->
+                  <span class="skills__percentage">80%</span>
+                </div>
+                <progress
+                  class="skills__progress"
+                  id="css3"
+                  max="100"
+                  value="80"
+                ></progress>
+              </article>
+
+              <article class="skills__data">
+                <div class="skills__names">
+                  <!-- icon -->
+                  <i class="fa-brands fa-js skills__icon"></i>
+                  <!-- skill name -->
+                  <span class="skills__name">JavaScript</span>
+                </div>
+                <div>
+                  <!-- percentage -->
+                  <span class="skills__percentage">90%</span>
+                </div>
+                <progress
+                  class="skills__progress"
+                  id="javascript"
+                  max="100"
+                  value="90"
+                ></progress>
+              </article>
+
+              <article class="skills__data">
+                <div class="skills__names">
+                  <!-- icon -->
+                  <i class="fa-solid fa-server skills__icon"></i>
+                  <!-- skill name -->
+                  <span class="skills__name">Back-end</span>
+                </div>
+                <div>
+                  <!-- percentage -->
+                  <span class="skills__percentage">95%</span>
+                </div>
+                <progress
+                  class="skills__progress"
+                  id="backend"
+                  max="100"
+                  value="95"
+                ></progress>
+              </article>
+            </div>
+          </div>
+
+          <!-- 이미지 -->
+          <div>
+            <img
+              class="skills__img"
+              src="./images/skills/Dog.jpg"
+              alt="작업 환경"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- Work -->
+      <section class="work section" id="work">
+        <h2 class="section__title">Work</h2>
+        <div class="work__container container">
+          <a class="work__link" href="#" target="_blank" title="프로젝트1">
+            <img
+              class="work__img"
+              src="./images/work/Dog.jpg"
+              alt="프로젝트1"
+            />
+          </a>
+          <a class="work__link" href="#" target="_blank" title="프로젝트2">
+            <img
+              class="work__img"
+              src="./images/work/Dog.jpg"
+              alt="프로젝트2"
+            />
+          </a>
+          <a class="work__link" href="#" target="_blank" title="프로젝트3">
+            <img
+              class="work__img"
+              src="./images/work/Dog.jpg"
+              alt="프로젝트3"
+            />
+          </a>
+          <a class="work__link" href="#" target="_blank" title="프로젝트4">
+            <img
+              class="work__img"
+              src="./images/work/Dog.jpg"
+              alt="프로젝트4"
+            />
+          </a>
+          <a class="work__link" href="#" target="_blank" title="프로젝트5">
+            <img
+              class="work__img"
+              src="./images/work/Dog.jpg"
+              alt="프로젝트5"
+            />
+          </a>
+          <a class="work__link" href="#" target="_blank" title="프로젝트6">
+            <img
+              class="work__img"
+              src="./images/work/Dog.jpg"
+              alt="프로젝트6"
+            />
+          </a>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section class="contact section" id="contact">
+        <h2 class="section__title">Contact</h2>
+        <div class="contact__container container">
+          <form id="contactForm" class="contact__form">
+            <input
+              class="contact__input"
+              type="text"
+              name="name"
+              placeholder="이름"
+              required
+            />
+            <input
+              class="contact__input"
+              type="text"
+              name="subject"
+              placeholder="제목"
+              required
+            />
+            <textarea
+              class="contact__input"
+              name="message"
+              id="message"
+              cols="30"
+              rows="10"
+              placeholder="내용"
+              required
+            ></textarea>
+            <button class="contact__button button">보내기</button>
+          </form>
+        </div>
+      </section>
+      <button class="floating-button" id="floating-button">
+        <i class="fa-solid fa-arrow-up floating-button-icon"></i>
+      </button>
+    </main>
+    <!-- Footer -->
+    <footer class="footer">
+      <p class="footer__title">CHAFA</p>
+      <div class="footer__social">
+        <a href="#" target="_blank" title="유튜브 링크">
+          <i class="fa-brands fa-youtube footer__icon"></i>
+        </a>
+        <a href="#" target="_blank" title="인스타그램 링크">
+          <i class="fa-brands fa-instagram footer__icon"></i>
+        </a>
+        <a href="#" target="_blank" title="깃허브 링크">
+          <i class="fa-brands fa-github footer__icon"></i>
+        </a>
+      </div>
+      <p class="footer__copy">
+        Copyright &copy; 2024 CHAFA All rights reserved.
+      </p>
+    </footer>
+  </body>
+</html>
+
+<!-- defer 속성을 사용하면 스크립트가 비동기적으로 다운로드되지만, HTML 파싱이 끝난 후에 실행됩니다. 이를 통해 HTML 파싱과 스크립트 다운로드가 동시에 이루어질 수 있으며, 스크립트가 HTML 문서를 모두 로드한 후에 실행되므로 DOM 요소에 안전하게 접근할 수 있습니다. -->
+
+<!-- async 속성을 사용하면 스크립트가 비동기적으로 다운로드되고, 다운로드가 완료되는 즉시 실행됩니다. 이 방법은 실행 순서가 보장되지 않기 때문에, 서로 의존적인 스크립트 파일에는 적합하지 않습니다. -->
+
+<!-- 놀라운 무료 이미지 https://pixabay.com/ko/ -->
+
+<!-- 이런식으로 id를 쓰는 이유는 태그를 눌렀을 때 해당 위치로 가게 하기 위함(#) -->
+
+<!-- #만 있으면 현재 페이지의 제일 상단으로 감  -->
+
+<!-- CSS 초기화로 Normalize.css 와 Reset CSS 가 있는데 Reset CSS는 모든 것을 다 제거하고 Normalize.css는 일관된 스타일을 유지하면서 브라우저 간의 차이를 보정해줌 -->
