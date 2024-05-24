@@ -1,7 +1,4 @@
-// 여러곳에서 쓰이므로 이렇게 상수화 해줫음.
-const authNavigations = {
-  AUTH_HOME: 'AuthHome',
-  LOGIN: 'Login',
-} as const; // 읽기 전용으로 만들려고
+export * from './colors';
+export * from './navigations';
 
-export {authNavigations};
+// 이렇게 하면 constants에서 한번에 다 불러올 수 있음.
