@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"changelists": [
+		{
+			"guid": "00000000000000000000000000000000",
+			"description": "Default Uncontrolled Changelist",
+			"files": [
+				"C:/Users/CHAFA/Desktop/cpp/UE5/BluePrintStudy/Content/Maps/DevMap.umap",
+				"C:/Users/CHAFA/Desktop/cpp/UE5/BluePrintStudy/Content/Maps/MyFunc.uasset",
+				"C:/Users/CHAFA/Desktop/cpp/UE5/BluePrintStudy/Content/Blueprints/BP_Player.uasset",
+				"C:/Users/CHAFA/Desktop/cpp/UE5/BluePrintStudy/Content/Blueprints/BP_Knight.uasset",
+				"C:/Users/CHAFA/Desktop/cpp/UE5/BluePrintStudy/Content/Blueprints/IFlyable.uasset"
+			]
+		}
+	]
+}
